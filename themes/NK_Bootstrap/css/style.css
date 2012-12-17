@@ -200,6 +200,12 @@ padding: 2%;
 #blockevent {
 padding: 2%;
 }
+/* Block Language */
+#blocklanguage {
+text-align: center;
+padding: 2%;
+}
+
 
 /*
 	#################################
