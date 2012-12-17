@@ -22,6 +22,7 @@
 		<meta name="author" content="">
 		<link href="media/css/bootstrap.css" rel="stylesheet">
 		<link href="media/css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet">
 		<link href="themes/<?php echo $theme ?>/css/style.css" rel="stylesheet">
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
@@ -88,7 +89,8 @@
 				<p class="muted credit">Codé par <a href="http://www.the-servants.fr">PepinKr</a> propulsé par <a href="http://www.nuked-klan.org/">Nuked-Klan</a>.</p>
 			</div>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<script src="media/js/bootstrap.js"></script>
 	</body>
 	</html>
