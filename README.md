@@ -14,6 +14,9 @@ Prérequis
 Changelog 
 ===========
 
+Version 1.0.0 :
+- Remise en forme de tout les blocks
+- Integration Patch NK Conversion
 
 Crédits 
 ===========
