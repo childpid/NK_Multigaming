@@ -248,18 +248,20 @@ text-shadow: 0px 1px 0px white;
 .widget-content-news {
 color: #777;
 background: #FBFBFB;
-border: solid 1px #E0E0E0;
-padding: 1%;	
+border-top: 1px solid #E0E0E0;
+border-left: solid 1px #E0E0E0;
+border-right: solid 1px #E0E0E0;	
 }
 .widget-text-news {	
+padding: 1%;
 }
 .widget-img-news{
 float: left;
 margin: 4px;
 }
 .widget-bottom-news {
-height: 20px;
 border-top: 1px solid #DDD;
+border-bottom: 1px solid #DDD;
 margin-bottom: -1px;
 padding: 5px;
 background-color: #FBFBFB;
