@@ -58,7 +58,7 @@ padding: 1%;
 }
 .widget-text {
 }
-.widget-header a h2,.widget-header a:hover{
+.widget-header h2, .widget-header a h2, .widget-header a:hover{
 font-size: 16px;
 line-height: 16px;
 margin-top: 2px;
@@ -253,6 +253,11 @@ text-align: left;
 }
 #blockrss h3 {
 text-align: center;
+}
+/* Block theme */
+#blocktheme {
+text-align: center;
+padding: 2%;
 }
 
 
