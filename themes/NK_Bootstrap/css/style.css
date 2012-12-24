@@ -247,6 +247,13 @@ background: #F8F8F8;
 width: 20%;
 text-align: center;
 }
+/* Block Rss */
+#blockrss {
+text-align: left;
+}
+#blockrss h3 {
+text-align: center;
+}
 
 
 /*
