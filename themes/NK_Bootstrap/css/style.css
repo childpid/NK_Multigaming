@@ -229,9 +229,23 @@ padding: 2%;
 text-align: center;
 padding: 2%;
 }
+/* Block counter */
 #blockcounter {
 text-align: center;
 padding: 2%;
+}
+/* Block roster */
+#blockroster {	
+}
+#blockroster table {
+width: 100%;
+}
+#blockroster tr:hover {
+background: #F8F8F8;
+}
+#blockroster .rosterflag, #blockroster .rostermail{
+width: 20%;
+text-align: center;
 }
 
 
