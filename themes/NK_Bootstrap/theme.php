@@ -9,8 +9,9 @@
     }
 	
 	/* ----------------------- */
+	
 	function top(){
-        global $nuked, $user,$theme, $language, $config;
+        global $nuked, $user, $theme, $language, $config;
 	?>
 	<!DOCTYPE html>
 	<html lang="fr"><head>
@@ -28,7 +29,6 @@
 		<!--[if lt IE 9]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		
 		<!-- Fav and touch icons -->
 		<link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
