@@ -45,22 +45,22 @@ function affich_block_suggest($blok){
         $level_admin = admin_mod($temp[1]);
 
         if ($visiteur >= $level_access && $level_access > -1){
-            $blok['content'] .= '&nbsp;<b><big>&middot;</big></b>&nbsp;<a href="index.php?file=Suggest&amp;module=' . $temp[1] . '">' . $temp[0] . '</a>';
+            $blok['content'] .= '<div class="suggestmod"><a href="index.php?file=Suggest&amp;module=' . $temp[1] . '">' . $temp[0] . '</a>';
         }
 
         if ($visiteur >= $level_admin && $level_admin > -1){
             if ($nb_sug > 0){
-                $blok['content'] .= '&nbsp;(<a href="index.php?file=Suggest&amp;page=admin">' . $nb_sug . '</a>)<br />'."\n";
+                $blok['content'] .= '<div class="suggestnbrsugg"><a href="index.php?file=Suggest&amp;page=admin">' . $nb_sug . '</a></div></div>';
             }
             else{
-                $blok['content'] .= '&nbsp;(' . $nb_sug . ')<br />'."\n";
+                $blok['content'] .= '<div class="suggestnbrsugg">' . $nb_sug . '</div></div>';
             }
         }
         else if ($visiteur >= $level_access && $level_access > -1){
-            $blok['content'] .= '<br />'."\n";
+            $blok['content'] .= '<br />';
         }
     }
-	$blok = '<div id="blocksuggest">'$blok'</div>';
+	$blok['content'] = '<div id="blocksuggest">' . $blok['content'] . '</div>';
     return $blok;
 }
 
