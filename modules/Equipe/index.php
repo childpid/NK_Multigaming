@@ -34,36 +34,31 @@ if ($visiteur >= $level_access && $level_access > -1)
 		list($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9, $c10, $c11, $nivoreq) = mysql_fetch_array($sql_config);
 	
     opentable();
+	  echo '<div id="moduleequipe">';
 
 	  $sql1=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff_cat ORDER BY ordre ASC');
 	  while($req1 = mysql_fetch_object($sql1))
 	  {	
 	  	if ($req1->img != 'non') $img_url = '<a href="index.php?file=Equipe&amp;op=view_cat&amp;cat_id='.$req1->id.'"><img src="'.$req1->img.'" alt="" style="border:none;" title="Afficher uniquement les '.$req1->nom.'" /></a>';
-		else $img_url = '<a href="index.php?file=Equipe&amp;op=view_cat&amp;cat_id='.$req1->id.'">'.$req1->nom.'</a>';
+		else $img_url = '<a href="index.php?file=Equipe&op=view_cat&cat_id=' .$req1->id. '">' .$req1->nom. '</a>';
 	  			
-		echo'<table width="100%">'
-		.'<tr><td>'.$img_url.'</td></tr>'
-		.'<tr><td>';
-		
+		echo '<div class="equipe"><div class="equipetitre"><h3>' . $img_url . '</h3></div><div class="equipeliste">';
 		$ii=1;
-		echo'<table cellpadding="0" cellspacing="0" width="100%" height="100%"><tr>';
 		
-		 echo "<table style=\"background: " . $bgcolor2 . ";border: 1px solid " . $bgcolor3 . ";\" width=\"100%\" cellpadding=\"2\" cellspacing=\"1\">\n"
-	. "<tr style=\"background: " . $bgcolor3 . ";\">\n"
-	. "<td style=\"width: 5%;\">&nbsp;</td>\n"
-	. "<td style=\"width: 20%;\" align=\"center\"><b>" . _NICK . "</b></td>\n";
-  if ($c1 == 'on'){echo "<td align=\"center\"><b>" . _MAIL . "</b></td>\n";}
-	if ($c2 == 'on'){echo "<td align=\"center\"><b>" . _ICQ . "</b></td>\n";}
-	if ($c3 == 'on'){echo "<td align=\"center\"><b>" . _MSN . "</b></td>\n";}
-	if ($c4 == 'on'){echo "<td align=\"center\"><b>" . _AIM . "</b></td>\n";}
-	if ($c5 == 'on'){echo "<td align=\"center\"><b>" . _YIM . "</b></td>\n";}
-	if ($c6 == 'on'){echo "<td align=\"center\"><b>" . _XFIRE . "</b></td>\n";}
-	if ($c7 == 'on'){echo "<td align=\"center\"><b>" . _FACEBOOK . "</b></td>\n";}
-	if ($c8 == 'on'){echo "<td align=\"center\"><b>" . _ORIGINEA . "</b></td>\n";}
-	if ($c9 == 'on'){echo "<td align=\"center\"><b>" . _STEAM . "</b></td>\n";}
-	if ($c10 == 'on'){echo "<td align=\"center\"><b>" . _TWITER . "</b></td>\n";}	
-	if ($c11 == 'on'){echo "<td align=\"center\"><b>" . _SKYPE . "</b></td>\n";}
-   echo "<td style=\"width: 15%;\" align=\"center\"><b>" . _RANK . "</b></td></tr>\n";
+		 echo '<table><thead><tr>'
+	. '<td>'. _NICK . '</td>';
+  if ($c1 == 'on'){echo '<td>' . _MAIL . '</td>';}
+	if ($c2 == 'on'){echo '<td>' . _ICQ . '</td>';}
+	if ($c3 == 'on'){echo '<td>' . _MSN . '</td>';}
+	if ($c4 == 'on'){echo '<td>' . _AIM . '</td>';}
+	if ($c5 == 'on'){echo '<td>' . _YIM . '</td>';}
+	if ($c6 == 'on'){echo '<td>' . _XFIRE . '</td>';}
+	if ($c7 == 'on'){echo '<td>' . _FACEBOOK . '</td>';}
+	if ($c8 == 'on'){echo '<td>' . _ORIGINEA . '</td>';}
+	if ($c9 == 'on'){echo '<td>' . _STEAM . '</td>';}
+	if ($c10 == 'on'){echo '<td>' . _TWITER . '</td>';}	
+	if ($c11 == 'on'){echo '<td>' . _SKYPE . '</td>';}
+   echo '<td>' . _RANK . '</td></tr></thead><tbody>';
 		
 		  $sql2=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff WHERE categorie_id="'.$req1->id.'"');
 		  while($req2 = mysql_fetch_object($sql2))
@@ -86,164 +81,162 @@ if ($visiteur >= $level_access && $level_access > -1)
 			
 			list ($pays, $ext) = split ('[.]', $country);
 			
-                        echo "<tr style=\"background: " . $bg . ";\">\n"
-                        . "<td style=\"width: 5%;\" align=\"center\"><img src=\"images/flags/" . $req3->country . "\" alt=\"\" /></td>\n"
-                        . "<td style=\"width: 20%;\"><a href=\"index.php?file=Members&amp;op=detail&amp;autor=".urlencode($req3->pseudo)."\"><b>".stripslashes($req1->tag)."".stripslashes($req3->pseudo)."".stripslashes($req1->tag2)."</b></a></td>\n";
+                        echo '<tr>'
+                        . '<td><img src="images/flags/' . $req3->country . '" alt="" />&nbsp;&nbsp;<a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'"><b>'.stripslashes($req1->tag).''.stripslashes($req3->pseudo).''.stripslashes($req1->tag2).'</a></td>';
                         
                         if ($c1 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->email != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"mailto:" . $req3->email . "\"><img style=\"border: 0;\" src=\"" . $img . "\" alt=\"\" title=\"" . $req3->email . "\" /></a></td>";
+                            echo '<a href="mailto' . $req3->email . '"><img src="' . $img . '" alt="" title="' . $req3->email . '" /></a></td>';
                         } 
                         else
                         {
-                            echo "<img style=\"border: 0;\" src=\"images/user/emailna.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/emailna.png" alt=""/></td>';
                         } 
                   }
                         if ($c2 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->icq != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"http://web.icq.com/whitepages/add_me?uin=" . $req3->icq . "&amp;action=add\"><img style=\"border: 0;\" src=\"images/user/icq.png\" alt=\"\" title=\"" . $req3->icq . "\" /></a></td>";
+                            echo '<a href="http://web.icq.com/whitepages/add_me?uin=' . $req3->icq . '&amp;action=add"><img src="images/user/icq.png" alt="" title="' . $req3->icq . '" /></a></td>';
                         } 
                         else{
-                        echo "<img style=\"border: 0;\" src=\"images/user/icqna.png\" alt=\"\"/></td>";
+                        echo '<img src="images/user/icqna.png" alt=""/></td>';
                         } 
                   }
                         if ($c3 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->msn != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"mailto:" . $req3->msn . "\"><img style=\"border: 0;\" src=\"images/user/msn.png\" alt=\"\" title=\"" . $msn . "\" /></a></td>";
+                            echo '<a href="mailto:' . $req3->msn . '"><img src="images/user/msn.png" alt="" title="' . $msn . '" /></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/msnna.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/msnna.png" alt=""/></td>';
                         } 
                   }
                         if ($c4 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->aim != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"aim:goim?screenname=" . $req3->aim . "&amp;message=Hi+" . $req3->aim . "+Are+you+there+?\"><img style=\"border: 0;\" src=\"images/user/aim.png\" alt=\"\" title=\"" . $req3->aim . "\" /></a></td>";
+                            echo '<a href="aim:goim?screenname=' . $req3->aim . '&amp;message=Hi+' . $req3->aim . '+Are+you+there+?"><img src="images/user/aim.png" alt="" title="' . $req3->aim . '" /></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/aimna.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/aimna.png" alt=""/></td>';
                         } 
                   }
                         if ($c5 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->yim != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $req3->yim . "&amp;.src=pg\"><img style=\"border: 0;\" src=\"images/user/yahoo.png\" alt=\"\" title=\"" . $req3->yim . "\" /></a></td>";
+                            echo '<a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $req3->yim . '&amp;.src=pg"><img src="images/user/yahoo.png" alt="" title="' . $req3->yim . '" /></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/yahoona.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/yahoona.png" alt=""/></td>';
                         } 
                   }
                         if ($c6 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->xfire != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"xfire:add_friend?user=" . $req3->xfire . "\"><img style=\"border: 0;\" src=\"images/user/xfire.png\" alt=\"\" title=\"" . $req3->xfire . "\" /></a></td>";
+                            echo '<a href="xfire:add_friend?user=' . $req3->xfire . '"><img src="images/user/xfire.png" alt="" title="' . $req3->xfire . '" /></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/xfirena.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/xfirena.png" alt=""/></td>';
                         } 
                   }
                         if ($c7 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->facebook != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"http://www.facebook.com/" . $req3->facebook . "\"><img style=\"border: 0;\" src=\"images/user/facebook.png\" alt=\"\" title=\"" . $req3->facebook . "\" /></a></td>";
+                            echo '<a href="http://www.facebook.com/' . $req3->facebook . '"><img src="images/user/facebook.png" alt="" title="' . $req3->facebook . '" /></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/facebookna.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/facebookna.png" alt=""/></td>';
                         } 
                   }
                         if ($c8 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->origin != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<img style=\"border: 0;\" src=\"images/user/origin.png\" alt=\"\" title=\"" . $req3->origin . "\" /></td>";
+                            echo '<img src="images/user/origin.png" alt="" title="' . $req3->origin . '" /></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/originna.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/originna.png" alt=""/></td>';
                         } 
                   }
                         if ($c9 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->steam != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"http://steamcommunity.com/actions/AddFriend/" . $req3->steam . "\"><img style=\"border: 0;\" src=\"images/user/steam.png\" alt=\"\" title=\"" . $req3->steam . "\" /></a></td>";
+                            echo '<a href="http://steamcommunity.com/actions/AddFriend/' . $req3->steam . '"><img src="images/user/steam.png" alt="" title="' . $req3->steam . '" /></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/steamna.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/steamna.png" alt=""/></td>';
                         } 
                   }
                         if ($c10 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->twitter != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"http://twitter.com/#!/" . $req3->twitter . "\"><img style=\"border: 0;\" src=\"images/user/twitter.png\" alt=\"\" title=\"" . $req3->twitter . "\" /></a></td>";
+                            echo '<a href="http://twitter.com/#!/' . $req3->twitter . '"><img src="images/user/twitter.png" alt="" title="' . $req3->twitter . '" /></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/twitterna.png\" alt=\"\"/></td>";
+                            echo '<img src="images/user/twitterna.png" alt="" /></td>';
                         } 
                   }
                         if ($c11 == 'on')
                   {
-                        echo "<td align=\"center\">\n";
+                        echo '<td>';
 
                         if ($req3->skype != "" && $visiteur >= $nivoreq)
                         {
-                            echo "<a href=\"skype:" . $req3->skype . "?call\"><img style=\"border: 0;\" src=\"images/user/skype.png\" alt=\"\" title=\"" . $req3->skype . "\" /></a></td>";
+                            echo '<a href="skype:' . $req3->skype . '?call"><img src="images/user/skype.png" alt="" title="' . $req3->skype . '"/></a></td>';
                         } 
                         else{
-                            echo "<img style=\"border: 0;\" src=\"images/user/skypena.png\" alt=\"\"/></td>";
+                            echo '<img src=\"images/user/skypena.png\" alt=\"\"/></td>';
                         } 
                   }
                   						
-						echo"<td style=\"width: 20%;\" align=\"center\">\n";
+						echo '<td>';
 						
 						$nom = $req6->nom;
 						$nom = stripslashes($nom);
-						
 						if ($req6->nom != "" && $req6->ordre >= 0)
                         {
-                        echo "" . $nom . "\n";
+                        echo $nom;
 						} 
                         else
                         {
-                            echo "N/A";
+                            echo 'N/A';
                         } 
                      } 
                 
 
-                echo "</td></tr></table><tr><td align=\"right\"><a href=\"index.php?file=Equipe&amp;op=view_cat&amp;cat_id=".$req1->id."\">Voir détail de la team</a>&nbsp;</td></tr></table><br />\n";
+                echo '</td></tr></tbody></table></div></div>';
                 $j = 0;
-
-            } 
+            }
+		echo '</div>';
         closetable();
     } 
 	

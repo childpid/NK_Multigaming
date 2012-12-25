@@ -223,6 +223,7 @@ padding: 2%;
 /* Block Event */
 #blockevent {
 padding: 2%;
+padding-top: 5%;
 }
 /* Block Language */
 #blocklanguage {
@@ -319,6 +320,23 @@ border-bottom: 1px solid #DDD;
 margin-bottom: -1px;
 padding: 5px;
 background-color: #FBFBFB;
+}
+/* Module Equipe */
+#moduleequipe {
+}
+#moduleequipe h3 {
+text-align: center;
+text-transform: uppercase;
+}
+#moduleequipe .equipeliste table{
+width: 100%;	
+}
+#moduleequipe .equipeliste td{
+text-align: center;	
+border: 1px solid #DDD;
+}
+#moduleequipe .equipeliste thead {
+background-color: #F8F8F8;
 }
 /* Style de placement */
 .center {
