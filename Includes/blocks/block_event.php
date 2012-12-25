@@ -60,7 +60,7 @@ function affich_block_event($blok){
     $start = mktime(0, 0, 0, $month, 1, $year);
     $firstdayarray = getdate($start);
 
-    $months = Array(_JAN, _FEB, _MAR, _APR, _MAY, _JUN, _JUL, _AUG, _SEP, _OCT, _NOV, _DEC);
+$months = Array(_JAN, _FEB, _MAR, _APR, _MAY, _JUN, _JUL, _AUG, _SEP, _OCT, _NOV, _DEC);
     $this_month = $month - 1;
     $days = Array(_SUN, _MON, _TUE, _WEN, _THR, _FRI, _SAT);
 
@@ -231,8 +231,8 @@ function affich_block_event($blok){
                         }
                     }
                 }
-                $blok['content'] .= '<td class="success" onmouseover="AffBulle(\'&nbsp;&nbsp;&nbsp;&nbsp;' . $event_date . '&nbsp;' . $months[$this_month] . '&nbsp;' . $year . '\', \'' . htmlentities(mysql_real_escape_string($txt), ENT_NOQUOTES) . '\', 200)" onmouseout="HideBulle()">'."\n"
-                . '<a href="index.php?file=Calendar&amp;m=' . $month . '&amp;y=' . $year . '">'. $bd . $dayarray['mday'] . $bf . '</a></td>'."\n";
+$blok['content'] .= '<td>'
+. '<a rel="popover" data-html="true" data-trigger="hover" data-placement="top" data-content="' . htmlentities(mysql_real_escape_string($txt), ENT_NOQUOTES) . '" data-original-title="' . $event_date . '&nbsp;' . $months[$this_month] . '&nbsp;' . $year . '" href="index.php?file=Calendar&amp;m=' . $month . '&amp;y=' . $year . '">'. $bd . $dayarray['mday'] . $bf . '</a></td>';
             }
             else{
                 $blok['content'] .= '<td align="center"><span style="text-align: center;">' . $bd . $dayarray[mday] . $bf . '</span></td>'."\n";
@@ -243,6 +243,7 @@ function affich_block_event($blok){
     }
 
     $blok['content'] .= '</tr></table>'."\n";
+	$blok['content'] .= '<script type="text/javascript">$("[rel=popover]").popover();</script>';
 	$blok['content'] = '<div id="blockevent">'. $blok['content'] .'</div>';
     return $blok;
 }
