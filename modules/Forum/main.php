@@ -46,8 +46,15 @@ if ($_REQUEST['cat'] != "")
 	$sql_cats = mysql_query("SELECT id, nom FROM " . FORUM_PRIMAIRE_TABLE . " WHERE id = '" . $catprimaire . "'");
     list($cat_pri, $cat_primaire) = mysql_fetch_row($sql_cats);
     $cat_primaire = printSecuTags($cat_primaire); 
-	
-    $nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;cat=" . $cat_pri . "\"><b>" . $cat_primaire . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $cat_name . "</b>";    
+
+    if ($nuked['forum_cat_prim'] == "on")
+    { 	
+    $nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;cat=" . $cat_pri . "\"><b>" . $cat_primaire . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $cat_name . "</b>";
+    } 
+    else
+    {
+    $nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $cat_name . "</b>";    
+    } 
 } 
 	if ($modos != "")
     {

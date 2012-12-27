@@ -48,7 +48,7 @@ function index()
 
    <div style="width:750px; margin:20px auto 0 260px;">
      <h2 style="padding: 20px 0 35px 0;">Bienvenue sur l'installation du patch NK Conversion</h2>
-     <p style="margin: -30px 0 20px 0;">Version 1.0</p>  
+     <p style="margin: -30px 0 20px 0;">Version 1.1</p>  
      <h3>Description :</h3>
      <p style="padding-top:10px;">Ce patch est une conversion de votre site Nuked Klan pour répondre aux attentes des utilisateurs Gamers et non gamers.<br />Il contient les modules  <font color="#57a000">Forum</font>,  <font color="#57a000">User</font>,  <font color="#57a000">Team</font> et  <font color="#57a000">Membres</font>. Ajout du module  <font color="#57a000">Equipe</font> de N1pple et mis à jour par Yurty et Sekuline pour la 1.79 (module qui permet d'ajouter autant de teams et de rang que l'on souhaite pour les membres avec un niveau d'admin > 1)</p>    
      
@@ -63,6 +63,7 @@ function index()
 
 <u><b>Module Forum :</b></u><br/><br/>
 -Ajout du patch Sous Catégories pour le Forum de Maxxi<br/>
+-Ajout de la possibilité de désactiver les Sous Catégories<br/>
 -Ajout du Skin Forum par Maxxi: Permet depuis l'administration de changer le design du Forum sous forme de templates, 4 templates disponibles (Nk_defaut, Nk_Guigoz, Nk_help et Nk_phpbb)<br/>
 -Tous les composants Skin Forum (titres, champ recherche , modérateurs etc...) peuvent être désactivés via l'administration.<br/>
 -Possibilité de créer ses propres skins.<br/>
@@ -214,7 +215,8 @@ $req = mysql_query($sql);
   $req = mysql_query($sql);
 
   $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_forums_cat ADD COLUMN (image varchar(200))");
-  $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_forums_cat ADD COLUMN (imagemini varchar(200))");   
+  $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_forums_cat ADD COLUMN (imagemini varchar(200))");
+	$sql = mysql_query("INSERT INTO " . $nuked['prefix'] . "_config (name, value) VALUES ('forum_cat_prim', 'on')");
 	$sql = mysql_query("INSERT INTO " . $nuked['prefix'] . "_config (name, value) VALUES ('image_forums', 'on')");
 	$sql = mysql_query("INSERT INTO " . $nuked['prefix'] . "_config (name, value) VALUES ('image_cat_mini', 'on')"); 	  
 	$sql = mysql_query("INSERT INTO " . $nuked['prefix'] . "_config (name, value) VALUES ('birthday_forum', 'on')");
@@ -259,10 +261,11 @@ $req = mysql_query($sql);
 (1, 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 0)");
 
 
-	?><h2 style="text-align:center;padding-top:50px;">Installation du patch "NK Conversion V1.0" éffectuée avec succès.<br /><br />Redirection...</h2><?php
+	?><h2 style="text-align:center;padding-top:50px;">Installation du patch "NK Conversion V1.1" éffectuée avec succès.<br /><br />Redirection...</h2><?php
 	
 	//******Supression automatique du fichier install.php******
 	@unlink("install.php");
+	@unlink("update.php");	
 	redirect("index.php", 3);
 
   }
@@ -270,6 +273,7 @@ $req = mysql_query($sql);
   {
     head();
 	@unlink("install.php");
+	@unlink("update.php");	
     ?><h2 style="text-align:center;padding-top:50px;">Installation annulée. Redirection vers l'index.</h2><?php
     redirect("index.php", 3);
   }

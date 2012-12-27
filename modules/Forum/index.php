@@ -41,9 +41,18 @@ if ($visiteur >= $level_access && $level_access > -1)
 
     function index()
     {
-        opentable();
+        global $nuked;
+        
+        if ($nuked['forum_cat_prim'] == "on")
+        { 
+        opentable();               
         include("modules/Forum/primaire.php");
-        closetable();
+        closetable();        
+        }
+        else
+        {
+        include("modules/Forum/main.php");
+        }
     }
 	
             function save($id, $value)

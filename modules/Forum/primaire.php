@@ -128,9 +128,11 @@ else
 					. "	</table>\n";
 }						
 			echo "		<table class=\"Forum_contenu_pri_t\" cellspacing=\"1\">\n";
+			
 							
 						$sqls = mysql_query("SELECT id from " . FORUM_CAT_TABLE . " WHERE cat_primaire = '" . $cid . "' AND '" . $visiteur . "' >= niveau ORDER BY ordre, nom");
-						list($id_cat) = mysql_fetch_row($sqls);	
+						list($id_cat) = mysql_fetch_row($sqls);
+							
 						if($id_cat)
 						{								
 							$sql = mysql_query("SELECT nom, comment, imagemini, id from " . FORUM_CAT_TABLE . " WHERE cat_primaire = '" . $cid . "' AND '" . $visiteur . "' >= niveau ORDER BY ordre, nom");
@@ -140,18 +142,21 @@ else
 							
 								$sql2 = mysql_query("SELECT id from " . FORUM_TABLE . " WHERE cat = '" . $cat_id . "' AND '" . $visiteur . "' >= niveau ORDER BY ordre, nom");
 								list($forum_id) = mysql_fetch_row($sql2);
+								
 							
 								$req2 = mysql_query("SELECT forum_id from " . FORUM_THREADS_TABLE . " WHERE forum_id = '" . $forum_id . "'");
 								$num_post = mysql_num_rows($req2);
+								
 
 								$req3 = mysql_query("SELECT forum_id from " . FORUM_MESSAGES_TABLE . " WHERE forum_id = '" . $forum_id . "'");
 								$num_mess = mysql_num_rows($req3);
+								
 
-								$req4 = mysql_query("SELECT MAX(id) from " . FORUM_MESSAGES_TABLE . " WHERE forum_id = '" . $forum_id . "'");
-								$idmax = mysql_result($req4, 0, "MAX(id)");
+                $req4 = mysql_query('SELECT M.id, M.titre, M.date, M.auteur, M.auteur_id, M.txt, T.id, F.id  FROM '.FORUM_TABLE.' AS F LEFT JOIN '.FORUM_CAT_TABLE.' AS C ON F.cat = C.id LEFT JOIN '.FORUM_MESSAGES_TABLE.' AS M ON  M.forum_id = F.id LEFT JOIN '.FORUM_THREADS_TABLE.' AS T ON T.id = M.thread_id WHERE C.id = \''.$cat_id.'\' ORDER BY M.date DESC LIMIT 0,1');
+                
+								list($mess_id, $lp_titre, $date, $auteur, $auteur_id, $txt, $topicmax, $forummax) = mysql_fetch_array($req4);
 
-								$req5 = mysql_query("SELECT id, titre, thread_id, date, auteur, auteur_id, txt FROM " . FORUM_MESSAGES_TABLE . " WHERE id = '" . $idmax . "'");
-								list($mess_id, $lp_titre, $thid, $date, $auteur, $auteur_id, $txt) = mysql_fetch_array($req5);			
+			
 								$lp_title = htmlentities(printSecuTags($lp_titre));
 								$auteur = nk_CSS($auteur);
 								
@@ -172,16 +177,17 @@ else
 
 								if (strlen($lp_titre) > 30)
 								{
-									$titre_topic = "<a href=\"index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forum_id . "&amp;thread_id=" . $thid . "#" . $mess_id . "\" onmouseover=\"AffBulle('" . mysql_real_escape_string(stripslashes($lp_title)) . "', '" . mysql_real_escape_string(stripslashes($texte)) . "', 400)\" onmouseout=\"HideBulle()\"><b>" . printSecuTags(substr($lp_titre, 0, 30)) . "...</b></a>";
+									$titre_topic = "<a href=\"index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forum_id . "&amp;thread_id=" . $topicmax . "#" . $mess_id . "\" onmouseover=\"AffBulle('" . mysql_real_escape_string(stripslashes($lp_title)) . "', '" . mysql_real_escape_string(stripslashes($texte)) . "', 400)\" onmouseout=\"HideBulle()\"><b>" . printSecuTags(substr($lp_titre, 0, 30)) . "...</b></a>";
 								}
 								else
 								{
-									$titre_topic = "<a href=\"index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forum_id . "&amp;thread_id=" . $thid . "#" . $mess_id . "\" onmouseover=\"AffBulle('" . mysql_real_escape_string(stripslashes($lp_title)) . "', '" . mysql_real_escape_string(stripslashes($texte)) . "', 400)\" onmouseout=\"HideBulle()\"><b>" . printSecuTags($lp_titre) . "</b></a>";
+									$titre_topic = "<a href=\"index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forum_id . "&amp;thread_id=" . $topicmax . "#" . $mess_id . "\" onmouseover=\"AffBulle('" . mysql_real_escape_string(stripslashes($lp_title)) . "', '" . mysql_real_escape_string(stripslashes($texte)) . "', 400)\" onmouseout=\"HideBulle()\"><b>" . printSecuTags($lp_titre) . "</b></a>";
 								}
 
 								if ($user) 
 								{
 									$visits = mysql_query("SELECT user_id, forum_id FROM " . FORUM_READ_TABLE . " WHERE user_id = '" . $user[0] . "' AND forum_id LIKE '%" . ',' . $forum_id . ',' . "%' ");
+                  
 									$results = mysql_fetch_assoc($visits);
 									if ($num_post > 0 && strrpos($results['forum_id'], ',' . $forum_id . ',') === false) 
 									{
@@ -197,18 +203,19 @@ else
 									$img = "<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/forum.png\" alt=\"\" />";
 								} 
 								
-								$sql_page = mysql_query("SELECT thread_id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $thid . "'");
+								$sql_page = mysql_query("SELECT thread_id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $topicmax . "'");
 								$nb_rep = mysql_num_rows($sql_page);
+								
 
 								if ($nb_rep > $nuked['mess_forum_page'])
 								{
 									$topicpages = $nb_rep / $nuked['mess_forum_page'];
 									$topicpages = ceil($topicpages);
-									$link_post = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forum_id . "&amp;thread_id=" . $thid . "&amp;p=" . $topicpages . "#" . $mess_id;
+									$link_post = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forummax . "&amp;thread_id=" . $topicmax . "&amp;p=" . $topicpages . "#" . $mess_id;
 								} 
 								else
 								{
-									$link_post = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forum_id . "&amp;thread_id=" . $thid . "#" . $mess_id;
+									$link_post = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forummax . "&amp;thread_id=" . $topicmax . "#" . $mess_id;
 								} 
 
 								echo "<tr class=\"Forum_contenu_pri_r\">\n"
@@ -224,6 +231,7 @@ else
 								echo "		<td class=\"Forum_contenu_pri_d2\" onclick=\"document.location='index.php?file=Forum&amp;page=main&amp;cat=" . $cat_id . "'\"><a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cat_id . "\"><big><b>" . $nom ." </b></big></a><br />" . $comment . "<br />\n";
                                 
                                 $sqlf = mysql_query("SELECT id, nom from " . FORUM_TABLE . " WHERE cat = '" . $cat_id . "'");
+                                
 								while(list($idfor, $forum_nom) = mysql_fetch_row($sqlf))
                                 {                                
                                     $forumnom = printSecuTags($forum_nom);
@@ -239,6 +247,7 @@ else
 													{
 														$sq_user = mysql_query("SELECT pseudo, country, rang  FROM " . USER_TABLE . " WHERE id = '" . $auteur_id . "'");
 														$test = mysql_num_rows($sq_user);
+														
 														list($author, $country, $autor_rank) = mysql_fetch_array($sq_user);
                             
                             if ($nuked['profil_details'] == "on")

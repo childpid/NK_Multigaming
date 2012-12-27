@@ -117,8 +117,15 @@ else
 		{
 			$administrator = 0;
 		}	
-		
+
+    if ($nuked['forum_cat_prim'] == "on")
+    { 		
 		$nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;cat=" . $cat_pri . "\"><b>" . $cat_primaire . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cat . "\"><b>" . $cat_name . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $nom . "</b>";
+		}
+		else
+		{
+		$nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cat . "\"><b>" . $cat_name . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $nom . "</b>";		
+		}
 
 if($nuked['forum_name_viewforum'] == "oui" || $nuked['forum_search_viewforum'] == "oui")	
 {
@@ -388,7 +395,7 @@ echo "				<tr class=\"Forum_contenu_for_r\">\n"
 
                 if ($nuked['profil_details'] == "on")
                  {
-                  $sql_lastrank_team_autor = mysql_query("SELECT couleur FROM " . TEAM_RANK_TABLE . " WHERE id = '" . $autor_rank . "'");
+                  $sql_lastrank_team_autor = mysql_query("SELECT couleur FROM " . TEAM_RANK_TABLE . " WHERE id = '" . $last_autor_rank . "'");
                   list($thecolorlast) = mysql_fetch_array($sql_lastrank_team_autor);
                   $lastrank_color_autor = "style=\"color: #" . $thecolorlast . ";\"";
                 } else {$lastrank_color_autor = "";}

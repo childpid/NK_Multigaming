@@ -12,18 +12,24 @@ if (!defined("INDEX_CHECK"))
     die ("<div style=\"text-align: center;\">You cannot open this page directly</div>");
 }
 
+if ($nuked['forum_cat_prim'] == "off")
+{ 
+$style_cat = "margin-top:20px; border-radius: 10px 10px 0 0;";
+$style_cat_titre = "margin-bottom: 0px;";
+}
+
 echo'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />';
 echo'<style type="text/css">
 
 /*** Cadre affichant la catégorie secondaire ***/
-.Forum_ariane_t{ width: 100%; background: ' . $forumcolor3 . ' url("modules/Forum/Skin/' . $nuked['forum_skin'] . '/images/template/navbar.gif"); }
+.Forum_ariane_t{ width: 100%;' . $style_cat .'; background: ' . $forumcolor3 . ' url("modules/Forum/Skin/' . $nuked['forum_skin'] . '/images/template/navbar.gif"); }
 .Forum_ariane_r{ height: 26px; }
 .Forum_ariane_d1{ color: ' . $forumcolor4 . '; }
 .Forum_ariane_d1 a{ color: ' . $forumcolor4 . '; }
 
 /*** Cadre affichant le contenu haut des catégories secondaires ***/
-.Forum_haut_t{ width: 100%; background: ' . $forumcolor3 . ' url("modules/Forum/Skin/' . $nuked['forum_skin'] . '/images/template/headerbar.gif"); padding: 0 10px; background-repeat: repeat-x; border-radius: 10px 10px 0 0; clear: both; }
-.Forum_haut_r{ height: 22px; color: ' . $forumcolor4 . '; }
+.Forum_haut_t{ width: 100%; ' . $style_cat_titre .' ; background: ' . $forumcolor3 . ' url("modules/Forum/Skin/' . $nuked['forum_skin'] . '/images/template/headerbar.gif"); padding: 0 10px; background-repeat: repeat-x; border-radius: 10px 10px 10px 10px; clear: both; }
+.Forum_haut_r{ height: 24px; color: ' . $forumcolor4 . '; }
 .Forum_haut_d1{ width: 5%; }
 .Forum_haut_d2{ text-align: center;	width: 40%; }
 .Forum_haut_d3{	text-align: center;	width: 15%; }

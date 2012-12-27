@@ -53,9 +53,12 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "</div>\n"
 			. "</div>\n"
 			. "<div class=\"tab-content\" id=\"tab2\"><div style=\"text-align: center;\"><b><a href=\"index.php?file=Forum&amp;page=admin\">" . _FORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | "
-			. "" . _CATMANAGEMENT . " | "
+			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | ";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | ";
+}
+			echo "" . _CATMANAGEMENT . " | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_rank\">" . _RANKMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=prune\">" . _PRUNE . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=skin\">" . _SKINS . "</a></b> | "
@@ -96,7 +99,7 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 
     function add_cat()
     {
-        global $language;
+        global $nuked, $language;
 
        echo "<div class=\"content-box\">\n" //<!-- Start Content Box -->
 			. "<div class=\"content-box-header\"><h3>" . _ADMINFORUMCATADD . "</h3>\n"
@@ -116,18 +119,23 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 //end top message  			
 			. "<div class=\"tab-content\" id=\"tab2\"><form method=\"post\" action=\"index.php?file=Forum&amp;page=admin&amp;op=send_cat\" enctype=\"multipart/form-data\">\n"
 			. "<table style=\"margin-left: auto;margin-right: auto;text-align: left;\" cellspacing=\"1\" cellpadding=\"2\" border=\"0\">\n"
-			. "<tr><td><b>" . _NAME . " :</b> <input type=\"text\" name=\"nom\" size=\"30\" /></td></tr>\n"
-			. "<tr><td><b>" . _CATSECONDAIRE . " :</b> <select name=\"cat\">\n";
+			. "<tr><td><b>" . _NAME . " :</b> <input type=\"text\" name=\"nom\" size=\"30\" /></td></tr>\n";
+			if($nuked['forum_cat_prim'] == "on")
+      {
+			echo "<tr><td><b>" . _CATPRIMAIRE . " :</b> <select name=\"cat\">\n";
+				select_forum_pri();
 
-			select_forum_pri();
-
-			echo"</select></td></tr>\n"
-			. "<tr><td align=\"left\"><b>" . _DESCR . " : </b><br /><textarea class=\"editor\" name=\"description\" rows=\"10\" cols=\"69\"></textarea></td></tr>\n"
-    . "<tr><td><b>" . _MAINIMAGE . " :</b> <input type=\"text\" name=\"urlimage\" size=\"42\" /></td></tr>\n"
-    . "<tr><td><b>" . _UPLOADMAINIMAGE . " :</b> <input type=\"file\" name=\"upimage\" /></td></tr>\n"
-    . "<tr><td><b>" . _IMAGEMINI . " :</b> <input type=\"text\" name=\"urlimagemini\" size=\"42\" /></td></tr>\n"
-    . "<tr><td><b>" . _UPLOADIMAGEMINI . " :</b> <input type=\"file\" name=\"upimagemini\" /></td></tr>\n"     		
-			. "<tr><td><b>" . _LEVELACCES . " :</b> <select name=\"niveau\">\n"
+      echo"</select></td></tr>\n";
+      }
+			echo "<tr><td align=\"left\"><b>" . _DESCR . " : </b><br /><textarea class=\"editor\" name=\"description\" rows=\"10\" cols=\"69\"></textarea></td></tr>\n"
+      . "<tr><td><b>" . _MAINIMAGE . " :</b> <input type=\"text\" name=\"urlimage\" size=\"42\" /></td></tr>\n"
+      . "<tr><td><b>" . _UPLOADMAINIMAGE . " :</b> <input type=\"file\" name=\"upimage\" /></td></tr>\n";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 
+    echo "<tr><td><b>" . _IMAGEMINI . " :</b> <input type=\"text\" name=\"urlimagemini\" size=\"42\" /></td></tr>\n"
+      . "<tr><td><b>" . _UPLOADIMAGEMINI . " :</b> <input type=\"file\" name=\"upimagemini\" /></td></tr>\n";
+}    		
+			echo "<tr><td><b>" . _LEVELACCES . " :</b> <select name=\"niveau\">\n"
 			. "<option>0</option>\n"
 			. "<option>1</option>\n"
 			. "<option>2</option>\n"
@@ -219,7 +227,7 @@ if ($visiteur >= $level_admin && $level_admin > -1)
         }
 
 
-		if(!$cat)
+		if(!$cat && $nuked['forum_cat_prim'] == "on")
 		{
         echo "<div class=\"notification success png_bg\">\n"
 			. "<div>\n"
@@ -323,18 +331,24 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 //end top message  			
 			. "<div class=\"tab-content\" id=\"tab2\"><form method=\"post\" action=\"index.php?file=Forum&amp;page=admin&amp;op=modif_cat\" enctype=\"multipart/form-data\">\n"
 			. "<table style=\"margin-left: auto;margin-right: auto;text-align: left;\" cellspacing=\"1\" cellpadding=\"2\" border=\"0\">\n"
-			. "<tr><td><b>" . _NAME . " :</b> <input type=\"text\" name=\"nom\" size=\"30\" value=\"" . $titre . "\" /></td></tr>\n"
-			. "<tr><td><b>" . _CATSECONDAIRE . " :</b> <select name=\"cat\"><option value=\"" . $cat . "\">" . $cat_name . "</option>\n";
-
+			. "<tr><td><b>" . _NAME . " :</b> <input type=\"text\" name=\"nom\" size=\"30\" value=\"" . $titre . "\" /></td></tr>\n";
+			if($nuked['forum_cat_prim'] == "on")
+      {
+			echo "<tr><td><b>" . _CATPRIMAIRE . " :</b> <select name=\"cat\">\n"
+			. "<option value=\"" . $cat . "\">" . $cat_name . "</option>\n";
 				select_forum_pri();
 
-		echo"</select></td></tr>\n"
-			. "<tr><td align=\"left\"><b>" . _DESCR . " : </b><br /><textarea class=\"editor\" name=\"description\" rows=\"10\" cols=\"69\">" . $description . "</textarea></td></tr>\n"
+      echo"</select></td></tr>\n";
+      }
+			echo "<tr><td align=\"left\"><b>" . _DESCR . " : </b><br /><textarea class=\"editor\" name=\"description\" rows=\"10\" cols=\"69\">" . $description . "</textarea></td></tr>\n"
       . "<tr><td><b>" . _MAINIMAGE . " :</b> <input type=\"text\" name=\"urlimage\" size=\"42\" value=\"" . $cat_image . "\"/></td></tr>\n"
-      . "<tr><td><b>" . _UPLOADMAINIMAGE . " :</b> <input type=\"file\" name=\"upimage\" /></td></tr>\n"
-      . "<tr><td><b>" . _IMAGEMINI . " :</b> <input type=\"text\" name=\"urlimagemini\" size=\"42\" value=\"" . $cat_imagemini . "\"/></td></tr>\n"
-      . "<tr><td><b>" . _UPLOADIMAGEMINI . " :</b> <input type=\"file\" name=\"upimagemini\" /></td></tr>\n"	      			
-			. "<tr><td><b>" . _LEVELACCES . " :</b> <select name=\"niveau\"><option>" . $niveau . "</option>\n"
+      . "<tr><td><b>" . _UPLOADMAINIMAGE . " :</b> <input type=\"file\" name=\"upimage\" /></td></tr>\n";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 
+      echo "<tr><td><b>" . _IMAGEMINI . " :</b> <input type=\"text\" name=\"urlimagemini\" size=\"42\" value=\"" . $cat_imagemini . "\"/></td></tr>\n"
+      . "<tr><td><b>" . _UPLOADIMAGEMINI . " :</b> <input type=\"file\" name=\"upimagemini\" /></td></tr>\n";
+}	      			
+			echo "<tr><td><b>" . _LEVELACCES . " :</b> <select name=\"niveau\"><option>" . $niveau . "</option>\n"
 			. "<option>0</option>\n"
 			. "<option>1</option>\n"
 			. "<option>2</option>\n"
@@ -498,7 +512,7 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 
     function add_forum()
     {
-        global $language;
+        global $nuked, $language;
 
        echo "<div class=\"content-box\">\n" //<!-- Start Content Box -->
 			. "<div class=\"content-box-header\"><h3>" . _ADMINFORUMADD . "</h3>\n"
@@ -507,9 +521,12 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "</div>\n"
 			. "</div>\n"
 			. "<div class=\"tab-content\" id=\"tab2\"><div style=\"text-align: center;\"><b><a href=\"index.php?file=Forum&amp;page=admin\">" . _FORUM . "</a></b> | "
-			. "" . _ADDFORUM . " | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
+			. "" . _ADDFORUM . " | ";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | ";
+}
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_rank\">" . _RANKMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=prune\">" . _PRUNE . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=skin\">" . _SKINS . "</a></b> | "
@@ -912,9 +929,12 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "</div>\n"
 			. "</div>\n"
 		. "<div class=\"tab-content\" id=\"tab2\"><div style=\"text-align: center;\">" . _FORUM . " | "
-		. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | "
-		. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | "
-		. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
+		. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | ";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 
+		echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | ";
+}
+		echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
 		. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_rank\">" . _RANKMANAGEMENT . "</a></b> | "
 		. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=prune\">" . _PRUNE . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=skin\">" . _SKINS . "</a></b> | "
@@ -973,9 +993,12 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "</div>\n"
 			. "</div>\n"
 			. "<div class=\"tab-content\" id=\"tab2\"><div style=\"text-align: center;\"><b><a href=\"index.php?file=Forum&amp;page=admin\">" . _FORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
+			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | ";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 			
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | ";
+}
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
 			. "" . _RANKMANAGEMENT . " | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=prune\">" . _PRUNE . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=skin\">" . _SKINS . "</a></b> | "
@@ -1169,9 +1192,12 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "</div>\n"
 			. "</div>\n"
 			. "<div class=\"tab-content\" id=\"tab2\"><div style=\"text-align: center;\"><b><a href=\"index.php?file=Forum&amp;page=admin\">" . _FORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
+			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | ";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 			
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | ";
+}			
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_rank\">" . _RANKMANAGEMENT . "</a></b> | "
 			. "" . _PRUNE . " | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=skin\">" . _SKINS . "</a></b> | "
@@ -1265,7 +1291,8 @@ if ($visiteur >= $level_admin && $level_admin > -1)
         if ($nuked['birthday_forum'] == "on") $checked4 = "checked=\"checked\"";                  
         if ($nuked['gamer_details'] == "on") $checked5 = "checked=\"checked\"";  
         if ($nuked['profil_details'] == "on") $checked6 = "checked=\"checked\"";
-        if ($nuked['image_cat_mini'] == "on") $checked7 = "checked=\"checked\"";         
+        if ($nuked['image_cat_mini'] == "on") $checked7 = "checked=\"checked\"";
+        if ($nuked['forum_cat_prim'] == "on") $checked8 = "checked=\"checked\"";                 
 
         echo "<div class=\"content-box\">\n" //<!-- Start Content Box -->
 			. "<div class=\"content-box-header\"><h3>" . _ADMINFORUM . "</h3>\n"
@@ -1274,9 +1301,12 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "</div>\n"
 			. "</div>\n"
 			. "<div class=\"tab-content\" id=\"tab2\"><div style=\"text-align: center;\"><b><a href=\"index.php?file=Forum&amp;page=admin\">" . _FORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
+			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | ";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 			
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | ";
+}
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_rank\">" . _RANKMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=prune\">" . _PRUNE . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=skin\">" . _SKINS . "</a></b> | "
@@ -1287,12 +1317,16 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "<tr><td colspan=\"2\"><b>" . _FORUMTITLE . " :</b> <input type=\"text\" name=\"forum_title\" size=\"40\" value=\"" . $nuked['forum_title'] . "\" /></td></tr>\n"
 			. "<tr><td colspan=\"2\"><b>" . _FORUMDESC . " :</b><br /><textarea name=\"forum_desc\" cols=\"55\" rows=\"5\">" . $nuked['forum_desc'] . "</textarea></td></tr>\n"
 			. "<tr><td colspan=\"2\">&nbsp;</td></tr>\n"
-    . "<tr><td>" . _SHOWIMAGECATMINI . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"image_cat_mini\" value=\"on\" " . $checked7 . " /></td></tr>\n"			
-    . "<tr><td>" . _IMAGEFORUM . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"image_forums\" value=\"on\" " . $checked3 . " /></td></tr>\n"
-    . "<tr><td>" . _BIRTHDAYFORUM . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"birthday_forum\" value=\"on\" " . $checked4 . " /></td></tr>\n" 			
+      . "<tr><td>" . _ACTIVECATPRIM . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"forum_cat_prim\" value=\"on\" " . $checked8 . " /></td></tr>\n";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 			
+      echo "<tr><td>" . _SHOWIMAGECATMINI . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"image_cat_mini\" value=\"on\" " . $checked7 . " /></td></tr>\n";
+}      			
+      echo "<tr><td>" . _IMAGEFORUM . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"image_forums\" value=\"on\" " . $checked3 . " /></td></tr>\n"
+      . "<tr><td>" . _BIRTHDAYFORUM . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"birthday_forum\" value=\"on\" " . $checked4 . " /></td></tr>\n" 			
 			. "<tr><td>" . _USERANKTEAM . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"forum_rank_team\" value=\"on\" " . $checked2 . " /></td></tr>\n"
-    . "<tr><td>" . _PROFILDETAILS . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"profil_details\" value=\"on\" " . $checked6 . " /></td></tr>\n" 
-    . "<tr><td>" . _GAMERDETAILS . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"gamer_details\" value=\"on\" " . $checked5 . " /></td></tr>\n" 			
+      . "<tr><td>" . _PROFILDETAILS . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"profil_details\" value=\"on\" " . $checked6 . " /></td></tr>\n" 
+      . "<tr><td>" . _GAMERDETAILS . " :</td><td><input class=\"checkbox\" type=\"checkbox\" name=\"gamer_details\" value=\"on\" " . $checked5 . " /></td></tr>\n" 			
 			. "<tr><td>" . _NUMBERTHREAD . " :</td><td><input type=\"text\" name=\"thread_forum_page\" size=\"2\" value=\"" . $nuked['thread_forum_page'] . "\" /></td></tr>\n"
 			. "<tr><td>" . _NUMBERPOST . " :</td><td><input type=\"text\" name=\"mess_forum_page\" size=\"2\" value=\"" . $nuked['mess_forum_page'] . "\" /></td></tr>\n"
 			. "<tr><td>" . _TOPICHOT . " :</td><td><input type=\"text\" name=\"hot_topic\" size=\"2\" value=\"" . $nuked['hot_topic'] . "\" /></td></tr>\n"
@@ -1315,7 +1349,7 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "<div style=\"text-align: center;\"><br />[ <a href=\"index.php?file=Forum&amp;page=admin\"><b>" . _BACK . "</b></a> ]</div></form><br /></div></div>\n";
     }
 
-    function change_pref($forum_title, $forum_desc, $forum_rank_team, $thread_forum_page, $mess_forum_page, $hot_topic, $post_flood, $forum_field_max, $forum_file, $forum_file_level, $forum_file_maxsize, $image_cat_mini, $image_forums, $birthday_forum, $gamer_details, $profil_details)
+    function change_pref($forum_title, $forum_desc, $forum_rank_team, $thread_forum_page, $mess_forum_page, $hot_topic, $post_flood, $forum_field_max, $forum_file, $forum_file_level, $forum_file_maxsize, $forum_cat_prim, $image_cat_mini, $image_forums, $birthday_forum, $gamer_details, $profil_details)
     {
         global $nuked, $user;
 
@@ -1327,6 +1361,11 @@ if ($visiteur >= $level_admin && $level_admin > -1)
         if ($forum_rank_team != "on")
         {
             $forum_rank_team = "off";
+        }
+        
+        if ($forum_cat_prim != "on")
+        {
+            $forum_cat_prim = "off";
         }
 
         if ($image_cat_mini != "on")
@@ -1374,6 +1413,7 @@ if ($visiteur >= $level_admin && $level_admin > -1)
         $upd14 = mysql_query("UPDATE " . CONFIG_TABLE . " SET value = '" . $gamer_details . "' WHERE name = 'gamer_details'");
         $upd15 = mysql_query("UPDATE " . CONFIG_TABLE . " SET value = '" . $profil_details . "' WHERE name = 'profil_details'");
         $upd16 = mysql_query("UPDATE " . CONFIG_TABLE . " SET value = '" . $image_cat_mini . "' WHERE name = 'image_cat_mini'");
+        $upd17 = mysql_query("UPDATE " . CONFIG_TABLE . " SET value = '" . $forum_cat_prim . "' WHERE name = 'forum_cat_prim'");        
         
         // Action
         $texteaction = "". _ACTIONPREFFO .".";
@@ -1436,7 +1476,7 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_pref\">" . _PREFS . "</a></b></div><br />\n"
 			. "<table style=\"margin-left: auto;margin-right: auto;text-align: left;\" width=\"70%\" border=\"0\" cellspacing=\"1\" cellpadding=\"2\">\n"
 			. "<tr>\n"
-			. "<td style=\"width: 30%;\" align=\"center\"><b>" . _CATSECONDAIRE . "</b></td>\n"
+			. "<td style=\"width: 30%;\" align=\"center\"><b>" . _CATPRIMAIRE . "</b></td>\n"
 			. "<td style=\"width: 20%; text-align: center;\" align=\"center\"><b>" . _LEVELACCES . "</b></td>\n"
 			. "<td style=\"width: 20%; text-align: center;\" align=\"center\"><b>" . _ORDER . "</b></td>\n"
 			. "<td style=\"width: 15%; text-align: center;\" align=\"center\"><b>" . _EDIT . "</b></td>\n"
@@ -1757,9 +1797,12 @@ if ($visiteur >= $level_admin && $level_admin > -1)
 			. "</div>\n"
 			. "<div class=\"tab-content\" id=\"tab2\">\n"
 			. "<div style=\"text-align: center;\"><b><a href=\"index.php?file=Forum&amp;page=admin\">" . _FORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | "
-			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
+			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=add_forum\">" . _ADDFORUM . "</a></b> | ";
+      if ($nuked['forum_cat_prim'] == "on")
+{ 			
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat_primaire\">" . _CATPRIMAIREMANAGEMENT . "</a></b> | ";
+}			
+			echo "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_cat\">" . _CATMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=main_rank\">" . _RANKMANAGEMENT . "</a></b> | "
 			. "<b><a href=\"index.php?file=Forum&amp;page=admin&amp;op=prune\">" . _PRUNE . "</a></b> | "
 			. "" . _SKINS . " | "
@@ -2203,7 +2246,7 @@ if ($visiteur >= $level_admin && $level_admin > -1)
             break;
 
         case "change_pref":
-            change_pref($_REQUEST['forum_title'], $_REQUEST['forum_desc'], $_REQUEST['forum_rank_team'], $_REQUEST['thread_forum_page'], $_REQUEST['mess_forum_page'], $_REQUEST['hot_topic'], $_REQUEST['post_flood'], $_REQUEST['forum_field_max'], $_REQUEST['forum_file'], $_REQUEST['forum_file_level'], $_REQUEST['forum_file_maxsize'], $_REQUEST['image_cat_mini'], $_REQUEST['image_forums'], $_REQUEST['birthday_forum'], $_REQUEST['gamer_details'], $_REQUEST['profil_details']);
+            change_pref($_REQUEST['forum_title'], $_REQUEST['forum_desc'], $_REQUEST['forum_rank_team'], $_REQUEST['thread_forum_page'], $_REQUEST['mess_forum_page'], $_REQUEST['hot_topic'], $_REQUEST['post_flood'], $_REQUEST['forum_field_max'], $_REQUEST['forum_file'], $_REQUEST['forum_file_level'], $_REQUEST['forum_file_maxsize'], $_REQUEST['forum_cat_prim'], $_REQUEST['image_cat_mini'], $_REQUEST['image_forums'], $_REQUEST['birthday_forum'], $_REQUEST['gamer_details'], $_REQUEST['profil_details']);
             break;
 
         default:

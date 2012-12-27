@@ -292,6 +292,7 @@ define("_NOCAT","There is no sub-category(s) in this category");
 define("_IN","Posted in");
 
 /***** Patch catégorie Admin *****/
+define("_ACTIVECATPRIM","Allow primary catégories");
 define("_CATPRIMAIRE","Primary categories");
 define("_EDITTHISCATPRIMAIRE","Edit this primary category");
 define("_DELTHISCATPRIMAIRE","Delete this primary category");

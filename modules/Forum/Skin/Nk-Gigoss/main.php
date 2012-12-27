@@ -12,11 +12,16 @@ if (!defined("INDEX_CHECK"))
     die ("<div style=\"text-align: center;\">You cannot open this page directly</div>");
 }
 
+if ($nuked['forum_cat_prim'] == "off")
+{ 
+$style_cat = "margin-top:-1px;";
+}
+
 echo'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />';
 echo'<style type="text/css">
 
 /*** Cadre affichant la catégorie secondaire ***/
-.Forum_ariane_t{ width: 100%; background: url("modules/Forum/Skin/' . $nuked['forum_skin'] . '/images/template/table_bg.jpg") repeat-x scroll 0 0 ' . $forumcolor4 . '; vertical-align: middle; }
+.Forum_ariane_t{ width: 100%; ' . $style_cat . '; background: url("modules/Forum/Skin/' . $nuked['forum_skin'] . '/images/template/table_bg.jpg") repeat-x scroll 0 0 ' . $forumcolor4 . '; vertical-align: middle; }
 .Forum_ariane_r{ height: 33px; }
 .Forum_ariane_d1{ background: url("modules/Forum/Skin/' . $nuked['forum_skin'] . '/images/template/top_bg.jpg") repeat-x scroll 0 0 transparent; }
 
