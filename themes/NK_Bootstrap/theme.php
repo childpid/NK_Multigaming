@@ -46,165 +46,164 @@
 				<div class="container-fluid">
 					<a class="brand" href="index.php"><?php echo $nuked['name'] ?></a>
 					<div class="nav-collapse collapse">
-						<ul class="nav" role="navigation">
+						<ul class="nav">
 							<li class="dropdown">
-								<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-									<li><a tabindex="-1" href="http://google.com">Action</a></li>
-									<li><a tabindex="-1" href="#anotherAction">Another action</a></li>
-									<li><a tabindex="-1" href="#">Something else here</a></li>
+								<a class="dropdown-toggle" id="drop1" role="button" data-toggle="dropdown" href="#">Communauté<b class="caret"></b></a>
+								<ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop1">
+									<li><a tabindex="-1" href="index.php?file=Members">Liste des membres</a></li>
+									<li><a tabindex="-1" href="index.php?file=Forum">Forum</a></li>
 								</ul>
 							</li>
 							<li class="dropdown">
-								<a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown 2 <b class="caret"></b></a>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-									<li><a tabindex="-1" href="#">Action</a></li>
-									<li><a tabindex="-1" href="#">Another action</a></li>
-									<li><a tabindex="-1" href="#">Something else here</a></li>
+								<a class="dropdown-toggle" id="drop3" role="button" data-toggle="dropdown" href="#">Médias<b class="caret"></b></a>
+								<ul id="menu3" class="dropdown-menu" role="menu" aria-labelledby="drop3">
+									<li><a tabindex="-1" href="index.php?file=Gallery">Gallerie</a></li>
+									<li><a tabindex="-1" href="index.php?file=Download">Téléchargements</a></li>
+									<li><a tabindex="-1" href="index.php?file=Sections">Tutoriels</a></li>
 								</ul>
-							</li>
-						</ul>
-						<ul class="nav pull-right"><li>
-							<?php include_once('themes/' . $theme . '/block/login.php'); ?>
-						</li></ul>
-					</div><!--/.nav-collapse -->
-				</div>
-			</div>
-		</div>
-		<div id="wrap">
-			<!-- Begin page content -->
-			<div class="container-fluid">
-				<div class="row-fluid">
-					<?php if($config['full'] != 1) { ?>
-						<div class="span3">
-							<?php get_blok('gauche'); ?>
+								<li>
+								</ul>
+								<ul class="nav pull-right"><li>
+									<?php include_once('themes/' . $theme . '/block/login.php'); ?>
+								</li></ul>
+							</div><!--/.nav-collapse -->
 						</div>
-						<div class="span6 well-white">
-							<div class="row-fluid">
-								<?php get_blok('centre'); ?>
-							</div>
-							<div class="row-fluid">
-								<?php } else { ?>
-								<div class="span12 well-white">
-									
-									<?php }} function footer() { 
-									global $theme, $config;
-								?>
-							</div>
-							<div class="row-fluid">
-								<?php get_blok('bas'); ?>
-							</div>
-						</div>
-						<?php if($config['full'] != 1) { ?>
-							<div class="span3">
-								<?php get_blok('droite'); ?>
-							</div>
-						<?php } ?>
 					</div>
 				</div>
-				<div id="push"></div>
-			</div>
-			
-		<div id="footer">
-		<div class="container-fluid">
-		<p class="muted credit">Codé par <a href="http://www.the-servants.fr">PepinKr</a> propulsé par <a href="http://www.nuked-klan.org/">Nuked-Klan</a>.</p>
-		</div>
-		</div>
-		</body>
-		</html>
-		<?php
-		}
-		
-		function news($data){
-		$posted = _NEWSPOSTBY . "&nbsp;<a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . urlencode($data['auteur']) . "\">" . $data['auteur'] . "</a>&nbsp;" . _THE . "&nbsp;". $data['date'];
-        $comment = "<a href=\"index.php?file=News&amp;op=index_comment&amp;news_id=" . $data['id'] . "\">" . _NEWSCOMMENT . "</a>&nbsp;(" . $data['nb_comment'] . ")";
-		?>
-		<div class="widget-news">
-		<div class="widget-header-news">
-		<h2><?php echo $data['titre']; ?></h2>
-		</div>
-		<div class="widget-content-news">
-		<div class="widget-text-news">
-		<div class="widget-img-news"><?php echo $data['image']; ?></div>
-		<?php echo $data['texte']; ?>
-		</div>
-		<div class="widget-bottom-news">
-		<?php echo $comment; ?> - Publiée dans
-		<a href="index.php?file=News&amp;op=categorie&amp;cat_id=<?php echo $data['catid']; ?>">
-		<?php echo $data['cat']; ?>
-		</a>
-		<div class="pull-right">
-		<?php echo $posted; ?>
-		</div>
-		</div>
-		</div>
-		</div>
-		<?php
-		}
-		
-		function block_centre($block){
-		global $theme;
-		?>
-		<div class="widget">
-		<div class="widget-header">
-		<h2><?php echo $block['titre']; ?></h2>
-		</div>
-		<div class="well-bright">
-		<div class="widget-text">
-		<?php echo $block['content']; ?>
-		</div>
-		</div>
-		</div>
-		<?php
-		}
-		
-		function block_bas($block){
-		?>
-		<div class="widget">
-		<div class="widget-header">
-		<h2><?php echo $block['titre']; ?></h2>
-		</div>
-		<div class="well-bright">
-		<div class="widget-text">
-		<?php echo $block['content']; ?>
-		</div>
-		</div>
-		</div>
-		<?php
-		}
-		
-		function block_gauche($block){
-		?>
-		<div class="widget">
-		<div class="widget-header">
-		<a data-toggle="collapse" data-target="#gauche<?php echo $block['bid']; ?>"><h2><?php echo $block['titre']; ?>
-		</h2></a>
-		</div>
-		<div id="gauche<?php echo $block['bid']; ?>" class="well-bright collapse in">
-		<div class="widget-text">
-		<?php echo $block['content']; ?>
-		</div>
-		</div>
-		</div>
-		<?php
-		}
-		
-		function block_droite($block){
-		?>
-		<div class="widget">
-		<div class="widget-header">
-		<a data-toggle="collapse" data-target="#gauche<?php echo $block['bid']; ?>"><h2><?php echo $block['titre']; ?>
-		</h2></a>
-		</div>
-		<div id="gauche<?php echo $block['bid']; ?>" class="well-bright collapse in">
-		<div class="widget-text">
-		<?php echo $block['content']; ?>
-		</div>
-		</div>
-		</div>
-		<?php
-		}
-		
-		function opentable(){}
-		function closetable(){}
-		?>				
+				<div id="wrap">
+					<!-- Begin page content -->
+					<div class="container-fluid">
+						<div class="row-fluid">
+							<?php if($config['full'] != 1) { ?>
+								<div class="span3">
+								<?php get_blok('gauche'); ?>
+								</div>
+								<div class="span6 well-white">
+								<div class="row-fluid">
+								<?php get_blok('centre'); ?>
+								</div>
+								<div class="row-fluid">
+								<?php } else { ?>
+								<div class="span12 well-white">
+								
+								<?php }} function footer() { 
+								global $theme, $config;
+								?>
+								</div>
+								<div class="row-fluid">
+								<?php get_blok('bas'); ?>
+								</div>
+								</div>
+								<?php if($config['full'] != 1) { ?>
+								<div class="span3">
+								<?php get_blok('droite'); ?>
+								</div>
+								<?php } ?>
+								</div>
+								</div>
+								<div id="push"></div>
+								</div>
+								
+								<div id="footer">
+								<div class="container-fluid">
+								<p class="muted credit">Codé par <a href="http://www.the-servants.fr">PepinKr</a> propulsé par <a href="http://www.nuked-klan.org/">Nuked-Klan</a>.</p>
+								</div>
+								</div>
+								</body>
+								</html>
+								<?php
+								}
+								
+								function news($data){
+								$posted = _NEWSPOSTBY . "&nbsp;<a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . urlencode($data['auteur']) . "\">" . $data['auteur'] . "</a>&nbsp;" . _THE . "&nbsp;". $data['date'];
+								$comment = "<a href=\"index.php?file=News&amp;op=index_comment&amp;news_id=" . $data['id'] . "\">" . _NEWSCOMMENT . "</a>&nbsp;(" . $data['nb_comment'] . ")";
+								?>
+								<div class="widget-news">
+								<div class="widget-header-news">
+								<h2><?php echo $data['titre']; ?></h2>
+								</div>
+								<div class="widget-content-news">
+								<div class="widget-text-news">
+								<div class="widget-img-news"><?php echo $data['image']; ?></div>
+								<?php echo $data['texte']; ?>
+								</div>
+								<div class="widget-bottom-news">
+								<?php echo $comment; ?> - Publiée dans
+								<a href="index.php?file=News&amp;op=categorie&amp;cat_id=<?php echo $data['catid']; ?>">
+								<?php echo $data['cat']; ?>
+								</a>
+								<div class="pull-right">
+								<?php echo $posted; ?>
+								</div>
+								</div>
+								</div>
+								</div>
+								<?php
+								}
+								
+								function block_centre($block){
+								global $theme;
+								?>
+								<div class="widget">
+								<div class="widget-header">
+								<h2><?php echo $block['titre']; ?></h2>
+								</div>
+								<div class="well-bright">
+								<div class="widget-text">
+								<?php echo $block['content']; ?>
+								</div>
+								</div>
+								</div>
+								<?php
+								}
+								
+								function block_bas($block){
+								?>
+								<div class="widget">
+								<div class="widget-header">
+								<h2><?php echo $block['titre']; ?></h2>
+								</div>
+								<div class="well-bright">
+								<div class="widget-text">
+								<?php echo $block['content']; ?>
+								</div>
+								</div>
+								</div>
+								<?php
+								}
+								
+								function block_gauche($block){
+								?>
+								<div class="widget">
+								<div class="widget-header">
+								<a data-toggle="collapse" data-target="#gauche<?php echo $block['bid']; ?>"><h2><?php echo $block['titre']; ?>
+								</h2></a>
+								</div>
+								<div id="gauche<?php echo $block['bid']; ?>" class="well-bright collapse in">
+								<div class="widget-text">
+								<?php echo $block['content']; ?>
+								</div>
+								</div>
+								</div>
+								<?php
+								}
+								
+								function block_droite($block){
+								?>
+								<div class="widget">
+								<div class="widget-header">
+								<a data-toggle="collapse" data-target="#gauche<?php echo $block['bid']; ?>"><h2><?php echo $block['titre']; ?>
+								</h2></a>
+								</div>
+								<div id="gauche<?php echo $block['bid']; ?>" class="well-bright collapse in">
+								<div class="widget-text">
+								<?php echo $block['content']; ?>
+								</div>
+								</div>
+								</div>
+								<?php
+								}
+								
+								function opentable(){}
+								function closetable(){}
+								?>												

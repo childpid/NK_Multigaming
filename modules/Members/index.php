@@ -44,29 +44,17 @@ if ($visiteur >= $level_access && $level_access > -1){
 
         opentable();
 
-        echo "<br /><table width=\"100%\" cellspacing=\"0\" cellpadding=\"3\" border=\"0\">\n"
-				. "<tr><td align=\"center\"><br /><big><b>" . _SITEMEMBERS . "</b></big><br /><br /></td></tr>\n";
+        echo '<div id="modulemembers"><div class="memberstitre">' . _SITEMEMBERS . '</div>';
 
         $alpha = array ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "" . _OTHER . "");
 
-        echo "<tr><td align=\"center\"><small>[ <a href=\"index.php?file=Members\">" . _ALL . "</a> | ";
+        echo '<div class="membersselect">[ <a href="index.php?file=Members">' . _ALL . '</a> ] ';
 
-        $num = count($alpha) - 1;
-        $counter = 0;
-        while (list(, $lettre) = each($alpha)){
-            echo "<a href=\"index.php?file=Members&amp;letter=" . $lettre . "\">" . $lettre . "</a>";
-
-            if ($counter == round($num / 2)){
-                echo " ]<br />[ ";
-            } 
-            else if ($counter != $num){
-                echo " | ";
-            } 
-
-            $counter++;
+        foreach($alpha as $lettre){
+            echo '[ <a href="index.php?file=Members&amp;letter=' . $lettre . '">' . $lettre . '</a> ] ';
         } 
 
-        echo " ]</small><br /><br /></td></tr></table>";
+        echo " </div>";
 
         if ($count > $nb_membres){
             $url_members = "index.php?file=Members&amp;letter=" . $_REQUEST['letter'];
@@ -76,23 +64,21 @@ if ($visiteur >= $level_access && $level_access > -1){
 	    $sql_config = mysql_query("SELECT mail, icq, msn, aim, yim, xfire, facebook, originea, steam, twiter, skype, lien FROM ". $nuked['prefix'] ."_users_config");
 		list($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9, $c10, $c11, $c12) = mysql_fetch_array($sql_config);
 
-        echo "<table style=\"background: " . $bgcolor2 . ";border: 1px solid " . $bgcolor3 . ";\" width=\"100%\" cellpadding=\"2\" cellspacing=\"1\">\n"
-				. "<tr style=\"background: " . $bgcolor3 . ";\">\n"
-				. "<td align=\"center\">&nbsp;</td>\n"
-				. "<td align=\"center\"><b>" . _NICK . "</b></td>\n";
-				if ($c1 == 'on'){echo "<td align=\"center\"><b>" . _MAIL . "</b></td>\n";}
-				if ($c2 == 'on'){echo "<td align=\"center\"><b>" . _ICQ . "</b></td>\n";}
-				if ($c3 == 'on'){echo "<td align=\"center\"><b>" . _MSN . "</b></td>\n";}
-				if ($c4 == 'on'){echo "<td align=\"center\"><b>" . _AIM . "</b></td>\n";}
-				if ($c5 == 'on'){echo "<td align=\"center\"><b>" . _YIM . "</b></td>\n";}
-				if ($c6 == 'on'){echo "<td align=\"center\"><b>" . _XFIRE . "</b></td>\n";}
-				if ($c7 == 'on'){echo "<td align=\"center\"><b>" . _FACEBOOK . "</b></td>\n";}
-				if ($c8 == 'on'){echo "<td align=\"center\"><b>" . _ORIGINEA . "</b></td>\n";}
-				if ($c9 == 'on'){echo "<td align=\"center\"><b>" . _STEAM . "</b></td>\n";}
-				if ($c10 == 'on'){echo "<td align=\"center\"><b>" . _TWITER . "</b></td>\n";}
-				if ($c11 == 'on'){echo "<td align=\"center\"><b>" . _SKYPE . "</b></td>\n";}
-				if ($c12 == 'on'){echo "<td style=\" width=\"5%\";\" align=\"center\"><b>" . _URL . "</b></td>\n";}
-				echo "</tr>\n";
+				echo '<table><thead><tr>'
+				. '<td>'. _NICK . '</td>';
+				if ($c1 == 'on'){echo '<td>' . _MAIL . '</td>';}
+				if ($c2 == 'on'){echo '<td>' . _ICQ . '</td>';}
+				if ($c3 == 'on'){echo '<td>' . _MSN . '</td>';}
+				if ($c4 == 'on'){echo '<td>' . _AIM . '</td>';}
+				if ($c5 == 'on'){echo '<td>' . _YIM . '</td>';}
+				if ($c6 == 'on'){echo '<td>' . _XFIRE . '</td>';}
+				if ($c7 == 'on'){echo '<td>' . _FACEBOOK . '</td>';}
+				if ($c8 == 'on'){echo '<td>' . _ORIGINEA . '</td>';}
+				if ($c9 == 'on'){echo '<td>' . _STEAM . '</td>';}
+				if ($c10 == 'on'){echo '<td>' . _TWITER . '</td>';}	
+				if ($c11 == 'on'){echo '<td>' . _SKYPE . '</td>';}
+				if ($c12 == 'on'){echo '<td>' . _URL . '</td>';}
+				echo '</tr>';
 
         $sql = mysql_query("SELECT pseudo, url, email, icq, msn, aim, yim, rang, country, xfire, facebook ,origin, steam, twitter, skype FROM " . USER_TABLE . " WHERE team = '' " . $and . " AND niveau > 0 ORDER BY pseudo LIMIT " . $start . ", " . $nb_membres);
         while (list($pseudo, $url, $email, $icq, $msn, $aim, $yim, $rang, $country, $xfire, $facebook ,$origin, $steam, $twitter, $skype) = mysql_fetch_array($sql)){

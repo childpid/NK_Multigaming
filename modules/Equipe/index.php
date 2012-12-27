@@ -42,7 +42,7 @@ if ($visiteur >= $level_access && $level_access > -1)
 	  	if ($req1->img != 'non') $img_url = '<a href="index.php?file=Equipe&amp;op=view_cat&amp;cat_id='.$req1->id.'"><img src="'.$req1->img.'" alt="" style="border:none;" title="Afficher uniquement les '.$req1->nom.'" /></a>';
 		else $img_url = '<a href="index.php?file=Equipe&op=view_cat&cat_id=' .$req1->id. '">' .$req1->nom. '</a>';
 	  			
-		echo '<div class="equipe"><div class="equipetitre"><h3>' . $img_url . '</h3></div><div class="equipeliste">';
+		echo '<div class="equipe"><div class="equipetitre">' . $img_url . '</div><div class="equipeliste">';
 		$ii=1;
 		
 		 echo '<table><thead><tr>'

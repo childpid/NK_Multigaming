@@ -347,7 +347,7 @@ box-shadow: none;
 -moz-border-radius: 2px 2px 0px 0px;
 border-radius: 2px 2px 0px 0px;		
 }
-#moduleequipe .equipetitre h3 {
+#moduleequipe .equipetitre {
 font-size: 14px;
 line-height: 14px;
 margin-top: 2px;
@@ -398,6 +398,21 @@ width: 50%;
 text-align: left;
 margin-top: 4px;
 margin-bottom: 4px;
+}
+/* Module Members */
+#modulemembers .memberstitre {
+font-size: 18px;
+line-height: 18px;
+margin-top: 2px;
+color: #646464;
+font-weight: normal;
+text-transform: uppercase;
+text-decoration: none;
+text-shadow: 0px 1px 0px white;
+text-align: center;	
+}
+#modulemembers .membersselect {
+text-align: center;	
 }
 /* Style de placement */
 .center {
