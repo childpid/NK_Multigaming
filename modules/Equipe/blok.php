@@ -56,6 +56,5 @@ global $nuked;
 
   $age = ($age != 'N/A') ? $age.' ans' : 'N/A';
   $membre_ville = ($req3->ville != '') ? $req3->ville : 'N/A';
-
-		    echo'<p align="center">'.$photos_membre.'<br />Pseudo : '.stripslashes($req2->pseudo).'<br />Age : '.$age.'<br />Ville : '. $membre_ville.'<br />Status : '.$req4->nom.'<br />Rang : '.$req5->nom.'<br /><br /><a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req2->pseudo).'"><b>[ + D\'INFOS ]</b></a></p>';
+  echo'<div id="blockequipe">'.$photos_membre.'<br />Pseudo : '.stripslashes($req2->pseudo).'<br />Age : '.$age.'<br />Ville : '. $membre_ville.'<br />Status : '.$req4->nom.'<br />Rang : '.$req5->nom.'<br /><br /><a class="btn" href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req2->pseudo).'">Voir profil</a></div>';
 ?>

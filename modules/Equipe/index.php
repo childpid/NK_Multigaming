@@ -245,18 +245,14 @@ if ($visiteur >= $level_access && $level_access > -1)
 	
     opentable();
 	echo '<div id="moduleequipe">';
-	
 	  $sql1=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff_cat WHERE id="'.$cat_id.'"');
 	  while($req1 = mysql_fetch_object($sql1))
 	  {
 	    if ($req1->img != 'non') $img_url = '<img src="'.$req1->img.'" alt="" style="border:none;" title="'.$req1->nom.'" />';
 		else $img_url = ''.$req1->nom.'';
 		
-		echo '<div classe="equipe"><div class="equipetitre"><h3>' . $img_url . '</h3></div><div class="equipelistecat">';
-		
-		$ii=1;
-		echo'<div class="row-fluid">';
-		
+		  echo '<div classe="equipe"><div class="equipetitre"><h3>' . $img_url . '</h3></div><div class="equipelistecat"><div class="row-fluid">';
+		  $cpt = 0;
 		  $sql2=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff WHERE categorie_id="'.$req1->id.'"');
 		  while($req2 = mysql_fetch_object($sql2))
 		  {
@@ -271,12 +267,17 @@ if ($visiteur >= $level_access && $level_access > -1)
 			
 			$sql6=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff_rang WHERE id="'.$req2->rang_id.'"');
 		    $req6 = mysql_fetch_object($sql6);
-			
-			$photos_membre = ($req4->photo != "") ? '<a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'"><img src="'.$req4->photo.'" width="100" height="100" style="float:left;margin:5px;border:none;" alt="" /></a>' : '<a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'"><img src="modules/User/images/noavatar.png" width="100" height="100" style="float:left;margin:5px;border:none;" alt="" /></a>';
-			
+				
 	        $age1=$req4->age;
             $age = explode('/', $age);
-            
+            if($req4->photo == "")
+			{
+			$photos_membre = 'modules/User/images/noavatar.png';
+			}
+			else 
+			{
+			$photos_membre = $req4->photo;
+			}
             if ($age1 != "")
             {
                 list ($jour, $mois, $an) = split ('[/]', $age1);
@@ -299,47 +300,32 @@ if ($visiteur >= $level_access && $level_access > -1)
 			$membre_ville = ($req4->ville != '') ? $req4->ville : 'N/A';
 			
 			$prenom = ($req4->prenom != '') ? $req4->prenom : 'N/A';
-			
-		    echo'<div class="span4"><table style="background: ' . $bgcolor2 . ';border: 1px solid ' . $bgcolor3 . ';" width="100%" cellpadding="2" cellspacing="1">
-			<tr><td style="background-color:'.$bgcolor3.';width:120px;">'.$photos_membre.'</td>
-			<td style="background-color:'.$bgcolor1.';padding:5px;border-left: 1px solid '.$bgcolor3.';" width="100%">
-			<table cellpadding="0" cellspacing="0" style="" width="100%">
-			<tr><td style="text-align:center;" width="100%"><a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'"><b>'.stripslashes($req1->tag).''.stripslashes($req3->pseudo).''.stripslashes($req1->tag2).'</b></a></td></tr>
-			<tr><td>&nbsp;</td></tr>
-			<tr><td width="100%">&raquo; Prenom : <b>'.stripslashes($prenom).'</b><br />&raquo; Age : <b>'.$age.'</b><br />&raquo; Ville : <b>'. $membre_ville.'</b><br />&raquo; Status : <b>'.$req5->nom.'</b><br />&raquo; Rang : <b>'.$req6->nom.'</b></td></tr>
-			<tr><td>&nbsp;</td></tr>
-			<tr><td style="text-align:center;" width="100%"><a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'"><b>Voir le profil</b></a></td></tr></table>
-			</td></tr></table></div>';
-			
-			if($ii == 3)
+			if($cpt==6)
 			{
-			  echo'</div><div class="row-fluid">';
-			  $ii=0;
+			echo '</div><div class="row-fluid">';
+			$cpt=0;
 			}
-			
-			$ii++;
-			$aze_id=$req2->categorie_id;
+			echo '
+			<div class="span2 widget">
+			<div class="block-widget-header">
+			<h2><a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'">'.stripslashes($req1->tag).''.stripslashes($req3->pseudo).''.stripslashes($req1->tag2).'</a></h2>
+			</div>
+			<div class="block-widget-content">
+			<img class="img-polaroid" data-src="' . $photos_membre . '" alt="' . $req3->pseudo . '" src="' . $photos_membre . '">
+			<ul>
+			<li>Prenom : <b>'.stripslashes($prenom).'</b></li>
+			<li>Age : <b>'.$age.'</b></li>
+			<li>Ville : <b>'. $membre_ville.'</b></li>
+			<li>Status : <b>'.$req5->nom.'</b></li>
+			<li>Rang : <b>'.$req6->nom.'</b></li>
+			</ul>
+			<a class="btn" href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'">Voir le profil</a>
+			</div>
+			</div>';
+			$cpt++;
 		  }
 		  
-		if($req1->id == $aze_id)
-		{
-		  if($ii == 3)
-		  {
-		    echo'<div class="span4"></div>';
-		  }
-		  else
-		  {
-		    echo'<div></div>';
-		  }
-		}
-		else
-		{
-		  echo'<div style="text-align:center" width="100%">Aucun membre dans cette catégorie.</div>';
-		}
-		  
-		echo'</tr></table></div></div>';
-		
-		echo'<div style="text-align: center;"><br />[ <a href="index.php?file=Equipe"><b>Retour</b></a> ]</div>';
+		echo'</div></div><div style="text-align: center;"><br />[ <a href="index.php?file=Equipe"><b>Retour</b></a> ]</div>';
 	  }
 
     closetable();
