@@ -28,7 +28,7 @@ if ($visiteur >= $level_access && $level_access > -1)
 {
 
     function index() {
-	 global $bgcolor1, $bgcolor2, $bgcolor3, $theme, $nuked, $cid, $user, $visiteur;
+	 global $theme, $nuked, $cid, $user, $visiteur;
 	
 			$sql_config = mysql_query("SELECT mail, icq, msn, aim, yim, xfire, facebook, originea, steam, twiter, skype, nivoreq FROM ". $nuked['prefix'] ."_users_config");
 		list($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9, $c10, $c11, $nivoreq) = mysql_fetch_array($sql_config);
@@ -214,7 +214,7 @@ if ($visiteur >= $level_access && $level_access > -1)
                             echo '<a href="skype:' . $req3->skype . '?call"><img src="images/user/skype.png" alt="" title="' . $req3->skype . '"/></a></td>';
                         } 
                         else{
-                            echo '<img src=\"images/user/skypena.png\" alt=\"\"/></td>';
+                            echo '<img src="images/user/skypena.png" alt=""/></td>';
                         } 
                   }
                   						
@@ -244,20 +244,18 @@ if ($visiteur >= $level_access && $level_access > -1)
 	global $bgcolor1, $bgcolor2, $bgcolor3, $theme, $nuked;
 	
     opentable();
-
+	echo '<div id="moduleequipe">';
+	
 	  $sql1=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff_cat WHERE id="'.$cat_id.'"');
 	  while($req1 = mysql_fetch_object($sql1))
 	  {
 	    if ($req1->img != 'non') $img_url = '<img src="'.$req1->img.'" alt="" style="border:none;" title="'.$req1->nom.'" />';
 		else $img_url = ''.$req1->nom.'';
 		
-		echo'<table width="100%">'
-		.'<tr><td>'.$img_url.'</td></tr>'
-		.'<tr><td>&nbsp;</td></tr>'
-		.'<tr><td>';
+		echo '<div classe="equipe"><div class="equipetitre"><h3>' . $img_url . '</h3></div><div class="equipelistecat">';
 		
 		$ii=1;
-		echo'<table cellpadding="0" cellspacing="0" width="100%" height="100%"><tr>';
+		echo'<div class="row-fluid">';
 		
 		  $sql2=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff WHERE categorie_id="'.$req1->id.'"');
 		  while($req2 = mysql_fetch_object($sql2))
@@ -302,7 +300,7 @@ if ($visiteur >= $level_access && $level_access > -1)
 			
 			$prenom = ($req4->prenom != '') ? $req4->prenom : 'N/A';
 			
-		    echo'<td style="width:50%;"><table style="background: ' . $bgcolor2 . ';border: 1px solid ' . $bgcolor3 . ';" width="100%" cellpadding="2" cellspacing="1">
+		    echo'<div class="span4"><table style="background: ' . $bgcolor2 . ';border: 1px solid ' . $bgcolor3 . ';" width="100%" cellpadding="2" cellspacing="1">
 			<tr><td style="background-color:'.$bgcolor3.';width:120px;">'.$photos_membre.'</td>
 			<td style="background-color:'.$bgcolor1.';padding:5px;border-left: 1px solid '.$bgcolor3.';" width="100%">
 			<table cellpadding="0" cellspacing="0" style="" width="100%">
@@ -311,16 +309,12 @@ if ($visiteur >= $level_access && $level_access > -1)
 			<tr><td width="100%">&raquo; Prenom : <b>'.stripslashes($prenom).'</b><br />&raquo; Age : <b>'.$age.'</b><br />&raquo; Ville : <b>'. $membre_ville.'</b><br />&raquo; Status : <b>'.$req5->nom.'</b><br />&raquo; Rang : <b>'.$req6->nom.'</b></td></tr>
 			<tr><td>&nbsp;</td></tr>
 			<tr><td style="text-align:center;" width="100%"><a href="index.php?file=Members&amp;op=detail&amp;autor='.urlencode($req3->pseudo).'"><b>Voir le profil</b></a></td></tr></table>
-			</td></tr></table></td>';
+			</td></tr></table></div>';
 			
-			if($ii == 2)
+			if($ii == 3)
 			{
-			  echo'</tr><tr><td>&nbsp;</td></tr><tr>';
+			  echo'</div><div class="row-fluid">';
 			  $ii=0;
-			}
-			else
-			{
-			  echo'<td>&nbsp;</td>';
 			}
 			
 			$ii++;
@@ -329,25 +323,21 @@ if ($visiteur >= $level_access && $level_access > -1)
 		  
 		if($req1->id == $aze_id)
 		{
-		  if($ii == 2)
+		  if($ii == 3)
 		  {
-		    echo'<td style="width:50%;"></td>';
+		    echo'<div class="span4"></div>';
 		  }
 		  else
 		  {
-		    echo'<td></td>';
+		    echo'<div></div>';
 		  }
 		}
 		else
 		{
-		  echo'<td style="text-align:center" width="100%">Aucun membre dans cette catégorie.</td>';
+		  echo'<div style="text-align:center" width="100%">Aucun membre dans cette catégorie.</div>';
 		}
 		  
-		echo'</tr></table>';
-		
-		echo '</td></tr>';
-		
-		echo'</table>';
+		echo'</tr></table></div></div>';
 		
 		echo'<div style="text-align: center;"><br />[ <a href="index.php?file=Equipe"><b>Retour</b></a> ]</div>';
 	  }

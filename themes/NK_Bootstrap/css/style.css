@@ -324,9 +324,39 @@ background-color: #FBFBFB;
 /* Module Equipe */
 #moduleequipe {
 }
-#moduleequipe h3 {
+#moduleequipe .equipe {
+}
+#moduleequipe .equipetitre {
+height: 18px;
+border: 1px solid #DDD;
+margin-bottom: -2px;
+padding: 6px;
+background-color: #FAFAFA;
+background-image: -moz-linear-gradient(top, #FAFAFA, #EFEFEF);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FAFAFA), to(#EFEFEF));
+background-image: -webkit-linear-gradient(top, #FAFAFA, #EFEFEF);
+background-image: -o-linear-gradient(top, #FAFAFA, #EFEFEF);
+background-image: linear-gradient(to bottom, #FAFAFA, #EFEFEF);
+filter: progid:dximagetransform.microsoft.gradient(startColorstr='#fafafa', endColorstr='#efefef', GradientType=0);
+-webkit-box-shadow: none;
+-moz-box-shadow: none;
+box-shadow: none;
+-webkit-border-radius: 2px 2px 0px 0px;
+-moz-border-radius: 2px 2px 0px 0px;
+border-radius: 2px 2px 0px 0px;		
+}
+#moduleequipe .equipetitre h3 {
+font-size: 14px;
+line-height: 14px;
+margin-top: 2px;
+color: #646464;
+font-weight: normal;
+text-decoration: none;
+text-shadow: 0px 1px 0px white;
 text-align: center;
-text-transform: uppercase;
+}
+#moduleequipe .equipelistecat {
+padding: 2%;	
 }
 #moduleequipe .equipeliste table{
 width: 100%;	
@@ -334,6 +364,14 @@ width: 100%;
 #moduleequipe .equipeliste td{
 text-align: center;	
 border: 1px solid #DDD;
+}
+#moduleequipe .equipeliste td:first-child {
+text-align: left;
+width: 20%;
+padding-left: 0.5%;
+}
+#moduleequipe .equipeliste td:nth-child(n+2) {
+width: 10%;	
 }
 #moduleequipe .equipeliste thead {
 background-color: #F8F8F8;
