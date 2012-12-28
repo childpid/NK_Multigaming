@@ -8,7 +8,7 @@
 // the Free Software Foundation; either version 2 of the License.           //
 // -------------------------------------------------------------------------//
 if (!defined("INDEX_CHECK")){
-    die ("<div style=\"text-align: center;\">You cannot open this page directly</div>");
+    die ('<div>You cannot open this page directly</div>');
 } 
 
 global $language, $user;
@@ -54,7 +54,7 @@ if ($visiteur >= $level_access && $level_access > -1){
             echo '[ <a href="index.php?file=Members&amp;letter=' . $lettre . '">' . $lettre . '</a> ] ';
         } 
 
-        echo " </div>";
+        echo '</div><div class="membersliste">';
 
         if ($count > $nb_membres){
             $url_members = "index.php?file=Members&amp;letter=" . $_REQUEST['letter'];
@@ -78,182 +78,176 @@ if ($visiteur >= $level_access && $level_access > -1){
 				if ($c10 == 'on'){echo '<td>' . _TWITER . '</td>';}	
 				if ($c11 == 'on'){echo '<td>' . _SKYPE . '</td>';}
 				if ($c12 == 'on'){echo '<td>' . _URL . '</td>';}
-				echo '</tr>';
+				echo '</tr></thead><tbody>';
 
         $sql = mysql_query("SELECT pseudo, url, email, icq, msn, aim, yim, rang, country, xfire, facebook ,origin, steam, twitter, skype FROM " . USER_TABLE . " WHERE team = '' " . $and . " AND niveau > 0 ORDER BY pseudo LIMIT " . $start . ", " . $nb_membres);
         while (list($pseudo, $url, $email, $icq, $msn, $aim, $yim, $rang, $country, $xfire, $facebook ,$origin, $steam, $twitter, $skype) = mysql_fetch_array($sql)){
             list ($pays, $ext) = explode ('.', $country);
 
             if ($url != "" && preg_match("`http://`i", $url)){
-                $home = "<a href=\"" . $url . "\" title=\"" . $url . "\" onclick=\"window.open(this.href); return false;\"><img style=\"border: 0;\" src=\"images/user/url.png\" alt=\"\" title=\"" . $url . "\" /></a>";
+                $home = '<a href="' . $url . '" title="' . $url . '" onclick="window.open(this.href); return false;"><img src="images/user/url.png" alt="" title="' . $url . '" /></a>';
             } 
 
-            if (is_file("themes/" . $theme . "/images/mail.png")){
-                $img = "themes/" . $theme . "/images/mail.png";
+            if (is_file('themes/' . $theme . '/images/mail.png')){
+                $img = 'themes/' . $theme . '/images/mail.png';
             } 
             else{
-                $img = "images/user/email.png";
+                $img = 'images/user/email.png';
             }
 
-            if ($j == 0){
-                $bg = $bgcolor2;
-                $j++;
-            } 
-            else{
-                $bg = $bgcolor1;
-                $j = 0;
-            } 
-
-            echo "<tr style=\"background: " . $bg . ";\">\n"
-					. "<td align=\"center\"><img src=\"images/flags/" . $country . "\" alt=\"\" title=\"" . $pays . "\" /></td>\n"
-					. "<td><a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . urlencode($pseudo) . "\" title=\"" . _VIEWPROFIL . "\"><b>" . $pseudo . "</b></a></td>\n";
+            echo '<tr>
+				  <td>
+				  <img src="images/flags/' . $country . '" alt="" title="' . $pays . '" />  
+				  <a href="index.php?file=Members&amp;op=detail&amp;autor=' . urlencode($pseudo) . '" title="' . _VIEWPROFIL . '">' . $pseudo . '</a>
+				  </td>';
+			
 			if ($c1 == 'on')
 		{
-			echo "<td align=\"center\">\n";
+			echo '<td>';
 
             if ($email != ""){
-                echo "<a href=\"mailto:" . $email . "\"><img style=\"border: 0;\" src=\"" . $img . "\" alt=\"\" title=\"" . $email . "\" /></a></td>";
+                echo '<a href="mailto:"' . $email . '"><img src="' . $img . '" alt="" title="' . $email . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/emailna.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/emailna.png" alt=""/></td>';
             } 
 		}
             if ($c2 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($icq != ""){
-                echo "<a href=\"http://web.icq.com/whitepages/add_me?uin=" . $icq . "&amp;action=add\"><img style=\"border: 0;\" src=\"images/user/icq.png\" alt=\"\" title=\"" . $icq . "\" /></a></td>";
+                echo '<a href="http://web.icq.com/whitepages/add_me?uin=' . $icq . '&amp;action=add"><img src="images/user/icq.png" alt="" title="' . $icq . '" /></a></td>';
             } 
             else{
-                echo"<img style=\"border: 0;\" src=\"images/user/icqna.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/icqna.png" alt=""/></td>';
             } 
 		}
 		    if ($c3 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($msn != ""){
-                echo "<a href=\"mailto:" . $msn . "\"><img style=\"border: 0;\" src=\"images/user/msn.png\" alt=\"\" title=\"" . $msn . "\" /></a></td>";
+                echo '<a href="mailto:' . $msn . '"><img src="images/user/msn.png" alt="" title="' . $msn . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/msnna.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/msnna.png" alt=""></td>';
             } 
 		}
 		    if ($c4 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($aim != ""){
-                echo "<a href=\"aim:goim?screenname=" . $aim . "&amp;message=Hi+" . $aim . "+Are+you+there+?\"><img style=\"border: 0;\" src=\"images/user/aim.png\" alt=\"\" title=\"" . $aim . "\" /></a></td>";
+                echo '<a href="aim:goim?screenname=' . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there+?"><img src="images/user/aim.png" alt="" title="' . $aim . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/aimna.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/aimna.png" alt=""/></td>';
             } 
 		}
 		    if ($c5 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($yim != ""){
-                echo "<a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . "&amp;.src=pg\"><img style=\"border: 0;\" src=\"images/user/yahoo.png\" alt=\"\" title=\"" . $yim . "\" /></a></td>";
+                echo '<a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $yim . '&amp;.src=pg"><img  src="images/user/yahoo.png" alt="" title="' . $yim . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/yahoona.png\" alt=\"\"/></td>";
+                echo '<img  src="images/user/yahoona.png" alt=""/></td>';
             } 
 		}
 		
 			if ($c6 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($xfire != ""){
-                echo "<a href=\"xfire:add_friend?user=" . $xfire . "\"><img style=\"border: 0;\" src=\"images/user/xfire.png\" alt=\"\" title=\"" . $xfire . "\" /></a></td>";
+                echo '<a href="xfire:add_friend?user=' . $xfire . '"><img  src="images/user/xfire.png" alt="" title="' . $xfire . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/xfirena.png\" alt=\"\"/></td>";
+                echo '<img  src="images/user/xfirena.png" alt=""/></td>';
             } 
 		}
 		
 			if ($c7 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($facebook != ""){
-                echo "<a href=\"http://www.facebook.com/" . $facebook . "\"><img style=\"border: 0;\" src=\"images/user/facebook.png\" alt=\"\" title=\"" . $facebook . "\" /></a></td>";
+                echo '<a href="http://www.facebook.com/' . $facebook . '"><img  src="images/user/facebook.png" alt="" title="' . $facebook . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/facebookna.png\" alt=\"\"/></td>";
+                echo '<img  src="images/user/facebookna.png" alt=""/></td>';
             } 
 		}
 		
 			if ($c8 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($origin != ""){
-                echo "<img style=\"border: 0;\" src=\"images/user/origin.png\" alt=\"\" title=\"" . $origin . "\" /></td>";
+                echo '<img src="images/user/origin.png" alt="" title="' . $origin . '" /></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/originna.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/originna.png" alt="" /></td>';
             } 
 		}
 		
 			if ($c9 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($steam != ""){
-                echo "<a href=\"http://steamcommunity.com/actions/AddFriend/" . $steam . "\"><img style=\"border: 0;\" src=\"images/user/steam.png\" alt=\"\" title=\"" . $steam . "\" /></a></td>";
+                echo '<a href="http://steamcommunity.com/actions/AddFriend/'. $steam . '"><img  src="images/user/steam.png" alt="" title="' . $steam . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/steamna.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/steamna.png" alt="" /></td>';
             } 
 		}
 		
 			if ($c10 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($twitter != ""){
-                echo "<a href=\"http://twitter.com/#!/" . $twitter . "\"><img style=\"border: 0;\" src=\"images/user/twitter.png\" alt=\"\" title=\"" . $twitter . "\" /></a></td>";
+                echo '<a href="http://twitter.com/#!/' . $twitter . '"><img src="images/user/twitter.png" alt="" title="' . $twitter . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/twitterna.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/twitterna.png" alt=""/></td>';
             } 
 		}
 		
 			if ($c11 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($skype != ""){
-                echo "<a href=\"skype:" . $skype . "?call\"><img style=\"border: 0;\" src=\"images/user/skype.png\" alt=\"\" title=\"" . $skype . "\" /></a></td>";
+                echo '<a href="skype:' . $skype . '?call\"><img  src="images/user/skype.png" alt="" title="' . $skype . '" /></a></td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/skypena.png\" alt=\"\"/></td>";
+                echo '<img src="images/user/skypena.png" alt=""/></td>';
             } 
 		}
 		
 			if ($c12 == 'on')
 		{
-            echo "<td align=\"center\">\n";
+            echo '<td>';
 
             if ($url != ""){
 				
-                echo "" . $home . "</td>";
+                echo '' . $home . '</td>';
             } 
             else{
-                echo "<img style=\"border: 0;\" src=\"images/user/urlna.png\" alt=\"\"/></td>";
+                echo '<img  src="images/user/urlna.png" alt=""/></td>';
             } 
 		}
         } 
 
         if ($count == 0){
-            echo "<tr><td colspan=\"8\" align=\"center\">" . _NOMEMBERS . "</td></tr>\n";
+            echo '<tr><td colspan="8">' . _NOMEMBERS . '</td></tr>';
         }
 		
-        echo "</table>";
+        echo '</table>';
 
         if ($count > $nb_membres){
             $url_members = "index.php?file=Members&amp;letter=" . $_REQUEST['letter'];
@@ -266,20 +260,21 @@ if ($visiteur >= $level_access && $level_access > -1){
             $_REQUEST['letter'] = htmlentities($_REQUEST['letter']);
             $_REQUEST['letter'] = nk_CSS($_REQUEST['letter']);
 
-            echo "<br /><div style=\"text-align: center;\">" . $count . "&nbsp;" . _MEMBERSFOUND . " <b>" . $_REQUEST['letter'] . "</b></div><br />\n";
+            echo '<div>' . $count . '&nbsp;' . _MEMBERSFOUND . ' ' . $_REQUEST['letter'] . '</div>';
         } 
         else{
-            echo "<br /><div style=\"text-align: center;\">" . _THEREARE . "&nbsp;" . $count . "&nbsp;" . _MEMBERSREG . "&nbsp;" . $date_install . "<br />\n";
+            echo '<div>' . _THEREARE . '&nbsp;' . $count . '&nbsp;' . _MEMBERSREG . '&nbsp;' . $date_install . '';
 
             if ($count > 0){
                 $sql_member = mysql_query("SELECT pseudo FROM " . USER_TABLE . " WHERE team = '' ORDER BY date DESC LIMIT 0, 1");
                 list($member) = mysql_fetch_array($sql_member);
-                echo _LASTMEMBER . " <a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . urlencode($member) . "\"><b>" . $member . "</b></a></div><br />\n";
+                echo _LASTMEMBER . ' <a href="index.php?file=Members&amp;op=detail&amp;autor=' . urlencode($member) . '">' . $member . '</a></div>';
             } 
             else{
-                echo "</div><br />\n";
+                echo '</div>';
             } 
 	}
+	echo '</div></div>';
 
         closetable();
     } 
@@ -302,10 +297,10 @@ if ($visiteur >= $level_access && $level_access > -1){
             list ($pays, $ext) = explode ('.', $country);
 
             if ($email != ""){
-                $mail = "<a href=\"mailto:" . $email . "\">" . $email . "</a>";
+                $mail = '<a href="mailto:' . $email . '">' . $email . '</a>';
             } 
             else{
-                $mail = "";
+                $mail = '';
             } 
 
             $sql2 = mysql_query("SELECT prenom, age, sexe, ville, motherboard, cpu, ram, video, resolution, son, ecran, souris, clavier, connexion, system, photo, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . USER_DETAIL_TABLE . " WHERE user_id = '" . $id_user . "'");
@@ -351,7 +346,7 @@ if ($visiteur >= $level_access && $level_access > -1){
             } 
 
             if ($visiteur == 9){
-               echo "<div style=\"text-align: right;\"><a href=\"index.php?file=Admin&amp;page=user&amp;op=edit_user&amp;id_user=" . $id_user . "\"><img style=\"border: 0;\" src=\"images/edition.gif\" alt=\"\" title=\"" . _EDIT . "\" /></a>";
+               echo '<div><a href="index.php?file=Admin&amp;page=user&amp;op=edit_user&amp;id_user=' . $id_user . '"><img  src="images/edition.gif" alt="" title="' . _EDIT . '" /></a>';
             
 	            if ($id_user != $user[0]){
 	                echo "<script type=\"text/javascript\">\n"
@@ -366,30 +361,15 @@ if ($visiteur >= $level_access && $level_access > -1){
 							. "// -->\n"
 							. "</script>\n";
 
-	            	echo "<a href=\"javascript:deluser('" . mysql_real_escape_string(stripslashes($autor)) . "', '" . $id_user . "');\"><img style=\"border: 0;\" src=\"images/delete.gif\" alt=\"\" title=\"" . _DELETE . "\" /></a>";
+	            	echo '<a href="javascript:deluser(' . mysql_real_escape_string(stripslashes($autor)) . ', ' . $id_user . ');"><img  src="images/delete.gif" alt="" title="' . _DELETE . '" /></a>';
 	            }
 				
-			echo "&nbsp;</div>\n";
+			echo '</div>';
 			} 
-
-            $a = "¿¡¬√ƒ≈‡·‚„‰Â“”‘’÷ÿÚÛÙıˆ¯»… ÀËÈÍÎ«ÁÃÕŒœÏÌÓÔŸ⁄€‹˘˙˚¸ˇ—Ò";
-            $b = "AAAAAAaaaaaaOOOOOOooooooEEEEeeeeCcIIIIiiiiUUUUuuuuyNn";
-            $flash_autor = @html_entity_decode($autor);
-            $flash_autor = strtr($flash_autor, $a, $b);
-
-            echo "<br /><object type=\"application/x-shockwave-flash\" data=\"modules/Members/images/title.swf\" width=\"100%\" height=\"50\">\n"
-					. "<param name=\"movie\" value=\"modules/Members/images/title.swf\" />\n"
-					. "<param name=\"pluginurl\" value=\"http://www.macromedia.com/go/getflashplayer\" />\n"
-					. "<param name=\"wmode\" value=\"transparent\" />\n"
-					. "<param name=\"menu\" value=\"false\" />\n"
-					. "<param name=\"quality\" value=\"best\" />\n"
-					. "<param name=\"scale\" value=\"exactfit\" />\n"
-					. "<param name=\"flashvars\" value=\"text=" . $flash_autor . "\" /></object>\n";
-
-			echo "<table style=\"background: " . $bgcolor2 . ";border: 1px solid " . $bgcolor3 . ";\" width=\"100%\" cellpadding=\"2\" cellspacing=\"1\">\n"
-					."<tr style=\"background: " . $bgcolor3 . ";\"><td style=\"height: 20px\" colspan=\"2\" align=\"center\"><big><b>" . _INFOPERSO . "</b></big></td></tr>\n"
-					."<tr style=\"background: " . $bgcolor1 . ";\"><td style=\"width: 100%\"><table cellpadding=\"1\" cellspacing=\"1\">\n"
-					."<tr><td><b>&nbsp;&nbsp;ª " . _NICK . "&nbsp;:&nbsp;</b></td><td><img src=\"images/flags/" . $country . "\" alt=\"" . $pays . "\" />&nbsp;" . $autor . "</td></tr>\n";
+			echo '<table>
+				  <tr><td>' . _INFOPERSO . '</td></tr>
+				  <tr><td><table>
+			      <tr><td><b>&nbsp;&nbsp;ª' . _NICK . '&nbsp;:&nbsp;</b></td><td><img src="images/flags/' . $country . '" alt="' . $pays . '" />&nbsp;' . $autor . '</td></tr>';
 			
 			if ($prenom) echo "<tr><td><b>&nbsp;&nbsp;ª " . _LASTNAME . "&nbsp;:&nbsp;</b></td><td>" . $prenom . "</td></tr>\n";
 			if ($age) echo "<tr><td><b>&nbsp;&nbsp;ª " . _AGE . "&nbsp;:&nbsp;</b></td><td>" . $age . "</td></tr>\n";
@@ -415,20 +395,20 @@ if ($visiteur >= $nivoreq)
 			if ($date) echo "<tr><td><b>&nbsp;&nbsp;ª " . _DATEUSER . "&nbsp;:&nbsp;</b></td><td>" . $date . "</td></tr>";
 			if ($last_used) echo "<tr><td><b>&nbsp;&nbsp;ª " . _LASTVISIT . "&nbsp;:&nbsp;</b></td><td>" . $last_used . "</td></tr>";
 			
-			echo "</table></td><td style=\"padding: 5px;\" align=\"right\">\n";
+			echo '</table></td><td>';
 			
 			if ($photo != ""){
-				echo "<img style=\"border: 1px solid " . $bgcolor3 . "; background:" . $bgcolor1 . "; padding: 2px; overflow: auto; max-width: 100px;  width: expression(this.scrollWidth >= 100? '100px' : 'auto');\" src=\"" . checkimg($photo) . "\" alt=\"\" />";
+				echo '<img src="' . checkimg($photo) . '" alt="" />';
 			} 
 			else{
-				echo "<img src=\"modules/Members/images/pas_image.jpg\" width=\"100\" alt=\"\" style=\"border: 1px solid " . $bgcolor3 . "; background:" . $bgcolor1 . "; padding: 2px;\" />";
+				echo '<img src="modules/Members/images/pas_image.jpg" alt="" />';
 			}
 			
 
 			
 			if ( $cpu || $ram || $motherboard || $video || $resolution || $sons || $souris || $clavier || $ecran || $osystem || $connexion ){
-				echo "<tr style=\"background: " . $bgcolor3 . ";\"><td colspan=\"2\" style=\"height: 20px\" align=\"center\"><big><b>" . _HARDCONFIG . "</b></big></td></tr>\n"
-						."<tr style=\"background: " . $bgcolor1 . ";\"><td style=\"width: 100%\" colspan=\"2\"><table cellpadding=\"1\" cellspacing=\"1\">\n";
+				echo '<tr><td>' . _HARDCONFIG . '</td></tr>
+					  <tr><td><table>';
 				
 				if ($cpu) echo "<tr><td><b>&nbsp;&nbsp;ª " . _PROCESSOR . "&nbsp;:&nbsp;</b></td><td>" . $cpu . "</td></tr>\n";
 				if ($ram) echo "<tr><td><b>&nbsp;&nbsp;ª " . _MEMORY . "&nbsp;:&nbsp;</b></td><td>" . $ram . "</td></tr>\n";
@@ -446,8 +426,8 @@ if ($visiteur >= $nivoreq)
 			}
 			
 			if ( $pref1 || $pref2 || $pref3 || $pref4 || $pref5 ){
-				echo "<tr style=\"background: " . $bgcolor3 . ";\"><td colspan=\"2\" style=\"height: 20px\" align=\"center\"><big><b>" . $titre . " :</b></big></td></tr>\n";
-				echo "<tr style=\"background: " . $bgcolor1 . ";\"><td colspan=\"2\"><table cellpadding=\"1\" cellspacing=\"1\">\n";
+				echo '<tr><td>' . $titre . ' :</td></tr>';
+				echo '<tr><td><table>';
 				
 				if ($pref1) echo "<tr><td><b>&nbsp;&nbsp;ª " . $pref_1 . "&nbsp;:&nbsp;</b></td><td>" . $pref1 . "</td></tr>\n";
 				if ($pref2) echo "<tr><td><b>&nbsp;&nbsp;ª " . $pref_2 . "&nbsp;:&nbsp;</b></td><td>" . $pref2 . "</td></tr>\n";
@@ -458,8 +438,7 @@ if ($visiteur >= $nivoreq)
 				echo "</table>";
 			}
 			
-			echo "</td></tr></table><br />\n"
-					."<br /><div style=\"text-align: center;\">\n";
+			echo '</td></tr></table><div>';
 			
             if ($user){
                 echo "&nbsp;[&nbsp;<a href=\"index.php?file=Userbox&amp;op=post_message&amp;for=" . $id_user . "\">" . _SENDPV . "</a>&nbsp;]&nbsp;\n";
@@ -468,7 +447,7 @@ if ($visiteur >= $nivoreq)
 			echo "&nbsp;[&nbsp;<a href=\"index.php?file=Search&amp;op=mod_search&amp;autor=" . $autor . "\">" . _FINDSTUFF . "</a>&nbsp;]&nbsp;</div><br />\n";
         }
         else{
-            echo "<br /><br /><div style=\"text-align: center;\">" . _NOMEMBER . "</div><br /><br />\n";
+            echo '<div>' . _NOMEMBER . '</div>';
         } 
 
         closetable();
@@ -515,18 +494,18 @@ if ($visiteur >= $nivoreq)
 } 
 else if ($level_access == -1){
     opentable();
-    echo "<br /><br /><div style=\"text-align: center;\">" . _MODULEOFF . "<br /><br /><a href=\"javascript:history.back()\"><b>" . _BACK . "</b></a></div><br /><br />";
+    echo '<div>' . _MODULEOFF . '<a href=\"javascript:history.back()\">' . _BACK . '</a></div>';
     closetable();
 } 
 else if ($level_access == 1 && $visiteur == 0){
     opentable();
-    echo "<br /><br /><div style=\"text-align: center;\">" . _USERENTRANCE . "<br /><br /><b><a href=\"index.php?file=User&amp;op=login_screen\">" . _LOGINUSER . "</a> | "
-    . "<a href=\"index.php?file=User&amp;op=reg_screen\">" . _REGISTERUSER . "</a></b></div><br /><br />";
+    echo '<div>' . _USERENTRANCE . '<a href="index.php?file=User&amp;op=login_screen">' . _LOGINUSER . '</a>
+    <a href="index.php?file=User&amp;op=reg_screen">' . _REGISTERUSER . '</a></b></div>';
     closetable();
 } 
 else{
     opentable();
-    echo "<br /><br /><div style=\"text-align: center;\">" . _NOENTRANCE . "<br /><br /><a href=\"javascript:history.back()\"><b>" . _BACK . "</b></a></div><br /><br />";
+    echo '<div>' . _NOENTRANCE . '<a href="javascript:history.back()">' . _BACK . '</a></div>';
     closetable();
 } 
 ?>

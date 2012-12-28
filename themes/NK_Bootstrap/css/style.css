@@ -414,6 +414,24 @@ text-align: center;
 #modulemembers .membersselect {
 text-align: center;	
 }
+#modulemembers .membersliste table{
+width: 100%;	
+}
+#modulemembers .membersliste td{
+text-align: center;	
+border: 1px solid #DDD;
+}
+#modulemembers .membersliste td:first-child {
+text-align: left;
+width: 20%;
+padding-left: 0.5%;
+}
+#modulemembers .membersliste td:nth-child(n+2) {
+width: 10%;	
+}
+#modulemembers .membersliste thead {
+background-color: #F8F8F8;
+}
 /* Style de placement */
 .center {
 	text-align: center;
