@@ -34,7 +34,7 @@ if ($visiteur >= $level_access && $level_access > -1)
 		list($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9, $c10, $c11, $nivoreq) = mysql_fetch_array($sql_config);
 	
     opentable();
-	  echo '<div id="moduleequipe">';
+	  echo '<div id="Equipe">';
 
 	  $sql1=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff_cat ORDER BY ordre ASC');
 	  while($req1 = mysql_fetch_object($sql1))
@@ -244,7 +244,7 @@ if ($visiteur >= $level_access && $level_access > -1)
 	global $bgcolor1, $bgcolor2, $bgcolor3, $theme, $nuked;
 	
     opentable();
-	echo '<div id="moduleequipe">';
+	echo '<div id="Equipe">';
 	  $sql1=mysql_query('SELECT * FROM '.$nuked['prefix'].'_staff_cat WHERE id="'.$cat_id.'"');
 	  while($req1 = mysql_fetch_object($sql1))
 	  {

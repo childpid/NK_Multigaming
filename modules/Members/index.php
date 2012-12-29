@@ -44,7 +44,7 @@ if ($visiteur >= $level_access && $level_access > -1){
 
         opentable();
 
-        echo '<div id="modulemembers"><div class="memberstitre">' . _SITEMEMBERS . '</div>';
+        echo '<div id="Members"><div class="memberstitre">' . _SITEMEMBERS . '</div>';
 
         $alpha = array ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "" . _OTHER . "");
 

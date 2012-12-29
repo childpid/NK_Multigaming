@@ -112,6 +112,7 @@
 								</body>
 								</html>
 								<?php
+								exit();
 								}
 								
 								function news($data){
