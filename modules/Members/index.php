@@ -36,7 +36,7 @@ if ($visiteur >= $level_access && $level_access > -1){
             $and = "";
         } 
 
-        $sql2 = mysql_query("SELECT pseudo FROM " . USER_TABLE . " WHERE team = '' AND niveau > 0 " . $and);
+        $sql2 = mysql_query("SELECT pseudo FROM " . USER_TABLE . " WHERE niveau > 0 " . $and);
         $count = mysql_num_rows($sql2);
 
         if (!$_REQUEST['p']) $_REQUEST['p'] = 1;
@@ -80,7 +80,7 @@ if ($visiteur >= $level_access && $level_access > -1){
 				if ($c12 == 'on'){echo '<td>' . _URL . '</td>';}
 				echo '</tr></thead><tbody>';
 
-        $sql = mysql_query("SELECT pseudo, url, email, icq, msn, aim, yim, rang, country, xfire, facebook ,origin, steam, twitter, skype FROM " . USER_TABLE . " WHERE team = '' " . $and . " AND niveau > 0 ORDER BY pseudo LIMIT " . $start . ", " . $nb_membres);
+        $sql = mysql_query("SELECT pseudo, url, email, icq, msn, aim, yim, rang, country, xfire, facebook ,origin, steam, twitter, skype FROM " . USER_TABLE . " WHERE niveau > 0 " . $and . " ORDER BY pseudo LIMIT " . $start . ", " . $nb_membres);
         while (list($pseudo, $url, $email, $icq, $msn, $aim, $yim, $rang, $country, $xfire, $facebook ,$origin, $steam, $twitter, $skype) = mysql_fetch_array($sql)){
             list ($pays, $ext) = explode ('.', $country);
 
@@ -260,13 +260,13 @@ if ($visiteur >= $level_access && $level_access > -1){
             $_REQUEST['letter'] = htmlentities($_REQUEST['letter']);
             $_REQUEST['letter'] = nk_CSS($_REQUEST['letter']);
 
-            echo '<div>' . $count . '&nbsp;' . _MEMBERSFOUND . ' ' . $_REQUEST['letter'] . '</div>';
+            echo '<div class="modulefooter">' . $count . '&nbsp;' . _MEMBERSFOUND . ' ' . $_REQUEST['letter'] . '</div>';
         } 
         else{
             echo '<div class="modulefooter">' . _THEREARE . '&nbsp;' . $count . '&nbsp;' . _MEMBERSREG . '&nbsp;' . $date_install . ' - ';
 
             if ($count > 0){
-                $sql_member = mysql_query("SELECT pseudo FROM " . USER_TABLE . " WHERE team = '' ORDER BY date DESC LIMIT 0, 1");
+                $sql_member = mysql_query("SELECT pseudo FROM " . USER_TABLE . " ORDER BY date DESC LIMIT 0, 1");
                 list($member) = mysql_fetch_array($sql_member);
                 echo _LASTMEMBER . ' <a href="index.php?file=Members&amp;op=detail&amp;autor=' . urlencode($member) . '">' . $member . '</a></div>';
             } 
