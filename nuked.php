@@ -722,26 +722,28 @@ function number($count, $each, $link){
         // Calcul du nombre de pages
         $n = ceil($count / intval($each)); // on arrondit à  l'entier sup.
         // Début de la chaine d'affichage
-        $output = '<b class="pgtitle">' . _PAGE . ' :</b> ';
+        $output = '<div class="pagination"><ul>';
         
         for ($i = 1; $i <= $n; $i++){
             if ($i == $current){
-                $output .= sprintf('<b class="pgactuel">[%d]</b> ',$i    );
+                $output .= sprintf('<li class="active"><a href="#">%d</a></li> ',$i    );
             }
             // On est autour de la page actuelle : on affiche
             elseif (abs($i - $current) <= 4){
-                $output .= sprintf('<a href="' . $link . '&amp;p=%d" class="pgnumber">%d</a> ',$i, $i);
+                $output .= sprintf('<li><a href="' . $link . '&amp;p=%d" class="pgnumber">%d</a></li>',$i, $i);
             }
             // On affiche quelque chose avant d'omettre les pages inutiles
             else{
                 // On est avant la page courante
                 if (!isset($first_done) && $i < $current){
-                    $output .= sprintf('...<a href="' . $link . '&amp;p=%d" title="' . _PREVIOUSPAGE . '" class="pgback">&laquo;</a> ',$current-1);
+                    $output .= sprintf('<li><a href="' . $link . '&amp;p=%d" title="' . _PREVIOUSPAGE . '" class="pgback"><<</a></li>',0);
+					$output .= sprintf('<li><a href="' . $link . '&amp;p=%d" title="' . _PREVIOUSPAGE . '" class="pgback"><</a></li>',$current-1);
                     $first_done = true;
                 }
                 // Après la page courante
                 elseif (!isset($last_done) && $i > $current){
-                    $output .= sprintf('<a href="' . $link . '&amp;p=%d" title="' . _NEXTPAGE . '" class="pgnext">&raquo;</a>... ',$current+1);
+					$output .= sprintf('<li><a href="' . $link . '&amp;p=%d" title="' . _PREVIOUSPAGE . '" class="pgback">></a></li>',$current+1);
+                    $output .= sprintf('<li><a href="' . $link . '&amp;p=%d" title="' . _NEXTPAGE . '" class="pgnext">>></a></li>',$n);
                     $last_done = true;
                 }
                 // On a dépassé les cas qui nous intéressent : inutile de continuer
@@ -749,7 +751,7 @@ function number($count, $each, $link){
                     break;
             }
         }
-        $output .= '<br />';
+        $output .= '</ul></div>';
         echo $output;
     }
 }

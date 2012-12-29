@@ -48,10 +48,10 @@ if ($visiteur >= $level_access && $level_access > -1){
 
         $alpha = array ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "" . _OTHER . "");
 
-        echo '<div class="membersselect">[ <a href="index.php?file=Members">' . _ALL . '</a> ] ';
+        echo '<div class="btn-group"><a class="btn" href="index.php?file=Members">' . _ALL . '</a>';
 
         foreach($alpha as $lettre){
-            echo '[ <a href="index.php?file=Members&amp;letter=' . $lettre . '">' . $lettre . '</a> ] ';
+            echo '<a class="btn" href="index.php?file=Members&amp;letter=' . $lettre . '">' . $lettre . '</a>';
         } 
 
         echo '</div><div class="membersliste">';
@@ -263,7 +263,7 @@ if ($visiteur >= $level_access && $level_access > -1){
             echo '<div>' . $count . '&nbsp;' . _MEMBERSFOUND . ' ' . $_REQUEST['letter'] . '</div>';
         } 
         else{
-            echo '<div>' . _THEREARE . '&nbsp;' . $count . '&nbsp;' . _MEMBERSREG . '&nbsp;' . $date_install . '';
+            echo '<div class="modulefooter">' . _THEREARE . '&nbsp;' . $count . '&nbsp;' . _MEMBERSREG . '&nbsp;' . $date_install . ' - ';
 
             if ($count > 0){
                 $sql_member = mysql_query("SELECT pseudo FROM " . USER_TABLE . " WHERE team = '' ORDER BY date DESC LIMIT 0, 1");
