@@ -280,8 +280,8 @@ if ($visiteur >= $level_access && $level_access > -1){
 
     function detail($autor){
         global $nuked, $user, $visiteur;
-
-		echo '<div id="Profile"><div class="showprofile">';
+		opentable();
+		echo '<div id="Profile">';
 		
         $autor = htmlentities($autor, ENT_QUOTES);
 
@@ -307,7 +307,8 @@ if ($visiteur >= $level_access && $level_access > -1){
 
             $sql3 = mysql_query("SELECT titre, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . GAMES_TABLE . " WHERE id = '" . $game_id . "'");
             list($titre, $pref_1, $pref_2, $pref_3, $pref_4, $pref_5) = mysql_fetch_array($sql3);
-	    
+			
+			
 			$date = nkDate($date);
 			$last_used > 0 ? $last_used=nkDate($last_used) : $last_used='';            
 
@@ -370,7 +371,7 @@ if ($visiteur >= $level_access && $level_access > -1){
 			else{
 				echo '<img class="img-polaroid" src="modules/User/images/noavatar.png" alt="" />';
 			}
-			echo '</div><div class="infos"><ul>';
+			echo '</div><div class="infos"><div class="block-widget"><div class="block-widget-header">' . _INFOPERSO . '</div><div class="block-widget-content"><ul>';
 			echo '<li>' . _NICK . ' : <img src="images/flags/' . $country . '" alt="' . $pays . '" /> <b>' . $autor . '</b></li>';
 			
 			if ($prenom) echo '<li>' . _LASTNAME . ' : <b>' . $prenom . '</b></li>';
@@ -378,34 +379,30 @@ if ($visiteur >= $level_access && $level_access > -1){
 			if ($sex) echo '<li>' . _SEXE . ' : <b>' . $sex . '</b></li>';
 			if ($ville) echo '<li>' . _CITY . ' : <b>' . $ville . '</b></li>';
 			if ($pays) echo '<li>' . _COUNTRY . ' : <b>' . $pays . '</b></li>';
+			if ($date) echo '<li>' . _DATEUSER . ' : <b>' . $date . '</b></li>';
+			if ($last_used) echo '<li>' . _LASTVISIT . ' : <b>' . $last_used . '</b></li>';
+			
+			echo '</ul></div></div><ul>';
 			
 			if ($visiteur >= $nivoreq)
 {			
 			if ($mail) echo '<li>' . _MAIL . ' : <b>' . $mail . '</b></li>';
-			if ($url && preg_match("`http://`i", $url)) echo '<li>' . _URL . "&nbsp;:&nbsp;</b></td><td><a href=\"" . $url . "\" onclick=\"window.open(this.href); return false;\">" . $url . "</a></td></tr>\n";
-			if ($icq) echo '<li>' . _ICQ . "&nbsp;:&nbsp;</b></td><td><a href=\"http://web.icq.com/whitepages/add_me?uin=" . $icq . "&amp;action=add\">" . $icq . "</a></td></tr>"; 
-			if ($msn) echo '<li>' . _MSN . "&nbsp;:&nbsp;</b></td><td><a href=\"mailto:" . $msn . "\">" . $msn . "</a></td></tr>";
-			if ($aim) echo '<li>' . _AIM . "&nbsp;:&nbsp;</b></td><td><a href=\"aim:goim?screenname=" . $aim . "&amp;message=Hi+" . $aim . "+Are+you+there+?\">" . $aim . "</a></td></tr>";                
-			if ($yim) echo '<li>' . _YIM . "&nbsp;:&nbsp;</b></td><td><a href=\"http://edit.yahoo.com/config/send_webmesg?.target=" . $yim . "&amp;.src=pg\">" . $yim . "</a></td></tr>";
-			if ($xfire) echo '<li>' . _XFIRE . "&nbsp;:&nbsp;</b></td><td><a href=\"xfire:add_friend?user=" . $xfire . "\">" . $xfire . "</a></td></tr>";
-			if ($facebook) echo '<li>' . _FACEBOOK . "&nbsp;:&nbsp;</b></td><td><a href=\"http://www.facebook.com/" . $facebook . "\">" . $facebook . "</a></td></tr>";
-			if ($origin) echo '<li>' . _ORIGINEA . "&nbsp;:&nbsp;</b></td><td><a href=\"#\">" . $origin. "</a></td></tr>";
-			if ($steam) echo '<li>' . _STEAM . "&nbsp;:&nbsp;</b></td><td><a href=\"#\">" . $steam . "</a></td></tr>";
-			if ($twitter) echo '<li>' . _TWITER . "&nbsp;:&nbsp;</b></td><td><a href=\"http://twitter.com/#!/" . $twitter . "\">" . $twitter . "</a></td></tr>";
-			if ($skype) echo '<li>' . _SKYPE . "&nbsp;:&nbsp;</b></td><td><a href=\"skype:" . $skype . "?call\">" . $skype . "</a></td></tr>";
+			if ($url && preg_match("`http://`i", $url)) echo '<li>' . _URL . ' : <a href="' . $url . '" onclick="window.open(this.href); return false;">' . $url . '</a></li>';
+			if ($icq) echo '<li>' . _ICQ . ' : <a href="http://web.icq.com/whitepages/add_me?uin=' . $icq . '&amp;action=add">' . $icq . '</a></li>';
+			if ($msn) echo '<li>' . _MSN . ' : <a href="mailto: . $msn . ">' . $msn . '</a></li>';
+			if ($aim) echo '<li>' . _AIM . ' : <a href="aim:goim?screenname=' . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there+?">' . $aim . '</a></li>';               
+			if ($yim) echo '<li>' . _YIM . ' : <a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $yim . '&amp;.src=pg">' . $yim . '</a></li>';
+			if ($xfire) echo '<li>' . _XFIRE . ' : <a href="xfire:add_friend?user=' . $xfire . '">' . $xfire . '</a></li>';
+			if ($facebook) echo '<li>' . _FACEBOOK . ' : <a href="http://www.facebook.com/' . $facebook . '">' . $facebook . '</a></li>';
+			if ($origin) echo '<li>' . _ORIGINEA . ' : <a href="#">' . $origin. '</a></li>';
+			if ($steam) echo '<li>' . _STEAM . ' : <a href="#">' . $steam . '</a></td></tr>';
+			if ($twitter) echo '<li>' . _TWITER . ' : <a href="http://twitter.com/#!/' . $twitter . '">' . $twitter . '</a></td></tr>';
+			if ($skype) echo '<li>' . _SKYPE . ' : <a href="skype:' . $skype . '?call">' . $skype . '</a></li>';
  }
  
-			echo '</ul></div></div><div class="profiledroit">';
-
-			if ($date) echo '<li>' . _DATEUSER . ' : <b>' . $date . "</td></tr>";
-			if ($last_used) echo '<li>' . _LASTVISIT . ' : <b>' . $last_used . "</td></tr>";
-			
-			echo '</table></td><td>';
-
-			
+			echo '</ul></div></div><div class="profiledroit"><div class="infos">';	
 			if ( $cpu || $ram || $motherboard || $video || $resolution || $sons || $souris || $clavier || $ecran || $osystem || $connexion ){
-				echo '<tr><td>' . _HARDCONFIG . '</td></tr>
-					  <tr><td><table>';
+				echo '<div class="block-widget"><div class="block-widget-header">' . _HARDCONFIG . '</div><div class="block-widget-content"><ul>';
 				
 				if ($cpu) echo '<li>' . _PROCESSOR . ' : <b>' . $cpu . '</b></li>';
 				if ($ram) echo '<li>' . _MEMORY . ' : <b>' . $ram . '</b></li>';
@@ -418,24 +415,47 @@ if ($visiteur >= $level_access && $level_access > -1){
 				if ($ecran) echo '<li>' . _MONITOR . ' : <b>' . $ecran . '</b></li>';
 				if ($osystem) echo '<li>' . _SYSTEMOS . ' : <b>' . $osystem . '</b></li>';
 				if ($connexion) echo '<li>' . _CONNECT . ' : <b>' . $connexion . '</b></li>';
-				
-				echo "</table></td></tr>\n";
+				echo '<ul></div></div>';
 			}
 			
 			if ( $pref1 || $pref2 || $pref3 || $pref4 || $pref5 ){
-				echo '<tr><td>' . $titre . ' :</td></tr>';
-				echo '<tr><td><table>';
+				echo '<div class="block-widget"><div class="block-widget-header">' . $titre . '</div><div class="block-widget-content"><ul>';
 				
 				if ($pref1) echo '<li>' . $pref_1 . ' : <b>' . $pref1 . '</b></li>';
 				if ($pref2) echo '<li>' . $pref_2 . ' : <b>' . $pref2 . '</b></li>';
 				if ($pref3) echo '<li>' . $pref_3 . ' : <b>' . $pref3 . '</b></li>';
 				if ($pref4) echo '<li>' . $pref_4 . ' : <b>' . $pref4 . '</b></li>';
 				if ($pref5) echo '<li>' . $pref_5 . ' : <b>' . $pref5 . '</b></li>';
-				
-				echo "</table>";
+				echo '<ul></div></div>';
 			}
-			
+			echo '<div class="block-widget"><div class="block-widget-header">' . _MESSINFORUM . '</div><div class="block-widget-content"><ul>';
+			$iforum = 0;
+            $sql_forum = mysql_query("SELECT id, titre, date, thread_id, forum_id FROM " . FORUM_MESSAGES_TABLE . " WHERE auteur_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
+            while (list($mid, $subject, $date, $tid, $fid) = mysql_fetch_array($sql_forum)){
+                $subject = htmlentities($subject);
+                $subject = nk_CSS($subject);
+                $date = nkDate($date);
 
+                $iforum++;
+
+                $sql_page = mysql_query("SELECT id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $tid . "'");
+                $nb_rep = mysql_num_rows($sql_page);
+
+                if ($nb_rep > $nuked['mess_forum_page']){
+                    $topicpages = $nb_rep / $nuked['mess_forum_page'];
+                    $topicpages = ceil($topicpages);
+                    $link_REQUEST = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $fid . "&amp;thread_id=" . $tid . "&amp;p=" . $topicpages . "#" . $mid;
+                }
+                else{
+                    $link_REQUEST = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $fid . "&amp;thread_id=" . $tid . "#" . $mid;
+                }
+				echo '<li><a href="' . $link_REQUEST . '">' . $subject . '</a>  ' . $date . '</li>';
+            }
+
+            if ($iforum == 0){
+                echo '<li>' . _NOUSERMESS . '</li>';
+            }
+			echo '</div></div>';
 			
             if ($user){
                 echo "&nbsp;[&nbsp;<a href=\"index.php?file=Userbox&amp;op=post_message&amp;for=" . $id_user . "\">" . _SENDPV . "</a>&nbsp;]&nbsp;\n";
@@ -447,7 +467,12 @@ if ($visiteur >= $level_access && $level_access > -1){
         else{
             echo '<div>' . _NOMEMBER . '</div>';
         } 
-		echo '</div></div></div></div>';
+		echo '</div></div></div>';
+		echo "<script>
+		$(document).ready(function(){
+		$('#Profile').height($(window).height());
+		});</script>";
+		closetable();
     } 
 	
 	function listing($q,$type='right',$limit=100){

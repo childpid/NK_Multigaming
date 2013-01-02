@@ -6,8 +6,9 @@
 html,
 body {
 	min-height: 100%;
-	height: auto !important;
-	height: 100%;
+	overflow: auto;
+    height: 100%;
+	width: 100%;
 	background: url('../img/background.png');
 }
 .well-grey {
@@ -34,6 +35,8 @@ body {
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
+	min-height: 100%;
+	height: 100%;
 	background: #FDFDFD;
 	border: solid 1px #E0E0E0;
 }
@@ -83,21 +86,6 @@ body {
 	height: auto !important;
 	height: 100%;
 	margin: 60px auto -60px;
-}
-.container-fluid {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-}
-.row-fluid {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;	
-}
-.span12 {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
 }
 /* Footer - Bas de Page */
 #push,
@@ -472,35 +460,28 @@ body {
 	background-color: #F8F8F8;
 }
 #Profile {
-	margin: 0px;
-	padding: 0px;
-}
-.showprofile {
-	margin: 0px;
-	padding: 0px;
-	width: 100%;
-	height: 100%;
-	overflow:auto;
+height: 100%;
 }
 #Profile .profilegauche {
 	background-color: #F4F4F4;	
 	width: 20%;
-	min-height: 100%;
-	height: auto !important;
 	height: 100%;
-	float: left;
-	margin-right: 0px;
+	margin: 0;
 	padding: 0;
+	float: left;
 }
 #Profile .profiledroit{
 	background-color: #F0F0F0;	
 	border-left: solid 1px #E0E0E0;
 	width: 80%;
-	min-height: 100%;
-	height: auto !important;
 	height: 100%;
+	margin: 0;
+	padding: 0;
 	margin-left: -1px;
 	float: right;
+}
+#Profile .block-widget {
+margin: 2%;	
 }
 #Profile .avatar{
 	text-align: center;

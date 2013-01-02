@@ -23,6 +23,8 @@ define("_SITEMEMBERS","Liste des membres");
 define("_URL","Url");
 define("_NOMEMBERS","Aucun membres trouvés");
 define("_MEMBERSFOUND","membres trouvés pour");
+define("_MESSINFORUM","Messages dans le Forum");
+define("_NOUSERMESS","Vous n'avez posté aucun message");
 define("_THEREARE","Il y a");
 define("_MEMBERSREG","membres enregistrés depuis le");
 define("_LASTMEMBER","Le dernier membre inscrit est");

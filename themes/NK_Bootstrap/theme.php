@@ -86,15 +86,15 @@
 								<?php } else { ?>
 								<div class="span12 fullpage">
 								
-								<?php }} function footer() { 
+								<?php }
+								}
+								function footer() { 
 								global $theme, $config;
 								?>
 								</div>
-								<?php if($config['full'] != 1) { ?>
 								<div class="row-fluid">
 								<?php get_blok('bas'); ?>
 								</div>
-								<?php } ?>
 								</div>
 								<?php if($config['full'] != 1) { ?>
 								<div class="span3">
