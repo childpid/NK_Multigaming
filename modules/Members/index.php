@@ -350,7 +350,7 @@ if ($visiteur >= $level_access && $level_access > -1){
 			echo '<div class="profilegauche">';
 			if ($visiteur == 9){
 				echo '<div class="editionprofil">';
-               echo '<a class="btn btn-small" href="index.php?file=Admin&amp;page=user&amp;op=edit_user&amp;id_user=' . $id_user . '"><i class="icon-pencil"></i>' . _EDIT . '</a>';
+               echo '<a class="btn btn-small" href="index.php?file=Admin&amp;page=user&amp;op=edit_user&amp;id_user=' . $id_user . '"> <i class="icon-pencil"></i>' . _EDIT . '</a>';
             
 	            if ($id_user != $user[0]){
 	                echo "<script type=\"text/javascript\">\n"
@@ -365,7 +365,7 @@ if ($visiteur >= $level_access && $level_access > -1){
 							. "// -->\n"
 							. "</script>\n";
 
-	            	echo '<a class="btn btn-small btn-danger" href="javascript:deluser(' . mysql_real_escape_string(stripslashes($autor)) . ', ' . $id_user . ');"><i class="icon-trash"></i>'. _DELETE . '</a>';
+	            	echo '<a class="btn btn-small btn-danger" href="javascript:deluser(' . mysql_real_escape_string(stripslashes($autor)) . ', ' . $id_user . ');"> <i class="icon-trash icon-white"></i>'. _DELETE . '</a>';
 	            }
 				echo '</div>';
 			} 
