@@ -308,6 +308,9 @@ if ($visiteur >= $level_access && $level_access > -1){
             $sql3 = mysql_query("SELECT titre, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . GAMES_TABLE . " WHERE id = '" . $game_id . "'");
             list($titre, $pref_1, $pref_2, $pref_3, $pref_4, $pref_5) = mysql_fetch_array($sql3);
 			
+			$sql4 = mysql_query("SELECT id FROM " . COMMENT_TABLE . " WHERE autor_id = '" . $user[0] . "'");
+			$nb_comment = mysql_num_rows($sql4);
+			
 			
 			$date = nkDate($date);
 			$last_used > 0 ? $last_used=nkDate($last_used) : $last_used='';            
@@ -346,7 +349,8 @@ if ($visiteur >= $level_access && $level_access > -1){
             } 
 			echo '<div class="profilegauche">';
 			if ($visiteur == 9){
-               echo '<a href="index.php?file=Admin&amp;page=user&amp;op=edit_user&amp;id_user=' . $id_user . '"><img  src="images/edition.gif" alt="" title="' . _EDIT . '" /></a>';
+				echo '<div class="editionprofil">';
+               echo '<a class="btn btn-small" href="index.php?file=Admin&amp;page=user&amp;op=edit_user&amp;id_user=' . $id_user . '"><i class="icon-pencil"></i>' . _EDIT . '</a>';
             
 	            if ($id_user != $user[0]){
 	                echo "<script type=\"text/javascript\">\n"
@@ -361,8 +365,9 @@ if ($visiteur >= $level_access && $level_access > -1){
 							. "// -->\n"
 							. "</script>\n";
 
-	            	echo '<a href="javascript:deluser(' . mysql_real_escape_string(stripslashes($autor)) . ', ' . $id_user . ');"><img  src="images/delete.gif" alt="" title="' . _DELETE . '" /></a>';
+	            	echo '<a class="btn btn-small btn-danger" href="javascript:deluser(' . mysql_real_escape_string(stripslashes($autor)) . ', ' . $id_user . ');"><i class="icon-trash"></i>'. _DELETE . '</a>';
 	            }
+				echo '</div>';
 			} 
 			echo '<div class="avatar">';
 			if ($photo != ""){
@@ -371,7 +376,15 @@ if ($visiteur >= $level_access && $level_access > -1){
 			else{
 				echo '<img class="img-polaroid" src="modules/User/images/noavatar.png" alt="" />';
 			}
-			echo '</div><div class="infos"><div class="block-widget"><div class="block-widget-header">' . _INFOPERSO . '</div><div class="block-widget-content"><ul>';
+			echo '</div>';
+			
+			echo'<div class="infos">';
+			if ($user){
+                echo '<a class="btn btn-block btn-primary" href="index.php?file=Userbox&amp;op=post_message&amp;for=' . $id_user . '">' . _REQUESTPV . '</a>';
+            }
+			
+			echo '<a class="btn btn-block" href="index.php?file=Search&amp;op=mod_search&amp;autor=' . $autor . '">' . _FINDSTUFF . '</a>';
+			echo '<div class="block-widget"><div class="block-widget-header">' . _INFOPERSO . '</div><div class="block-widget-content"><ul>';
 			echo '<li>' . _NICK . ' : <img src="images/flags/' . $country . '" alt="' . $pays . '" /> <b>' . $autor . '</b></li>';
 			
 			if ($prenom) echo '<li>' . _LASTNAME . ' : <b>' . $prenom . '</b></li>';
@@ -382,10 +395,11 @@ if ($visiteur >= $level_access && $level_access > -1){
 			if ($date) echo '<li>' . _DATEUSER . ' : <b>' . $date . '</b></li>';
 			if ($last_used) echo '<li>' . _LASTVISIT . ' : <b>' . $last_used . '</b></li>';
 			
-			echo '</ul></div></div><ul>';
+			echo '</ul></div></div>';
 			
 			if ($visiteur >= $nivoreq)
 {			
+			echo '</div><div class="infos"><div class="block-widget"><div class="block-widget-header">' . _INFOCONTACT . '</div><div class="block-widget-content"><ul>';
 			if ($mail) echo '<li>' . _MAIL . ' : <b>' . $mail . '</b></li>';
 			if ($url && preg_match("`http://`i", $url)) echo '<li>' . _URL . ' : <a href="' . $url . '" onclick="window.open(this.href); return false;">' . $url . '</a></li>';
 			if ($icq) echo '<li>' . _ICQ . ' : <a href="http://web.icq.com/whitepages/add_me?uin=' . $icq . '&amp;action=add">' . $icq . '</a></li>';
@@ -398,9 +412,10 @@ if ($visiteur >= $level_access && $level_access > -1){
 			if ($steam) echo '<li>' . _STEAM . ' : <a href="#">' . $steam . '</a></td></tr>';
 			if ($twitter) echo '<li>' . _TWITER . ' : <a href="http://twitter.com/#!/' . $twitter . '">' . $twitter . '</a></td></tr>';
 			if ($skype) echo '<li>' . _SKYPE . ' : <a href="skype:' . $skype . '?call">' . $skype . '</a></li>';
+			echo '</ul></div></div>';
  }
  
-			echo '</ul></div></div><div class="profiledroit"><div class="infos">';	
+			echo '</div></div><div class="profiledroit"><div class="infos">';	
 			if ( $cpu || $ram || $motherboard || $video || $resolution || $sons || $souris || $clavier || $ecran || $osystem || $connexion ){
 				echo '<div class="block-widget"><div class="block-widget-header">' . _HARDCONFIG . '</div><div class="block-widget-content"><ul>';
 				
@@ -428,7 +443,7 @@ if ($visiteur >= $level_access && $level_access > -1){
 				if ($pref5) echo '<li>' . $pref_5 . ' : <b>' . $pref5 . '</b></li>';
 				echo '<ul></div></div>';
 			}
-			echo '<div class="block-widget"><div class="block-widget-header">' . _MESSINFORUM . '</div><div class="block-widget-content"><ul>';
+			echo '<div class="block-widget"><div class="block-widget-header">' . _LASTUSERMESS . '</div><div class="block-widget-content"><ul>';
 			$iforum = 0;
             $sql_forum = mysql_query("SELECT id, titre, date, thread_id, forum_id FROM " . FORUM_MESSAGES_TABLE . " WHERE auteur_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
             while (list($mid, $subject, $date, $tid, $fid) = mysql_fetch_array($sql_forum)){
@@ -455,13 +470,53 @@ if ($visiteur >= $level_access && $level_access > -1){
             if ($iforum == 0){
                 echo '<li>' . _NOUSERMESS . '</li>';
             }
-			echo '</div></div>';
-			
-            if ($user){
-                echo "&nbsp;[&nbsp;<a href=\"index.php?file=Userbox&amp;op=post_message&amp;for=" . $id_user . "\">" . _SENDPV . "</a>&nbsp;]&nbsp;\n";
+		echo '</ul></div></div><div class="block-widget"><div class="block-widget-header">' . _LASTUSERCOMMENT . '</div><div class="block-widget-content"><ul>';
+        if ($nb_comment == 0){
+            echo '<li>' . _NOUSERCOMMENT . '</li>';
+        }
+        else{
+            $icom = 0;
+            $sql_com = mysql_query("SELECT im_id, titre, module, date FROM " . COMMENT_TABLE . " WHERE autor_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
+            while (list($im_id, $titre, $module, $date) = mysql_fetch_array($sql_com)){
+                $titre = htmlentities($titre);
+                $titre = nk_CSS($titre);
+
+                if ($titre != ""){
+                    $title = $titre;
+                }
+                else{
+                    $title = $module;
+                }
+
+                $date = nkDate($date);
+
+                $icom++;
+
+                if ($module == "news"){
+                    $link_title = '<li><a href="index.php?file=News&amp;op=index_comment&amp;news_id=' . $im_id . '">' . $title . '</a></li>';
+                }
+                else if ($module == "Gallery"){
+                    $link_title = '<li><a href="index.php?file=Gallery&amp;op=description&amp;sid=' . $im_id . '">' . $title . '</a>/li>';
+                }
+                else if ($module == "Wars"){
+                    $link_title = '<li><a href="index.php?file=Wars&amp;op=detail&amp;war_id=' . $im_id . '">' . $title . '</a></li>';
+                }
+                else if ($module == "Links"){
+                    $link_title = '<li><a href="index.php?file=Links&amp;op=description&amp;link_id=' . $im_id . '">' . $title . '</a></li>';
+                }
+                else if ($module == "Download"){
+                    $link_title = '<li><a href="index.php?file=Download&amp;op=description&amp;dl_id=' . $im_id . '">' . $title . '</a></li>';
+                }
+                else if ($module == "Survey"){
+                    $link_title = '<li><a href="index.php?file=Survey&amp;op=affich_res&amp;sid=' . $im_id . '">' . $title . '</a></li>';
+                }
+                else if ($module == "Sections"){
+                    $link_title = '<li><a href="index.php?file=Sections&amp;op=article&amp;artid=' . $im_id . '">' . $title . '</a></li>';
+                }
+				echo $link_title;
             }
-			
-			echo "&nbsp;[&nbsp;<a href=\"index.php?file=Search&amp;op=mod_search&amp;autor=" . $autor . "\">" . _FINDSTUFF . "</a>&nbsp;]&nbsp;<br />\n";
+			echo '</ul></div></div>';
+        }
 
         }
         else{

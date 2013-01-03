@@ -415,9 +415,8 @@ body {
 }
 /* Module Members */
 #Members {
-	margin: 0px;
+	margin: 2%;
 	padding: 0px;
-	width: 100%;
 	min-height: 100%;
 }
 #Members .memberstitre {
@@ -470,6 +469,9 @@ height: 100%;
 	padding: 0;
 	float: left;
 }
+#Profile .editionprofil {
+margin: 2%;	
+}
 #Profile .profiledroit{
 	background-color: #F0F0F0;	
 	border-left: solid 1px #E0E0E0;
@@ -485,7 +487,7 @@ margin: 2%;
 }
 #Profile .avatar{
 	text-align: center;
-	margin: 1%;
+	margin: 2%;
 }
 #Profile .avatar img{
 	width: 60%;
@@ -493,7 +495,7 @@ margin: 2%;
 #Profile .infos {
 	color: #8A8A8A;	
 	font-size: 12px;
-	margin-left: 1%;
+	margin: 2%;
 }
 #Profile .infos ul {
 	list-style-type: none;
