@@ -248,6 +248,7 @@ define("_SEND","Envoyer");
 
 define("_PREFNAME","Préférence");
 define("_ICON","Icône");
+define("_DESCRIPTION","Description");
 define("_GAMEADD","Ajouter un jeu");
 define("_GAMEEDIT","Editer ce jeu");
 define("_GAMEDEL","Supprimer ce jeu");

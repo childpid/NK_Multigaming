@@ -243,6 +243,7 @@ define("_SEND","Send");
 
 define("_PREFNAME","Preference");
 define("_ICON","Icon");
+define("_DESCRIPTION","Description");
 define("_GAMEADD","Add Game");
 define("_GAMEEDIT","Edit this game");
 define("_GAMEDEL","Remove this game");

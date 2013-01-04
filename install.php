@@ -213,6 +213,9 @@ $req = mysql_query($sql);
 
   $sql = "ALTER TABLE " . $db_prefix . "_forums_cat ADD `comment` text NOT NULL AFTER `moderateurs`";
   $req = mysql_query($sql);
+  
+  $sql = "ALTER TABLE " . $db_prefix . "_games ADD  `description` text NOT NULL AFTER  `titre`";
+  $req = mysql_query($sql);
 
   $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_forums_cat ADD COLUMN (image varchar(200))");
   $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_forums_cat ADD COLUMN (imagemini varchar(200))");
