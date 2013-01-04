@@ -24,56 +24,47 @@ else $captcha = 1;
 
 function index(){
     global $user, $nuked, $bgcolor1, $bgcolor2, $bgcolor3;
-
+	echo '<div id="User">';
     if ($user){
         opentable();
-
-        echo '<div style="text-align: center"><br /><big><b>' . _YOURACCOUNT . '</b></big><br /><br />',"\n"
-                . _INFO . '<b> | ',"\n"
-                . '<a href="index.php?file=User&amp;op=edit_account">' . _PROFIL . '</a> | ',"\n"
-                . '<a href="index.php?file=User&amp;op=edit_pref">' . _PREF . '</a> | ',"\n"
-                . '<a href="index.php?file=User&amp;op=change_theme">' . _THEMESELECT . '</a> | ',"\n"
-                . '<a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></b></div><br />',"\n";
-
-        $sql3 = mysql_query('SELECT U.pseudo, U.url, U.mail, U.date, U.avatar, U.count, S.last_used FROM ' . USER_TABLE . ' AS U LEFT OUTER JOIN ' . SESSIONS_TABLE . ' AS S ON U.id = S.user_id WHERE U.id = "' . $user[0] . '"');
+		echo '<div class="profilegauche">';
+		$sql3 = mysql_query('SELECT U.pseudo, U.url, U.mail, U.date, U.avatar, U.count, S.last_used FROM ' . USER_TABLE . ' AS U LEFT OUTER JOIN ' . SESSIONS_TABLE . ' AS S ON U.id = S.user_id WHERE U.id = "' . $user[0] . '"');
         $user_data = mysql_fetch_array($sql3);
-
-        $last_used = $user_data['last_used'] > 0 ? nkDate($user_data['last_used']) : 'N/A';
-        $website = !$user_data['url'] ? 'N/A' : $user_data['url'];
-        $avatar = !$user_data['avatar'] ? 'modules/User/images/noavatar.png' : checkimg($user_data['avatar']);
-
-        echo '<table style="margin:auto; background:' . $bgcolor2 . '; border:1px solid ' . $bgcolor3 . '; width:75%;" cellpadding="0" cellspacing="1">',"\n"
-                . '<tr style="background: '. $bgcolor3 . '"><td colspan="2" align="center" style="padding:2px"><b>' . _ACCOUNT . '</b></td></tr>',"\n"
-                . '<tr style="background: '. $bgcolor1 . '"><td align="left" valign="middle" style="width:100%; background:' . $bgcolor1 . '">',"\n"
-                . '<ul style="list-style-type:square;margin-left:25px">',"\n"
-                . '<li><b>' . _NICK . ' :</b> ' . $user_data['pseudo'] . '</li>',"\n"
-                . '<li><b>' . _WEBSITE . ' :</b> ' . $website . '</li>',"\n"
-                . '<li><b>' . _MAIL . ' :</b> ' . $user_data['mail'] . '</li>',"\n"
-                . '<li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>',"\n"
-                . '<li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>',"\n"
-                . '</ul>',"\n"
-                . '</td>',"\n"
-                . '<td align="right" valign="middle" style="padding:5px; background:' . $bgcolor2 . '">',"\n"
-                . '<img style="border: 0; overflow: auto; max-width: 100px; width: expression(this.scrollWidth >= 100? \'100px\' : \'auto\');" src="' . $avatar . '" alt="" />',"\n"
-                . '</td></tr></table><br />',"\n"
-                . '<table style="margin: auto;text-align: left;background: ' . $bgcolor2 . ';border: 1px solid ' . $bgcolor3 . '" width="75%" cellpadding="2" cellspacing="1">',"\n"
-                . '<tr style="background: '. $bgcolor3 . '"><td align="center"><b>' . _MESSPV . '</b></td></tr>',"\n";
+		$avatar = !$user_data['avatar'] ? 'modules/User/images/noavatar.png' : checkimg($user_data['avatar']);
+		$last_used = $user_data['last_used'] > 0 ? nkDate($user_data['last_used']) : 'N/A';
+		$website = !$user_data['url'] ? 'N/A' : $user_data['url'];
+		echo '<div class="avatar"><img src="' . $avatar .'" class="img-polaroid" ></div>';
+		echo '
+		<ul class="nav nav-list">
+		<li class="nav-header">' . _YOURACCOUNT . '</li>
+		<li class="active"><a href="#">' . _INFO . '</a></li>
+		<li><a href="index.php?file=User&amp;op=edit_account">' . _PROFIL . '</a></li>
+		<li><a href="index.php?file=User&amp;op=edit_pref">' . _PREF . '</a></li>
+		<li><a href="index.php?file=User&amp;op=change_theme">' . _THEMESELECT . '</a></li>
+		<li><a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></li>
+		<li class="nav-header infos">' . _ACCOUNT .'</li>
+        <li><b>' . _NICK . ' :</b> ' . $user_data['pseudo'] . '</li>
+        <li><b>' . _WEBSITE . ' :</b> ' . $website . '</li>
+        <li><b>' . _MAIL . ' :</b> ' . $user_data['mail'] . '</li>
+        <li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>
+        <li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>
+		</ul>';
+		echo '</div><div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' .  _MESSPV . '</div><div class="block-widget-content"><ul>';
 
         $sql2 = mysql_query('SELECT mid FROM ' . USERBOX_TABLE . ' WHERE user_for = "' . $user[0] . '" AND status = 1');
         $nb_mess_lu = mysql_num_rows($sql2);
 
         $msg_not_read = ($user[5] > 0) ? '<a href="index.php?file=Userbox"><b>' . $user[5] . '</b></a>' : '<b>' . $user[5] . '</b>';
 
-        echo '<tr style="background: ' . $bgcolor2 . '"><td>' . _NOTREAD . ' : ' . $msg_not_read . '</td></tr>',"\n";
+        echo '<li>' . _NOTREAD . ' : ' . $msg_not_read . '</li>';
 
         $nb_mess_lu = ($nb_mess_lu > 0) ? '<a href="index.php?file=Userbox"><b>' . $nb_mess_lu . '</b></a>' : '<b>' . $nb_mess_lu . '</b>';
 
-        echo '<tr style="background: ' . $bgcolor1 . '"><td>' . _READ . ' : ' . $nb_mess_lu . '</td></tr>',"\n";
-
-        echo '<tr style="background: ' . $bgcolor3 . '"><td align="center">',"\n"
-                . '<input type="button" value="' . _READPV . '" onclick="document.location=\'index.php?file=Userbox\'" />&nbsp;',"\n"
-                . '<input type="button" value="' . _REQUESTPV . '" onclick="document.location=\'index.php?file=Userbox&amp;op=post_message\'" />',"\n"
-                . '</td></tr></table><br /><div style="text-align: center"><big>' . _YOURSTATS . '</big></div>',"\n"
+        echo '<li>' . _READ . ' : ' . $nb_mess_lu . '</li></ul>
+		<a class="btn" href="index.php?file=Userbox">' . _READPV .'</a>
+		<a class="btn" href="index.php?file=Userbox&amp;op=post_message">' . _REQUESTPV .'</a></div></div>';
+		
+                echo '<br /><div style="text-align: center"><big>' . _YOURSTATS . '</big></div>',"\n"
                 . '<table style="margin: auto;text-align: left;background: ' . $bgcolor2 . ';border: 1px solid ' . $bgcolor3 . '" width="75%" cellpadding="2" cellspacing="1">',"\n"
                 . '<tr style="background: '. $bgcolor3 . '"><td align="center"><b>' . _NAME . '</b></td><td align="center"><b>' . _COUNT . '</b></td></tr>',"\n";
 
@@ -205,12 +196,17 @@ function index(){
         }
 
         echo "</table><br />\n";
-
+		echo '</div></div>';
+		echo "<script>
+		$(document).ready(function(){
+		$('#User').height($(window).height());
+		});</script>";
         closetable();
     }
     else{
         redirect("index.php?file=User&op=login_screen", 0);
     }
+	echo '</div>';
 }
 
 function reg_screen(){
@@ -488,8 +484,8 @@ function edit_pref(){
     global $user, $nuked, $bgcolor3, $bgcolor2, $bgcolor1;
 
     if ($user){
-        $sql = mysql_query("SELECT prenom, age, sexe, ville, motherboard, cpu, ram, video, resolution, son, ecran, souris, clavier, connexion, system, photo, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . USER_DETAIL_TABLE . " WHERE user_id = '" . $user[0] . "'");
-        list($prenom, $age, $sexe, $ville, $motherboard, $cpu, $ram, $video, $resolution, $sons, $ecran, $souris, $clavier, $connexion, $osystem, $photo, $pref1, $pref2, $pref3, $pref4, $pref5) = mysql_fetch_array($sql);
+        $sql = mysql_query("SELECT prenom, age, sexe, ville, motherboard, cpu, ram, video, resolution, son, ecran, souris, clavier, connexion, system, photo FROM " . USER_DETAIL_TABLE . " WHERE user_id = '" . $user[0] . "'");
+        list($prenom, $age, $sexe, $ville, $motherboard, $cpu, $ram, $video, $resolution, $sons, $ecran, $souris, $clavier, $connexion, $osystem, $photo) = mysql_fetch_array($sql);
 
         if ($age != ""){
             list ($jour, $mois, $an) = explode ('/', $age);

@@ -118,6 +118,32 @@ function send()
 	$req = mysql_query("DROP TABLE IF EXISTS ". $nuked['prefix'] ."_forums_primaire");
     
 //*****Création des tables****** 
+	$sql = "DROP TABLE IF EXISTS " . $nuked['prefix'] . "_page";
+	$req = mysql_query($sql);
+
+	$sql = "CREATE TABLE " . $nuked['prefix'] . "_page (
+    `id` int(11) NOT NULL auto_increment,
+    `niveau` int(1) NOT NULL default '0',
+    `titre` varchar(50) NOT NULL default '',
+    `content` text NOT NULL,
+    `url` varchar(80) NOT NULL default '',
+    `type` varchar(5) NOT NULL default '',
+    `show_title` int(1) NOT NULL default '0',
+    `members` text NOT NULL,
+    PRIMARY KEY  (`id`),
+    KEY `titre` (`titre`)
+	) ENGINE=MyISAM;";
+	$req = mysql_query($sql);
+
+	$sql = "INSERT INTO " . $nuked['prefix'] . "_config (name, value) VALUES ('index_page', '');";
+	$req = mysql_query($sql);
+  
+	$sqlchk = mysql_query("SELECT * FROM " . $nuked['prefix'] . "_modules WHERE nom = 'Page'");
+	
+	if ( mysql_num_rows($sqlchk) == 0 )
+	{
+		$sql = mysql_query("INSERT INTO " . $nuked['prefix'] . "_modules (id, nom, niveau, admin) VALUES ('', 'Page', 0, 9);");
+	}
     
 $sql = "CREATE TABLE IF NOT EXISTS `$nuked[prefix]"._users_config."` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

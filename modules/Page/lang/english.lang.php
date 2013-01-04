@@ -1,0 +1,65 @@
+<?php
+define("_NOENTRANCE","Sorry you haven't permission to open this page");
+define("_ZONEADMIN","This zone is reserved has Admin, sorry...");
+define("_NOEXIST","Sorry this page does not exist or the address which you typed is incorrect");
+
+define("_ADMINPAGE","Page Administration");
+define("_HELP","Help");
+define("_DELETEPAGE","You are about to remove");
+define("_CONFIRM","Continue ?");
+define("_PAGETYPE","Type");
+define("_PAGENAME","Name");
+define("_PAGEFILE","File");
+define("_CONTENT","Content");
+define("_PAGEHTML","HTML Page");
+define("_PAGEPHP","PHP Page");
+define("_PAGELINK","Url Page");
+define("_PAGELEVEL","Level access");
+define("_EDIT","Edit");
+define("_DEL","Remove");
+define("_NOPAGE","No page in database");
+define("_EDITTHISPAGE","Edit this Page");
+define("_DELTHISPAGE","Remove this Page");
+define("_ADDTHISPAGE","Add this Page");
+define("_MODIFTHISPAGE","Modify this Page");
+define("_ADDPAGE","Add Page");
+define("_NOFILE","None");
+define("_NONE","None");
+define("_BACK","Back");
+define("_PAGEADD","Page added successfully.");
+define("_PAGEMODIF","Page modified successfully.");
+define("_PAGEDELETE","Page removed successfully.");
+define("_BADFILEFORMAT","Error : Bad page file type !");
+define("_PREFS","Preferences");
+define("_PAGEINDEX","Main Page");
+define("_PREFUPDATED","Preferences were successfully modified.");
+define("_UPLOADPAGE","Upload the page onto the server");
+define("_ADDMENU","Add to menu");
+define("_UNHAUTORIZEDCODE","Error: Unauthorized code !!!");
+define("_INTERDITS","Pay attention ! The word \"global\" and the ellipsis (..) are prohibited for reasons of security!");
+define("_SHOWTITLE","Show title on the page ?");
+define("_MEMBERSAUTORIZ","Allowed members");
+
+//installation
+define('_NEARGLOBAL', 'Install.php must be near globals.php');
+define('_NEARCONF', 'Install.php must be near conf.inc.php');
+define('_NEARNUKED', 'Install.php must be near nuked.php');
+define('_FEINSTALL', 'Installation of FileEditor module');
+define('_MODDESC', 'Description of "FileEditor" module');
+define('_EXPL1', 'This module lets you create, modify and delete some pages with the style of your website.');
+define('_EXPL2', 'Options of this module allow you to :');
+define('_EXPL3', 'define a title');
+define('_EXPL4', 'show title of each page (or not)');
+define('_EXPL5', 'set an access level for each page');
+define('_EXPL6', 'define which users are allowed to see a page');
+define('_EXPL7', 'choose a type of page (html or php)');
+define('_EXPL8', 'make all your pages with a wysiwyg editor');
+define('_EXPL9', 'add a link to your page into NK menu');
+define('_EXPL10', 'In case of problem with this module, go at <a href="http://www.nuked-klan.org">http://www.nuked-klan.org</a> and ask for some help on forum (don\'t forget to read rules before posting) !');
+define('_EXPL11', 'Module developed by MasterPsX and updated by Pepere<br />For versions 1.7.9 and SP4.6 of Nuked-Klan');
+define('_GO_ON', 'Continue installation');
+define('_CANCEL', 'Cancel');
+define('_WRONGVER', '<b>Error : Wrong version</b><br />This module only works with versions 1.7.9 and SP4.6 of NK!');
+define('_INSTALLOK', '<b>Installation proceed successfully!</b><br />"Install.php" file will now remove from your FTP.');
+define('_INSTALLCANCEL', '<b>Installation canceled!</b>');
+?>

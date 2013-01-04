@@ -1,0 +1,65 @@
+<?php
+define("_NOENTRANCE","Désolé mais vous n'avez pas les droits pour accéder à cette page");
+define("_ZONEADMIN","Cette zone est réservée a l'Admin, Désolé...");
+define("_NOEXIST","Désolé cette page n'existe pas ou l'adresse que vous avez tapé est incorrecte");
+
+define("_ADMINPAGE","Administration Page");
+define("_HELP","Aides");
+define("_DELETEPAGE","Vous êtes sur le point de supprimer");
+define("_CONFIRM","Continuer ?");
+define("_PAGETYPE","Type");
+define("_PAGENAME","Nom");
+define("_PAGEFILE","Fichier");
+define("_CONTENT","Contenu");
+define("_PAGEHTML","Page html");
+define("_PAGEPHP","Page php");
+define("_PAGELINK","Page url");
+define("_PAGELEVEL","Niveau d'accès");
+define("_EDIT","Editer");
+define("_DEL","Supprimer");
+define("_NOPAGE","Aucune page dans la base de données");
+define("_EDITTHISPAGE","Editer cette Page");
+define("_DELTHISPAGE","Supprimer cette Page");
+define("_ADDTHISPAGE","Ajouter cette Page");
+define("_MODIFTHISPAGE","Modifier cette Page");
+define("_ADDPAGE","Ajouter une Page");
+define("_BACK","Retour");
+define("_NOFILE","Aucun");
+define("_NONE","Aucune");
+define("_PAGEADD","Page ajoutée avec succès");
+define("_PAGEMODIF","Page modifiée avec succès");
+define("_BADFILEFORMAT","Erreur : Le fichier ne correspond pas au type de page sélectionné !");
+define("_PAGEDELETE","Page supprimée avec succès");
+define("_PREFS","Préférences");
+define("_PAGEINDEX","Page par défaut");
+define("_PREFUPDATED","Préférences modifiées avec succès.");
+define("_UPLOADPAGE","Uploader la page sur le serveur");
+define("_ADDMENU","Ajouter au menu");
+define("_UNHAUTORIZEDCODE","Erreur: Cette page contient du code interdit pour des raisons de sécurité");
+define("_INTERDITS","Attention ! Pour des raisons de sécurité, le terme \"global\" et les points de suspension (..) sont interdits !");
+define("_SHOWTITLE","Afficher le titre sur la page ?");
+define("_MEMBERSAUTORIZ","Membres autorisés");
+
+//installation
+define('_NEARGLOBAL', 'Le fichier install.php doit être placé à côté du fichier globals.php');
+define('_NEARCONF', 'Le fichier install.php doit être placé à côté du fichier conf.inc.php');
+define('_NEARNUKED', 'Le fichier install.php doit être placé à côté du fichier nuked.php');
+define('_FEINSTALL', 'Installation du module Page');
+define('_MODDESC', 'Description du module "Page"');
+define('_EXPL1', 'Ce module permet de créer, modifier et supprimer des pages diverses, aux couleurs de votre site.');
+define('_EXPL2', 'Les options du module permettent de :');
+define('_EXPL3', 'définir un titre pour votre page');
+define('_EXPL4', 'afficher ou non le titre des pages');
+define('_EXPL5', 'définir un niveau d\'accès pour chaque page');
+define('_EXPL6', 'définir une liste des utilisateurs autorisés à visionner chaque page');
+define('_EXPL7', 'choisir le type de votre page (html ou php)');
+define('_EXPL8', 'réaliser votre page avec l\'éditeur wysiwyg');
+define('_EXPL9', 'ajouter un lien vers chaque page dans le menu NK');
+define('_EXPL10', 'En cas de problème avec ce module, rendez-vous sur le site <a href="http://www.nuked-klan.org">http://www.nuked-klan.org</a> et demandez de l\'aide sur le forum (après avoir pris connaissance du règlement) !');
+define('_EXPL11', 'Module développé par MasterPsX et mis à jour par Pepere<br />Pour les versions 1.7.9 et SP4.6 de Nuked-Klan');
+define('_GO_ON', 'Poursuivre l\'installation');
+define('_CANCEL', 'Annuler');
+define('_WRONGVER', '<b>Erreur : Mauvaise version</b><br />Ce module fonctionne uniquement avec les versions 1.7.9 et SP4.6 !');
+define('_INSTALLOK', '<b>Installation réussie !</b><br />Le fichier "install.php" va maintenant être supprimé de votre FTP.');
+define('_INSTALLCANCEL', '<b>Installation annulée !</b>');
+?>
