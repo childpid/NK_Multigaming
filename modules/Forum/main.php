@@ -19,6 +19,8 @@ $visiteur = $user ? $user[1] : 0;
 $user_last_visit = (empty($user[4])) ? time() : $user[4];
 
 opentable();
+// Affichage Forum (Acceuil) - Début Forum Header
+echo '<div id="Forum"><div class="ForumHeader">';
 
 /****** Récupération du skin ******/
 include('modules/Forum/Skin/' . $nuked['forum_skin'] . '/comun.php');
@@ -116,12 +118,12 @@ echo"		<form method=\"get\" action=\"index.php\">\n"
 		. "	</form>\n";	
 }	
 	
-echo "		<table class=\"Forum_nav_t\" cellspacing=\"4\" border=\"0\">\n"
-		. "		<tr class=\"Forum_nav_r\">\n"
-		. "			<td class=\"Forum_nav_d1\"><img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/home.png\" alt=\"\" style=\"margin-bottom:-1px;\"/>&nbsp;<a href=\"index.php?file=Forum\"><b>" . _INDEXFORUM . "</b></a>" . $nav . "</td>\n"
-		. "			<td class=\"Forum_nav_d2\"><small>" . _DAYIS . " : " . $date_jour . $lst . "</small></td>\n"
-		. "		</tr>\n"
-		. "	</table>\n";
+echo '<ul class="breadcrumb">
+		<li class="active">' . _INDEXFORUM . '</li>
+		<li class="pull-right">' . _DAYIS . ' : ' . $date_jour . $lst . '</li>
+	  </ul>';
+//Fin Header Forum
+echo '</div>';
 
 echo"<div class=\"Forum_cadre_haut\">\n";		
 
@@ -523,6 +525,6 @@ echo "	<table class=\"Forum_info_t\" cellspacing=\"0\">\n"
 	. "</table>\n";
 	
 	
-echo"</div>\n";	
+echo '</div></div>';	
 closetable();
 ?>

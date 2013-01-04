@@ -458,6 +458,7 @@ body {
 #Members .membersliste thead {
 	background-color: #F8F8F8;
 }
+/* Module Members (Profil) */
 #Profile {
 height: 100%;
 }
@@ -505,6 +506,10 @@ margin: 2%;
 #Profile .infos b {
 	color: #353535;	
 }
+/* Module Forum */
+#Forum {
+margin: 2%;
+} 
 /* Style de placement */
 .center {
 	text-align: center;

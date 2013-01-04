@@ -42,7 +42,6 @@ if ($visiteur >= $level_access && $level_access > -1)
     function index()
     {
         global $nuked;
-        
         if ($nuked['forum_cat_prim'] == "on")
         { 
         opentable();               

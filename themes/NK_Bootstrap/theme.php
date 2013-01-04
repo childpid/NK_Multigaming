@@ -20,8 +20,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<link href="media/css/bootstrap.css" rel="stylesheet">
-		<link href="media/css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="media/css/bootstrap.min.css" rel="stylesheet">
+		<link href="media/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="media/css/font-awesome.min.css" rel="stylesheet">
 		<link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet">
 		<link href="themes/<?php echo $theme ?>/css/style.css" rel="stylesheet">
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
