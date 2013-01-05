@@ -13,7 +13,11 @@
         global $nuked, $user,$theme, $language, $config;
 	?>
 	<!DOCTYPE html>
-	<html lang="fr"><head>
+	<html lang="fr">
+	<?php 
+		if($_REQUEST['file'] != 'Admin'){
+	?>
+	<head>
 		<meta charset="iso-8859-1" />
 		<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 		<title><?php echo $nuked['name'] ?> - <?php echo $nuked['slogan'] ?></title>
@@ -22,7 +26,7 @@
 		<meta name="author" content="">
 		<link href="media/css/bootstrap.min.css" rel="stylesheet">
 		<link href="media/css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link href="media/css/font-awesome.min.css" rel="stylesheet">
+		<!--<link href="media/css/font-awesome.min.css" rel="stylesheet">-->
 		<link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet">
 		<link href="themes/<?php echo $theme ?>/css/style.css" rel="stylesheet">
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -37,6 +41,7 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
 	</head>
+	<?php } ?>
 	
 	<body>
 		<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
@@ -79,7 +84,7 @@
 								<div class="span3">
 								<?php get_blok('gauche'); ?>
 								</div>
-								<div class="span6 well-white">
+								<div class="span6">
 								<div class="row-fluid">
 								<?php get_blok('centre'); ?>
 								</div>

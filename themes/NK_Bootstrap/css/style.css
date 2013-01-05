@@ -9,6 +9,8 @@ body {
 	overflow: auto;
     height: 100%;
 	width: 100%;
+	font-size: 14px;
+	line-height: 14px;
 	background: url('../img/background.png');
 }
 .well-grey {
@@ -278,7 +280,16 @@ body {
 	text-align: center;
 	padding: 2%;	
 }
-
+#Forumblok {
+margin: 0;
+padding: 0;
+}
+#Forumblok .icon-chevron-right {
+float: right;
+margin-top: 2px;
+margin-right: -6px;
+opacity: .25;
+}
 
 /*
 	#################################
@@ -510,6 +521,48 @@ margin: 2%;
 #Forum {
 margin: 2%;
 } 
+/* Module User */
+#User{
+	height: 100%;
+}
+#User .profilegauche {
+	background-color: #F4F4F4;	
+	width: 20%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+#User .profilegauche b {
+	color: #353535;	
+}
+#User .profilegauche li {
+color: #8A8A8A;	
+}
+#User .profiledroit{
+	background-color: #F0F0F0;	
+	border-left: solid 1px #E0E0E0;
+	width: 80%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	margin-left: -1px;
+	float: right;
+}
+#User .block-widget {
+margin: 2%;	
+}
+#User .block-widget-content {
+	text-align: center;
+}
+#User .block-widget-content li{
+	text-align: left;
+}
+#User .avatar {
+margin: 5px 0 5px 0px;
+width: 98%;
+text-align: center;
+}
 /* Style de placement */
 .center {
 	text-align: center;
