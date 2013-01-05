@@ -90,33 +90,23 @@ if ($_REQUEST['cat'] != "")
 		$lst = "<br />" . _LASTVISIT . " : " . $your_last_visite;
 	} 
 
-if($nuked['forum_name_secondaire'] == "oui" || $nuked['forum_search_secondaire'] == "oui")	
-{
-echo"		<form method=\"get\" action=\"index.php\">\n"
-		. "	<table class=\"Forum_search_t\" width=\"100%\" cellspacing=\"0\">\n"
-		. "		<tr class=\"Forum_search_r\">\n";
-		
-		if($nuked['forum_name_secondaire'] == "oui")	
+	if($nuked['forum_search_secondaire'] == "oui")	
 		{
-		echo "		<td class=\"Forum_search_d1\"><big><b>" . $title . "</b></big><br />" . $cat_name . "</td>\n";
-		}
-		
-		if($nuked['forum_search_secondaire'] == "oui")	
-		{
-		echo "			<td class=\"Forum_search_d2\"><br /><b>" . _SEARCH . " :</b>\n"
-		. "				<input type=\"text\" name=\"query\" size=\"25\" /><br />\n"
-		. "				[ <a href=\"index.php?file=Forum&amp;page=search\">" . _ADVANCEDSEARCH . "</a> ]&nbsp;\n"
-		. "				<input type=\"hidden\" name=\"file\" value=\"Forum\" />\n"
-		. "				<input type=\"hidden\" name=\"page\" value=\"search\" />\n"
-		. "				<input type=\"hidden\" name=\"do\" value=\"search\" />\n"
-		. "				<input type=\"hidden\" name=\"into\" value=\"all\" />\n"
-		. "			</td>\n";
-		}
-		
-		echo "		</tr>\n"
-		. "	</table>\n"
-		. "	</form>\n";	
-}	
+		echo'
+		<div class="navbar">
+		<div class="navbar-inner">
+		<form class="navbar-form" method="get" action="index.php">
+		<input type="text" name="query" class="span3" />
+		<input type="hidden" name="file" value="Forum" />
+		<input type="hidden" name="page" value="search" />
+		<input type="hidden" name="do" value="search" />
+		<input type="hidden" name="into" value="all" />
+		<button type="submit" class="btn">' . _SEARCH . '</button>
+		</form>
+		</div>
+		</div>
+		';
+	}
 	
 echo '<ul class="breadcrumb">
 		<li class="active">' . _INDEXFORUM . '</li>
@@ -134,7 +124,7 @@ echo "		<table class=\"Forum_haut_t\" cellspacing=\"1\">\n"
     { 
     echo "<td style=\"width: 6%;\" >&nbsp;</td>\n";
     }			
-		echo "			<td class=\"Forum_haut_d2\"><b>" . _FORUMS . "</b></td>\n"
+		echo "		<td class=\"Forum_haut_d2\"><b>" . _FORUMS . "</b></td>\n"
 		. "			<td class=\"Forum_haut_d3\"><b>" . _SUBJECTS . "</b></td>\n"
 		. "			<td class=\"Forum_haut_d4\"><b>" . _MESSAGES . "</b></td>\n"
 		. "			<td class=\"Forum_haut_d5\"><b>" . _LASTPOST . "</b></td>\n"
@@ -164,9 +154,10 @@ if ($cat_image != "")
 }    
 else
 {		
-        echo " <td class=\"Forum_ariane_d1\">&nbsp;&nbsp;<a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cid . "\"><big><b>" . $nom_cat . "</b></big></a></td>\n"
-            . "		</tr>\n"
-            . "	</table>\n";		
+		echo '<td><div class="navbar"><div class="navbar-inner">
+		<a class="brand" href="index.php?file=Forum&amp;page=main&amp;cat=' . $cid . '">' . $nom_cat . '</a>
+		</div></div<
+		</td></tr></table>';
 }	
 echo "		<table class=\"Forum_contenu_t\" cellspacing=\"1\">\n";
 	
