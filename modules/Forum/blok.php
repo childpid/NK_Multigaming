@@ -135,7 +135,7 @@ if ($active == 3 || $active == 4)
 }
 else
 {
-    echo "<table width=\"100%\" cellspacing=\"5\" cellpadding=\"0\" border=\"0\">\n";
+    echo '<div id="Forumblok"><ul class="nav nav-list">';
 
     $sql = mysql_query("SELECT FTT.id, FTT.titre, FTT.last_post, FTT.forum_id FROM " . FORUM_THREADS_TABLE . " AS FTT INNER JOIN " . FORUM_TABLE . " AS FT ON FT.id = FTT.forum_id WHERE FT.niveau <= '" . $visiteur . "' ORDER BY last_post DESC LIMIT 0, 10");
     while (list($thread_id, $titre, $last_post, $forum_id) = mysql_fetch_row($sql))
@@ -176,15 +176,15 @@ else
 
         if (strlen($titre) > 40)
         {
-            $titre_topic = "<a href=\"" . $link_post . "\" title=\"" . $title . " ( " . $autor . " )\"><b>" . printSecuTags(substr($titre, 0, 40)) . "...</b></a>";
+            $titre_topic = '<a href="' . $link_post . '" title="' . $title . ' ( ' . $autor . ' )"><i class="icon-chevron-right"></i>' . printSecuTags(substr($titre, 0, 40)) . '...</a>';
         }
         else
         {
-            $titre_topic = "<a href=\"" . $link_post . "\" title=\"" . _BY . "&nbsp;" . $autor . "\"><b>" . $title . "</b></a>";
+            $titre_topic = '<a href="' . $link_post . '" title="' . _BY . ' ' . $autor . '"><i class="icon-chevron-right"></i>' . $date . ' - ' . $title . '</a>';
         }
-        echo "<tr><td><img src=\"images/posticon.gif\" alt=\"\" title=\"" . $date . "\" />&nbsp;" . $titre_topic . "</td></tr>\n";
+        echo '<li>' . $titre_topic . '</li>';
     }
-    echo "</table><div style=\"text-align: right;\">&#187; <a href=\"index.php?file=Forum\"><small>" . _VISITFORUMS . "</small></a></div>&nbsp;\n";
+    echo '<li><a href="index.php?file=Forum">' . _VISITFORUMS . '</a></li></div>';
 }
 
 ?>
