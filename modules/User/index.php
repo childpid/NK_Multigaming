@@ -49,24 +49,23 @@ function index(){
         <li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>
         <li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>
 		</ul>';
-		echo '</div><div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' .  _MESSPV . '</div><div class="block-widget-content"><ul>';
+		echo '</div><div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' .  _MESSPV . '</div><div class="block-widget-content"><table class="table table-striped"><tbody>';
 
         $sql2 = mysql_query('SELECT mid FROM ' . USERBOX_TABLE . ' WHERE user_for = "' . $user[0] . '" AND status = 1');
         $nb_mess_lu = mysql_num_rows($sql2);
 
         $msg_not_read = ($user[5] > 0) ? '<a href="index.php?file=Userbox"><b>' . $user[5] . '</b></a>' : '<b>' . $user[5] . '</b>';
 
-        echo '<li>' . _NOTREAD . ' : ' . $msg_not_read . '</li>';
+        echo '<tr><td>' . _NOTREAD . '</td><td>' . $msg_not_read . '</td></tr>';
 
         $nb_mess_lu = ($nb_mess_lu > 0) ? '<a href="index.php?file=Userbox"><b>' . $nb_mess_lu . '</b></a>' : '<b>' . $nb_mess_lu . '</b>';
 
-        echo '<li>' . _READ . ' : ' . $nb_mess_lu . '</li></ul>
+        echo '<tr><td>' . _READ . '</td><td> ' . $nb_mess_lu . '</td></tr></tbody><tfoot><tr><td colspan="2">
 		<a class="btn" href="index.php?file=Userbox">' . _READPV .'</a>
-		<a class="btn" href="index.php?file=Userbox&amp;op=post_message">' . _REQUESTPV .'</a></div></div>';
-		
-                echo '<br /><div style="text-align: center"><big>' . _YOURSTATS . '</big></div>',"\n"
-                . '<table style="margin: auto;text-align: left;background: ' . $bgcolor2 . ';border: 1px solid ' . $bgcolor3 . '" width="75%" cellpadding="2" cellspacing="1">',"\n"
-                . '<tr style="background: '. $bgcolor3 . '"><td align="center"><b>' . _NAME . '</b></td><td align="center"><b>' . _COUNT . '</b></td></tr>',"\n";
+		<a class="btn" href="index.php?file=Userbox&amp;op=post_message">' . _REQUESTPV .'</a>
+		</td></tr></tfoot></table></div></div>
+		<div class="block-widget"><div class="block-widget-header">' . _YOURSTATS . '</div><div class="block-widget-content"><table class="table table-striped">
+		<thead><tr><td>' . _NAME .'</td><td>' . _COUNT . '</td></tr></thead><tbody>';
 
         $sql4 = mysql_query("SELECT id FROM " . COMMENT_TABLE . " WHERE autor_id = '" . $user[0] . "'");
         $nb_comment = mysql_num_rows($sql4);
@@ -74,18 +73,14 @@ function index(){
         $sql5 = mysql_query("SELECT id FROM " . SUGGEST_TABLE . " WHERE user_id = '" . $user[0] . "'");
         $nb_suggest = mysql_num_rows($sql5);
 
-        echo "<tr style=\"background: ". $bgcolor2 . "\"><td>" . _MESSINFORUM . "</td><td align=\"center\">" . $user_data['count'] . "</td></tr>\n"
-                . "<tr style=\"background: ". $bgcolor1 . "\"><td>" . _USERCOMMENT . "</td><td align=\"center\">" . $nb_comment . "</td></tr>\n"
-                . "<tr style=\"background: ". $bgcolor2 . "\"><td>" . _USERSUGGEST . "</td><td align=\"center\">" . $nb_suggest . "</td></tr>\n"
-                . "</table><br /><div style=\"text-align: center;\"><big>" . _LASTUSERMESS . "</big></div>\n"
-                . "<table style=\"margin-left: auto;margin-right: auto;text-align: left;background: " . $bgcolor2 . ";border: 1px solid " . $bgcolor3 . ";\" width=\"75%\" cellpadding=\"2\" cellspacing=\"1\">\n"
-                . "<tr style=\"background: ". $bgcolor3 . "\">\n"
-                . "<td style=\"width: 10%;\" align=\"center\"><b>#</b></td>\n"
-                . "<td style=\"width: 50%;\" align=\"center\"><b>" . _TITLE . "</b></td>\n"
-                . "<td style=\"width: 40%;\" align=\"center\"><b>" . _DATE . "</b></td></tr>\n";
+        echo '<tr><td>' . _MESSINFORUM . '</td><td>' . $user_data['count'] . '</td></tr>
+              <tr><td>' . _USERCOMMENT . '</td><td>' . $nb_comment . '</td></tr>
+              <tr><td>' . _USERSUGGEST . '</td><td>' . $nb_suggest . '</td></tr></tbody></table></div></div>
+			  <div class="block-widget"><div class="block-widget-header">' . _LASTUSERMESS . '</div><div class="block-widget-content"><table class="table table-striped">
+			  <thead><tr><td>#</td><td>' . _TITLE .'</td><td>' . _DATE . '</td></tr></thead><tbody>';
 
         if ($user_data['count'] == 0){
-            echo "<tr><td align=\"center\" colspan=\"3\">" . _NOUSERMESS . "</td></tr>\n";
+            echo '<tr><td colspan="3">' . _NOUSERMESS . '</td></tr>';
         }
         else{
             $iforum = 0;
@@ -96,15 +91,6 @@ function index(){
                 $date = nkDate($date);
 
                 $iforum++;
-
-                if ($j == 0){
-                    $bg = $bgcolor2;
-                    $j++;
-                }
-                else{
-                    $bg = $bgcolor1;
-                    $j = 0;
-                }
 
                 $sql_page = mysql_query("SELECT id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $tid . "'");
                 $nb_rep = mysql_num_rows($sql_page);
@@ -118,26 +104,21 @@ function index(){
                     $link_REQUEST = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $fid . "&amp;thread_id=" . $tid . "#" . $mid;
                 }
 
-                echo "<tr style=\"background: ". $bg . "\">\n"
-                        . "<td style=\"width: 10%;\" align=\"center\">" . $iforum . "</td>\n"
-                        . "<td style=\"width: 50%;\"><a href=\"" . $link_REQUEST . "\">" . $subject . "</a></td>\n"
-                        . "<td style=\"width: 40%;\" align=\"center\">" . $date . "</td></tr>\n";
+                echo '<tr><td>' . $iforum . '</td>
+                      <td><a href="' . $link_REQUEST . '">' . $subject . '</a></td>
+                      <td>' . $date . '</td></tr>';
             }
 
             if ($iforum == 0){
-                echo "<tr><td align=\"center\" colspan=\"3\">" . _NOUSERMESS . "</td></tr>\n";
+                echo '<tr><td colspan="3">' . _NOUSERMESS . '</td></tr>';
             }
         }
 
-        echo "</table><br /><div style=\"text-align: center;\"><big>" . _LASTUSERCOMMENT . "</big></div>\n"
-                . "<table style=\"margin-left: auto;margin-right: auto;text-align: left;background: " . $bgcolor2 . ";border: 1px solid " . $bgcolor3 . ";\" width=\"75%\" cellpadding=\"2\" cellspacing=\"1\">\n"
-                . "<tr style=\"background: ". $bgcolor3 . "\">\n"
-                . "<td style=\"width: 10%;\" align=\"center\"><b>#</b></td>\n"
-                . "<td style=\"width: 50%;\" align=\"center\"><b>" . _TITLE . "</b></td>\n"
-                . "<td style=\"width: 40%;\" align=\"center\"><b>" . _DATE . "</b></td></tr>\n";
+        echo '</tbody></table></div></div><div class="block-widget"><div class="block-widget-header">' . _LASTUSERCOMMENT . '</div><div class="block-widget-content"><table class="table table-striped">
+			  <thead><tr><td>#</td><td>' . _TITLE .'</td><td>' . _DATE . '</td></tr></thead><tbody>';
 
         if ($nb_comment == 0){
-            echo "<tr><td align=\"center\" colspan=\"3\">" . _NOUSERCOMMENT . "</td></tr>\n";
+            echo '<tr><td colspan="3">' . _NOUSERCOMMENT . '</td></tr>';
         }
         else{
             $icom = 0;
@@ -188,15 +169,11 @@ function index(){
                     $link_title = "<a href=\"index.php?file=Sections&amp;op=article&amp;artid=" . $im_id . "\">" . $title . "</a>";
                 }
 
-                echo "<tr style=\"background: ". $bg1 . "\">\n"
-                        . "<td style=\"width: 10%;\" align=\"center\">" . $icom . "</td>\n"
-                        . "<td style=\"width: 50%;\">" . $link_title . "</td>\n"
-                        . "<td style=\"width: 40%;\" align=\"center\">" . $date . "</td></tr>\n";
+                echo '<tr><td>' . $icom . '</td><td>' . $link_title . '</td><td>' . $date . '</td></tr>';
             }
         }
 
-        echo "</table><br />\n";
-		echo '</div></div>';
+        echo '</tbody></table></div></div></div></div>';
 		echo "<script>
 		$(document).ready(function(){
 		$('#User').height($(window).height());
@@ -215,6 +192,7 @@ function reg_screen(){
     if ($user){
         redirect("index.php?file=User&op=edit_account", 0);
     }
+	echo '<div id="user">';
 
     if ($nuked['inscription'] != "off"){
         if ($nuked['inscription_charte'] != "" && !isset($_REQUEST['charte_agree'])){
@@ -333,32 +311,48 @@ function reg_screen(){
             if ($captcha == 1) create_captcha(2);
 
             echo "<tr><td colspan=\"2\">&nbsp;</td></tr>\n"
-                    . "<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"" . _USERREGISTER . "\" /></td></tr></table></form><br />\n";
+                    . "<tr><td colspan=\"2\" align=\"center\"><input class=\"btn\" type=\"submit\" value=\"" . _USERREGISTER . "\" /></td></tr></table></form><br />\n";
         }
     }
     else{
         echo "<br /><br /><div style=\"text-align: center;\">" . _REGISTRATIONCLOSE . "<br /><br /><a href=\"javascript:history.back()\"><b>" . _BACK . "</b></a></div><br /><br />\n";
     }
+	echo '</div>';
 }
 
 function edit_account(){
     global $nuked, $user;
 
     define('EDITOR_CHECK', 1);
-
+	echo '<div id="User">';
     if ($user){
         $sql = mysql_query("SELECT pseudo, pass, url, mail, email, icq, msn, aim, yim, avatar, signature, country, game, xfire, facebook ,origin, steam, twitter, skype FROM " . USER_TABLE . " WHERE id = '" . $user[0] . "'");
         list($nick, $pass, $url, $mail, $email, $icq, $msn, $aim, $yim, $avatar, $signature, $pays, $jeu, $xfire, $facebook ,$origin, $steam, $twitter, $skype) = mysql_fetch_array($sql);
 
 		$sql_config = mysql_query("SELECT mail, icq, msn, aim, yim, xfire, facebook, originea, steam, twiter, skype, lien FROM ". $nuked['prefix'] ."_users_config");
 		list($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9, $c10, $c11, $c12) = mysql_fetch_array($sql_config);
-
-        echo "<br /><div style=\"text-align: center;\"><big><b>" . _YOURACCOUNT . "</b></big></div><br />\n"
-                . "<div style=\"text-align: center;\"><b><a href=\"index.php?file=User\">" . _INFO . "</a> | "
-                . "</b>" . _PROFIL . "<b> | "
-                . "<a href=\"index.php?file=User&amp;op=edit_pref\">" . _PREF . "</a> | "
-                . "<a href=\"index.php?file=User&amp;op=change_theme\">" . _THEMESELECT . "</a> | "
-                . "<a href=\"index.php?file=User&amp;nuked_nude=index&amp;op=logout\">" . _USERLOGOUT . "</a></b></div><br />\n";
+		
+		$sql3 = mysql_query('SELECT U.pseudo, U.url, U.mail, U.date, U.avatar, U.count, S.last_used FROM ' . USER_TABLE . ' AS U LEFT OUTER JOIN ' . SESSIONS_TABLE . ' AS S ON U.id = S.user_id WHERE U.id = "' . $user[0] . '"');
+        $user_data = mysql_fetch_array($sql3);
+		$avatar = !$user_data['avatar'] ? 'modules/User/images/noavatar.png' : checkimg($user_data['avatar']);
+		$last_used = $user_data['last_used'] > 0 ? nkDate($user_data['last_used']) : 'N/A';
+		$website = !$user_data['url'] ? 'N/A' : $user_data['url'];
+		echo '<div class="profilegauche"><div class="avatar"><img src="' . $avatar .'" class="img-polaroid" ></div>';
+		echo '
+		<ul class="nav nav-list">
+		<li class="nav-header">' . _YOURACCOUNT . '</li>
+		<li class="active"><a href="#">' . _INFO . '</a></li>
+		<li><a href="index.php?file=User&amp;op=edit_account">' . _PROFIL . '</a></li>
+		<li><a href="index.php?file=User&amp;op=edit_pref">' . _PREF . '</a></li>
+		<li><a href="index.php?file=User&amp;op=change_theme">' . _THEMESELECT . '</a></li>
+		<li><a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></li>
+		<li class="nav-header infos">' . _ACCOUNT .'</li>
+        <li><b>' . _NICK . ' :</b> ' . $user_data['pseudo'] . '</li>
+        <li><b>' . _WEBSITE . ' :</b> ' . $website . '</li>
+        <li><b>' . _MAIL . ' :</b> ' . $user_data['mail'] . '</li>
+        <li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>
+        <li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>
+		</ul></div>';
 
         echo "<script type=\"text/javascript\">\n"
                 ."<!--\n"
@@ -384,16 +378,15 @@ function edit_account(){
                 . "// -->\n"
                 . "</script>\n";
 
-        echo "<div style=\"text-align: center;\"><small><i>" . _PASSFIELD . "</i></small></div><br />\n"
+        echo "<div class=\"profiledroit\">\n"
                 . "<form method=\"post\" action=\"index.php?file=User&amp;op=update\" enctype=\"multipart/form-data\" onsubmit=\"return verifchamps();\">\n"
-                . "<table style=\"margin-left: auto;margin-right: auto;text-align: left;\" cellspacing=\"1\" cellpadding=\"2\">\n"
+                . "<table class=\"table table-striped\">\n"
+				. "<tr><td colspan=\"2\">" . _PASSFIELD . "</td></tr>\n"
                 . "<tr><td><b>" . _NICK . " : </b></td><td><input id=\"edit_pseudo\" type=\"text\" name=\"nick\" size=\"30\" maxlength=\"30\" value=\"" . $nick . "\" /> *</td></tr>\n"
                 . "<tr><td><b>" . _USERPASSWORD . " : </b></td><td><input type=\"password\" name=\"pass_reg\" size=\"10\" maxlength=\"15\" autocomplete=\"off\" /> *</td></tr>\n"
                 . "<tr><td><b>" . _PASSCONFIRM . " : </b></td><td><input type=\"password\" name=\"pass_conf\" size=\"10\" maxlength=\"15\" autocomplete=\"off\" /> *</td></tr>\n"
                 . "<tr><td><b>" . _MAIL . " " . _PRIVATE . " : </b></td><td><input id=\"edit_mail\" type=\"text\" name=\"mail\" size=\"30\" maxlength=\"80\" value=\"" . $mail. "\" /> *</td></tr>\n"
-                . "<tr><td colspan=\"2\">&nbsp;</td></tr>\n"
-                . "<tr><td><b>" . _USERPASSWORD . " (" . _PASSOLD . ") :</b></td><td><input type=\"password\" name=\"pass_old\" size=\"10\" maxlength=\"15\" /> *</td></tr>\n"
-                . "<tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+                . "<tr><td><b>" . _USERPASSWORD . " (" . _PASSOLD . ") :</b></td><td><input type=\"password\" name=\"pass_old\" size=\"10\" maxlength=\"15\" /> *</td></tr>\n";
 				if ($c1 == 'on'){echo "<tr><td><b>" . _MAIL . " " . _PUBLIC . " : </b></td><td><input type=\"text\" name=\"email\" size=\"30\" maxlength=\"80\" value=\"" . $email . "\" /></td></tr>\n";}
 				if ($c2 == 'on'){echo "<tr><td><b>" . _ICQ . " : </b></td><td><input type=\"text\" name=\"icq\" size=\"30\" maxlength=\"30\" value=\"" . $icq . "\" /></td></tr>\n";}
 				if ($c3 == 'on'){echo "<tr><td><b>" . _MSN . " : </b></td><td><input type=\"text\" name=\"msn\" size=\"30\" maxlength=\"80\" value=\"" . $msn . "\" /></td></tr>\n";}
@@ -401,7 +394,7 @@ function edit_account(){
 				if ($c5 == 'on'){echo "<tr><td><b>" . _YIM . " : </b></td><td><input type=\"text\" name=\"yim\" size=\"30\" maxlength=\"30\" value=\"" . $yim . "\" /></td></tr>\n";}
 				if ($c6 == 'on'){echo "<tr><td><b>" . _XFIRE . " : </b></td><td><input type=\"text\" name=\"xfire\" size=\"30\" maxlength=\"30\" value=\"" . $xfire . "\" /></td></tr>\n";}
 				if ($c7 == 'on'){echo "<tr><td><b>" . _FACEBOOK . " : </b></td><td><input type=\"text\" name=\"facebook\" size=\"30\" maxlength=\"30\" value=\"" . $facebook . "\" /></td></tr>\n";}
-				if ($c8 == 'on'){echo "<tr><tr><td><b>" . _ORIGINEA . " : </b></td><td><input type=\"text\" name=\"origin\" size=\"30\" maxlength=\"30\" value=\"" . $origin . "\" /></td></tr>\n";}
+				if ($c8 == 'on'){echo "<tr><td><b>" . _ORIGINEA . " : </b></td><td><input type=\"text\" name=\"origin\" size=\"30\" maxlength=\"30\" value=\"" . $origin . "\" /></td></tr>\n";}
 				if ($c9 == 'on'){echo "<tr><td><b>" . _STEAM . " : </b></td><td><input type=\"text\" name=\"steam\" size=\"30\" maxlength=\"30\" value=\"" . $steam . "\" /></td></tr>\n";}
 				if ($c10 == 'on'){echo "<tr><td><b>" . _TWITER . " : </b></td><td><input type=\"text\" name=\"twitter\" size=\"30\" maxlength=\"30\" value=\"" . $twitter . "\" /></td></tr>\n";}	
 				if ($c11 == 'on'){echo "<tr><td><b>" . _SKYPE . " : </b></td><td><input type=\"text\" name=\"skype\" size=\"30\" maxlength=\"30\" value=\"" . $skype . "\" /></td></tr>\n";}	
@@ -458,7 +451,7 @@ function edit_account(){
                     . "&nbsp;[ <a  href=\"#\" onclick=\"javascript:window.open('index.php?file=User&amp;nuked_nude=index&amp;op=show_avatar','Avatar','toolbar=0,location=0,directories=0,status=0,scrollbars=1,resizable=0,copyhistory=0,menuBar=0,width=350,height=450,top=30,left=0');return(false)\">" . _SEEAVATAR . "</a> ]</td></tr><tr><td>&nbsp;</td>\n";
 
             if ($nuked['avatar_upload'] == "on"){
-                echo "<td><input type=\"file\" name=\"fichiernom\" /></td></tr><tr><td colspan=\"2\">&nbsp;</td></tr>\n";
+                echo "<td><input type=\"file\" name=\"fichiernom\" /></td></tr>\n";
             }
             else{
                 echo "<td>&nbsp;</td></tr>\n";
@@ -472,7 +465,7 @@ function edit_account(){
         }
 
         echo "<tr><td colspan=\"2\">&nbsp;</td></tr><tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" name=\"Submit\" value=\"" . _MODIF . "\" />\n"
-                . "<input type=\"hidden\" name=\"pass\" value=\"" . $pass . "\" /></td></tr></table></form><br />\n";
+                . "<input type=\"hidden\" name=\"pass\" value=\"" . $pass . "\" /></td></tr></table></form><br /></div>\n";
     }
     else{
         echo "<br /><br /><div style=\"text-align: center;\">" . _USERENTRANCE . "</div><br /><br />";

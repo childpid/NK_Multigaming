@@ -64,7 +64,7 @@ body {
 	-webkit-border-radius: 2px 2px 0px 0px;
 	-moz-border-radius: 2px 2px 0px 0px;
 	border-radius: 2px 2px 0px 0px;	
-}
+	}
 .widget-content {
 	color: #777;
 	background: #FBFBFB;
@@ -550,18 +550,32 @@ color: #8A8A8A;
 	float: right;
 }
 #User .block-widget {
-margin: 2%;	
+margin: 2%;
+padding: 0%;
+}
+#User .table {
+margin-bottom: 0px;	
 }
 #User .block-widget-content {
 	text-align: center;
-}
-#User .block-widget-content li{
-	text-align: left;
+	padding: 0%;
 }
 #User .avatar {
 margin: 5px 0 5px 0px;
 width: 98%;
 text-align: center;
+}
+#User td:last-child {
+text-align: center;	
+}
+#User td,#User tbody tr:last-child {
+border: 0px;
+}
+#User tbody tr, #User thead tr{
+border-bottom: 1px solid #DDD;	
+}
+#User tfoot tr {
+border-top: 1px solid #DDD;		
 }
 /* Style de placement */
 .center {
