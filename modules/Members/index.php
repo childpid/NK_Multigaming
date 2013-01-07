@@ -302,8 +302,8 @@ if ($visiteur >= $level_access && $level_access > -1){
                 $mail = '';
             } 
 
-            $sql2 = mysql_query("SELECT prenom, age, sexe, ville, motherboard, cpu, ram, video, resolution, son, ecran, souris, clavier, connexion, system, photo, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . USER_DETAIL_TABLE . " WHERE user_id = '" . $id_user . "'");
-            list($prenom, $birthday, $sexe, $ville, $motherboard, $cpu, $ram, $video, $resolution, $sons, $ecran, $souris, $clavier, $connexion, $osystem, $photo, $pref1, $pref2, $pref3, $pref4, $pref5) = mysql_fetch_array($sql2);
+            $sql2 = mysql_query("SELECT prenom, age, sexe, ville, motherboard, cpu, ram, video, resolution, son, ecran, souris, clavier, connexion, system, photo FROM " . USER_DETAIL_TABLE . " WHERE user_id = '" . $id_user . "'");
+            list($prenom, $birthday, $sexe, $ville, $motherboard, $cpu, $ram, $video, $resolution, $sons, $ecran, $souris, $clavier, $connexion, $osystem, $photo) = mysql_fetch_array($sql2);
 
             $sql3 = mysql_query("SELECT titre, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . GAMES_TABLE . " WHERE id = '" . $game_id . "'");
             list($titre, $pref_1, $pref_2, $pref_3, $pref_4, $pref_5) = mysql_fetch_array($sql3);
@@ -433,16 +433,6 @@ if ($visiteur >= $level_access && $level_access > -1){
 				echo '<ul></div></div>';
 			}
 			
-			if ( $pref1 || $pref2 || $pref3 || $pref4 || $pref5 ){
-				echo '<div class="block-widget"><div class="block-widget-header">' . $titre . '</div><div class="block-widget-content"><ul>';
-				
-				if ($pref1) echo '<li>' . $pref_1 . ' : <b>' . $pref1 . '</b></li>';
-				if ($pref2) echo '<li>' . $pref_2 . ' : <b>' . $pref2 . '</b></li>';
-				if ($pref3) echo '<li>' . $pref_3 . ' : <b>' . $pref3 . '</b></li>';
-				if ($pref4) echo '<li>' . $pref_4 . ' : <b>' . $pref4 . '</b></li>';
-				if ($pref5) echo '<li>' . $pref_5 . ' : <b>' . $pref5 . '</b></li>';
-				echo '<ul></div></div>';
-			}
 			echo '<div class="block-widget"><div class="block-widget-header">' . _LASTUSERMESS . '</div><div class="block-widget-content"><ul>';
 			$iforum = 0;
             $sql_forum = mysql_query("SELECT id, titre, date, thread_id, forum_id FROM " . FORUM_MESSAGES_TABLE . " WHERE auteur_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
