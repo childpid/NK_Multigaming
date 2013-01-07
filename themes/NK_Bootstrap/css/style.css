@@ -6,7 +6,6 @@
 html,
 body {
 	min-height: 100%;
-	overflow: auto;
     height: 100%;
 	width: 100%;
 	font-size: 14px;
@@ -523,7 +522,13 @@ margin: 2%;
 } 
 /* Module User */
 #User{
-	height: 100%;
+}
+#User .alert {
+width: 50%;
+margin-left: auto;
+margin-right: auto;
+margin-top: 10px;
+text-align: center;
 }
 #User .profilegauche {
 	background-color: #F4F4F4;	
