@@ -5,11 +5,7 @@
 */
 html,
 body {
-	min-height: 100%;
-    height: 100%;
-	width: 100%;
 	font-size: 14px;
-	line-height: 14px;
 	background: url('../img/background.png');
 }
 .well-grey {
@@ -520,6 +516,37 @@ margin: 2%;
 #Forum {
 margin: 2%;
 } 
+#Forum table {
+width: 100%;
+margin: 0px;
+padding: 0px;
+}
+#Forum table caption {
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 5px;
+padding-bottom: 5px;
+background-color: #FAFAFA;
+background-image: -moz-linear-gradient(top, white, #F2F2F2);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#F2F2F2));
+background-image: -webkit-linear-gradient(top, white, #F2F2F2);
+background-image: -o-linear-gradient(top, white, #F2F2F2);
+background-image: linear-gradient(to bottom, white, #F2F2F2);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+border-bottom: 1px solid #D4D4D4;
+}
+#Forum table caption a {
+text-transform: uppercase;
+font-size: 18px;
+}
+#Forum .forumcategorie {
+border: 1px solid #D4D4D4;
+margin-bottom: 20px;
+}
+#Forum .linksfooter {
+text-align: right;
+}
 /* Module User */
 #User{
 }

@@ -87,7 +87,7 @@ if ($_REQUEST['cat'] != "")
 	
 	if ($user && $user[4] != "")
 	{
-		$lst = "<br />" . _LASTVISIT . " : " . $your_last_visite;
+		$lst = ' - ' . _LASTVISIT . " : " . $your_last_visite;
 	} 
 
 	if($nuked['forum_search_secondaire'] == "oui")	
@@ -115,22 +115,7 @@ echo '<ul class="breadcrumb">
 //Fin Header Forum
 echo '</div>';
 
-echo"<div class=\"Forum_cadre_haut\">\n";		
-
-echo "		<table class=\"Forum_haut_t\" cellspacing=\"1\">\n"
-		. "		<tr class=\"Forum_haut_r\">\n"
-		. "			<td class=\"Forum_haut_d1\">&nbsp;</td>\n";
-  if ($nuked['image_forums'] == "on")
-    { 
-    echo "<td style=\"width: 6%;\" >&nbsp;</td>\n";
-    }			
-		echo "		<td class=\"Forum_haut_d2\"><b>" . _FORUMS . "</b></td>\n"
-		. "			<td class=\"Forum_haut_d3\"><b>" . _SUBJECTS . "</b></td>\n"
-		. "			<td class=\"Forum_haut_d4\"><b>" . _MESSAGES . "</b></td>\n"
-		. "			<td class=\"Forum_haut_d5\"><b>" . _LASTPOST . "</b></td>\n"
-		. "		</tr>\n"
-		. "	</table>\n";
-		
+echo '<div class="forumcontenu">';		
 if ($_REQUEST['cat'] != "")
 {
     $main = mysql_query("SELECT nom, id, image FROM " . FORUM_CAT_TABLE . " WHERE '" . $visiteur . "' >= niveau AND id = '" . $_REQUEST['cat'] . "'");
@@ -143,23 +128,21 @@ else
 while (list($nom_cat, $cid, $cat_image) = mysql_fetch_row($main))
 {
     $nom_cat = printSecuTags($nom_cat);
-	
-echo "	<table class=\"Forum_ariane_t\" cellspacing=\"1\">\n"
-		. "	<tr class=\"Forum_ariane_r\">\n";
-if ($cat_image != "")
-{ 
-        echo " <td class=\"Forum_ariane_d1\"><div style=\"margin: 0 0 -2px 0;\"><a href=\"index.php?file=Forum&amp;cat=" . $cid . "\"><img src=\"" . $cat_image . "\" style=\"border:0px;\" /></a></div></td>\n"
-            . "		</tr>\n"
-            . "	</table>\n";		
-}    
-else
-{		
-		echo '<td><div class="navbar"><div class="navbar-inner">
-		<a class="brand" href="index.php?file=Forum&amp;page=main&amp;cat=' . $cid . '">' . $nom_cat . '</a>
-		</div></div<
-		</td></tr></table>';
-}	
-echo "		<table class=\"Forum_contenu_t\" cellspacing=\"1\">\n";
+	if ($cat_image != "")
+	{ 
+	$nom_cat = '<img src="' . $cat_image . '"/>';		
+	}   
+	echo '<div class="forumcategorie"><table class="table table-striped"><caption><a href="index.php?file=Forum&amp;page=main&amp;cat=' . $cid . '">' . $nom_cat . '</a></caption><thead><tr>';
+	if ($nuked['image_forums'] == "on")
+    { 
+    echo '<td colspan="2"></td>';
+    }
+	else 
+	{
+	echo '<td></td>';
+	}
+	echo '<td>' . _FORUMS . '</td><td>' . _SUBJECTS . '</td><td>' . _MESSAGES . '</td><td>' . _LASTPOST . '</td></tr></thead><tbody>';
+		
 	
 				$sqls = mysql_query("SELECT id from " . FORUM_TABLE . " WHERE cat = '" . $cid . "'");
 				list($id_cat) = mysql_fetch_row($sqls);	
@@ -315,31 +298,22 @@ echo "		<table class=\"Forum_contenu_t\" cellspacing=\"1\">\n";
 						. "<td class=\"Forum_contenu_d6\" colspan=\"5\">" . _NOFORUM ."</td>\n";
 				}	
 
-echo "		<table class=\"Forum_bas_t\" cellspacing=\"1\">\n"
-	. "			<tr class=\"Forum_bas_r\">\n"
-	. "				<td class=\"Forum_bas_d\"></td>\n"
-	. "			</tr>\n"
-	. "		</table>\n";
+echo '</tbody></table></div>';
 } 
 
-echo"</div>\n";
+echo '</div>';
 
-echo "		<table class=\"Forum_markread_t\" cellspacing=\"1\">\n"
-		. "			<tr class=\"Forum_markread_r\">\n"
-		. "				<td class=\"Forum_markread_d\">";
+echo '<div class="forumfooter"><div class="linksfooter">';
+	if ($user)
+	{
+	echo "<a href=\"index.php?file=Forum&amp;op=mark\">" . _MARKREAD . "</a>";
+	} 
+	if ($user && $user[4] != "")
+	{
+	echo "<br /><a href=\"index.php?file=Forum&amp;page=search&amp;do=search&amp;date_max=" . $user[4] . "\">" . _VIEWLASTVISITMESS . "</a>";
+	} 
+echo '</div>';
 
-								if ($user)
-								{
-									echo "<a href=\"index.php?file=Forum&amp;op=mark\">" . _MARKREAD . "</a>";
-								} 
-								if ($user && $user[4] != "")
-								{
-									echo "<br /><a href=\"index.php?file=Forum&amp;page=search&amp;do=search&amp;date_max=" . $user[4] . "\">" . _VIEWLASTVISITMESS . "</a>";
-								} 
-
-echo "			</td>\n"
-		. "			</tr>\n"
-		. "		</table>\n";
 
 echo"<div class=\"Forum_cadre_bas\">\n";	
 		
@@ -503,19 +477,6 @@ echo "	<table class=\"Forum_online_bas_t\">\n"
 	. "		</tr>\n"
 	. "	</table>\n";
 }	
-	
-echo "	<table class=\"Forum_info_t\" cellspacing=\"0\">\n"
-	. "		<tr class=\"Forum_info_r1\">\n"
-	. "			<td class=\"Forum_info_d1\"><img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/forum_new.png\" alt=\"\" /></td>\n"
-	. "			<td class=\"Forum_info_d2\">&nbsp;" . _NEWSPOSTLASTVISIT . "</td>\n"
-	. "		</tr>\n"
-	. "		<tr class=\"Forum_info_r2\">\n"
-	. "			<td class=\"Forum_info_d3\"><img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/forum.png\" alt=\"\" /></td>\n"
-	. "			<td class=\"Forum_info_d4\">&nbsp;" . _NOPOSTLASTVISIT . "</td>\n"
-	. "		</tr>\n"
-	. "</table>\n";
-	
-	
-echo '</div></div>';	
+echo '</div></div></div>';	
 closetable();
 ?>
