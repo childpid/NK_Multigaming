@@ -22,6 +22,8 @@ define("_PRIVATE","privé");
 define("_DATEUSER","Date d arrivée");
 define("_HELLO","Bonjour");
 define("_USERLOGOUT","Déconnexion");
+define("_PREFGAMES","Mes jeux");
+define("_NOGAMES","Aucun jeux disponible");
 define("_PREF","Préférences");
 define("_ACCOUNT","Compte");
 define("_INFOPERSO","Infos générales");

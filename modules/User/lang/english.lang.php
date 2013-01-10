@@ -23,6 +23,8 @@ define("_PRIVATE","private");
 define("_DATEUSER","Join Date");
 define("_HELLO","Hello");
 define("_USERLOGOUT","Logout");
+define("_PREFGAMES","My games");
+define("_NOGAMES","No games available");
 define("_PREF","Preferences");
 define("_ACCOUNT","Account");
 define("_INFOPERSO","Profile");

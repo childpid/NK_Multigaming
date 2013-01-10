@@ -223,7 +223,7 @@ $req = mysql_query($sql);
 //******Mises à jour des tables******
 
   $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_users ADD COLUMN (xfire varchar(50), facebook varchar(50), origin varchar(50), steam varchar(50), twitter varchar(50), skype varchar(50))");
-
+  $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_users DROP `game`, DROP `team`, DROP `team2`, DROP `team3`;");
   $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_team_rank ADD COLUMN (image varchar(200), couleur varchar(6))");
  
   $sql = mysql_query("ALTER TABLE  " . $nuked['prefix'] . "_forums ADD COLUMN (image varchar(200))");

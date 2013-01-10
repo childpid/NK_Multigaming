@@ -5,6 +5,7 @@
 */
 html,
 body {
+	height: 100%;
 	font-size: 14px;
 	background: url('../img/background.png');
 }
@@ -549,6 +550,10 @@ text-align: right;
 }
 /* Module User */
 #User{
+height: 100%;
+width: 100%;
+position: relative;
+display: table;
 }
 #User .alert {
 width: 50%;
@@ -557,13 +562,22 @@ margin-right: auto;
 margin-top: 10px;
 text-align: center;
 }
+#User .block-widget-content select {
+margin: 2%;	
+}
+#User .mygames{
+width: 50%;
+margin:2%;
+text-align: left;
+}
 #User .profilegauche {
 	background-color: #F4F4F4;	
 	width: 20%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	float: left;
+	display: table-cell;
+	vertical-align: top;
 }
 #User .profilegauche b {
 	color: #353535;	
@@ -579,7 +593,8 @@ color: #8A8A8A;
 	margin: 0;
 	padding: 0;
 	margin-left: -1px;
-	float: right;
+	display: table-cell;
+	vertical-align: top;
 }
 #User .block-widget {
 margin: 2%;

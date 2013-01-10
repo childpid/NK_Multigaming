@@ -16,17 +16,14 @@ translate('modules/Members/lang/' . $language . '.lang.php');
 // Inclusion système Captcha
 include_once('Includes/nkCaptcha.php');
 include_once('Includes/hash.php');
+include_once('modules/User/mygames.php');
 
 // On determine si le captcha est actif ou non
 if (_NKCAPTCHA == 'off') $captcha = 0;
 else if ((_NKCAPTCHA == 'auto' OR _NKCAPTCHA == 'on') && $user[1] > 0)  $captcha = 0;
 else $captcha = 1;
-
-function index(){
-    global $user, $nuked, $bgcolor1, $bgcolor2, $bgcolor3;
-	echo '<div id="User">';
-    if ($user){
-        opentable();
+function leftpannel() {
+		global $user, $nuked;
 		echo '<div class="profilegauche">';
 		$sql3 = mysql_query('SELECT U.pseudo, U.url, U.mail, U.date, U.avatar, U.count, S.last_used FROM ' . USER_TABLE . ' AS U LEFT OUTER JOIN ' . SESSIONS_TABLE . ' AS S ON U.id = S.user_id WHERE U.id = "' . $user[0] . '"');
         $user_data = mysql_fetch_array($sql3);
@@ -36,20 +33,55 @@ function index(){
 		echo '<div class="avatar"><img src="' . $avatar .'" class="img-polaroid" ></div>';
 		echo '
 		<ul class="nav nav-list">
-		<li class="nav-header">' . _YOURACCOUNT . '</li>
-		<li class="active"><a href="#">' . _INFO . '</a></li>
-		<li><a href="index.php?file=User&amp;op=edit_account">' . _PROFIL . '</a></li>
-		<li><a href="index.php?file=User&amp;op=edit_pref">' . _PREF . '</a></li>
-		<li><a href="index.php?file=User&amp;op=change_theme">' . _THEMESELECT . '</a></li>
-		<li><a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></li>
+		<li class="nav-header">' . _YOURACCOUNT . '</li>';
+		if($_REQUEST['op'] == index) {
+		echo '<li class="active"><a href="#">' . _INFO . '</a></li>';
+		}
+		else {
+		echo '<li><a href="index.php?file=User">' . _INFO . '</a></li>';
+		}
+		if($_REQUEST['op'] == edit_account) {
+		echo '<li class="active"><a href="#">' . _PROFIL . '</a></li>';
+		}
+		else {
+		echo '<li><a href="index.php?file=User&amp;op=edit_account">' . _PROFIL . '</a></li>';
+		}
+		if($_REQUEST['op'] == edit_pref) {
+		echo '<li class="active"><a href="#">' ._PREF . '</a></li>';
+		}
+		else {
+		echo '<li><a href="index.php?file=User&amp;op=edit_pref">' . _PREF . '</a></li>';
+		}
+		if($_REQUEST['op'] == edit_games) {
+		echo '<li class="active"><a href="#">' ._PREFGAMES . '</a></li>';
+		}
+		else {
+		echo '<li><a href="index.php?file=User&amp;op=edit_games">' . _PREFGAMES . '</a></li>';
+		}
+		if($_REQUEST['op'] == change_theme) {
+		echo '<li class="active"><a href="#">' . _THEMESELECT . '</a></li>';
+		}
+		else {
+		echo '<li><a href="index.php?file=User&amp;op=change_theme">' . _THEMESELECT . '</a></li>';
+		}
+		echo '<li><a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></li>
 		<li class="nav-header infos">' . _ACCOUNT .'</li>
         <li><b>' . _NICK . ' :</b> ' . $user_data['pseudo'] . '</li>
         <li><b>' . _WEBSITE . ' :</b> ' . $website . '</li>
         <li><b>' . _MAIL . ' :</b> ' . $user_data['mail'] . '</li>
         <li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>
         <li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>
-		</ul>';
-		echo '</div><div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' .  _MESSPV . '</div><div class="block-widget-content"><table class="table table-striped"><tbody>';
+		</ul></div>';
+}
+
+
+function index(){
+    global $user, $nuked;
+	echo '<div id="User">';
+    if ($user){
+        opentable();
+		leftpannel();
+		echo '<div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' .  _MESSPV . '</div><div class="block-widget-content"><table class="table table-striped"><tbody>';
 
         $sql2 = mysql_query('SELECT mid FROM ' . USERBOX_TABLE . ' WHERE user_for = "' . $user[0] . '" AND status = 1');
         $nb_mess_lu = mysql_num_rows($sql2);
@@ -173,15 +205,7 @@ function index(){
             }
         }
 
-        echo '</tbody></table></div></div></div>
-		<div class="clearfix"></div>
-		</div>';
-		echo "<script>
-		$(document).ready(function(){
-		var high = $(window).height() - $('#container-fluid').height();
-		$('#User').height(high);
-		});
-		</script>";
+        echo '</tbody></table></div></div></div></div>';
         closetable();
     }
     else{
@@ -336,27 +360,7 @@ function edit_account(){
 		$sql_config = mysql_query("SELECT mail, icq, msn, aim, yim, xfire, facebook, originea, steam, twiter, skype, lien FROM ". $nuked['prefix'] ."_users_config");
 		list($c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9, $c10, $c11, $c12) = mysql_fetch_array($sql_config);
 		
-		$sql3 = mysql_query('SELECT U.pseudo, U.url, U.mail, U.date, U.avatar, U.count, S.last_used FROM ' . USER_TABLE . ' AS U LEFT OUTER JOIN ' . SESSIONS_TABLE . ' AS S ON U.id = S.user_id WHERE U.id = "' . $user[0] . '"');
-        $user_data = mysql_fetch_array($sql3);
-		$avatar = !$user_data['avatar'] ? 'modules/User/images/noavatar.png' : checkimg($user_data['avatar']);
-		$last_used = $user_data['last_used'] > 0 ? nkDate($user_data['last_used']) : 'N/A';
-		$website = !$user_data['url'] ? 'N/A' : $user_data['url'];
-		echo '<div class="profilegauche"><div class="avatar"><img src="' . $avatar .'" class="img-polaroid" ></div>';
-		echo '
-		<ul class="nav nav-list">
-		<li class="nav-header">' . _YOURACCOUNT . '</li>
-		<li><a href="index.php?file=User">' . _INFO . '</a></li>
-		<li class="active"><a href="#">' . _PROFIL . '</a></li>
-		<li><a href="index.php?file=User&amp;op=edit_pref">' . _PREF . '</a></li>
-		<li><a href="index.php?file=User&amp;op=change_theme">' . _THEMESELECT . '</a></li>
-		<li><a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></li>
-		<li class="nav-header infos">' . _ACCOUNT .'</li>
-        <li><b>' . _NICK . ' :</b> ' . $user_data['pseudo'] . '</li>
-        <li><b>' . _WEBSITE . ' :</b> ' . $website . '</li>
-        <li><b>' . _MAIL . ' :</b> ' . $user_data['mail'] . '</li>
-        <li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>
-        <li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>
-		</ul></div>';
+		leftpannel();
 
         echo "<script type=\"text/javascript\">\n"
                 ."<!--\n"
@@ -474,12 +478,6 @@ function edit_account(){
 
         echo "<tr><td colspan=\"2\">&nbsp;</td></tr><tr><td colspan=\"2\" align=\"center\"><input class=\"btn\" type=\"submit\" name=\"Submit\" value=\"" . _MODIF . "\" />\n"
                 . "<input type=\"hidden\" name=\"pass\" value=\"" . $pass . "\" /></td></tr></table></form><br /></div></div></div>\n";
-		echo "<script>
-		$(document).ready(function(){
-		var high = $('.profiledroit').height();
-		$('#User').height(high+50);
-		});
-		</script>";
     }
     else{
         echo "<br /><br /><div style=\"text-align: center;\">" . _USERENTRANCE . "</div><br /><br />";
@@ -499,30 +497,10 @@ function edit_pref(){
             list ($jour, $mois, $an) = explode ('/', $age);
         }
 
-		echo '<div class="profilegauche">';
-		$sql3 = mysql_query('SELECT U.pseudo, U.url, U.mail, U.date, U.avatar, U.count, S.last_used FROM ' . USER_TABLE . ' AS U LEFT OUTER JOIN ' . SESSIONS_TABLE . ' AS S ON U.id = S.user_id WHERE U.id = "' . $user[0] . '"');
-        $user_data = mysql_fetch_array($sql3);
-		$avatar = !$user_data['avatar'] ? 'modules/User/images/noavatar.png' : checkimg($user_data['avatar']);
-		$last_used = $user_data['last_used'] > 0 ? nkDate($user_data['last_used']) : 'N/A';
-		$website = !$user_data['url'] ? 'N/A' : $user_data['url'];
-		echo '<div class="avatar"><img src="' . $avatar .'" class="img-polaroid" ></div>';
-		echo '
-		<ul class="nav nav-list">
-		<li class="nav-header">' . _YOURACCOUNT . '</li>
-		<li><a href="index.php?file=User">' . _INFO . '</a></li>
-		<li><a href="index.php?file=User&amp;op=edit_account">' . _PROFIL . '</a></li>
-		<li class="active"><a href="#">' . _PREF . '</a></li>
-		<li><a href="index.php?file=User&amp;op=change_theme">' . _THEMESELECT . '</a></li>
-		<li><a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></li>
-		<li class="nav-header infos">' . _ACCOUNT .'</li>
-        <li><b>' . _NICK . ' :</b> ' . $user_data['pseudo'] . '</li>
-        <li><b>' . _WEBSITE . ' :</b> ' . $website . '</li>
-        <li><b>' . _MAIL . ' :</b> ' . $user_data['mail'] . '</li>
-        <li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>
-        <li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>
-		</ul></div><div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' . _INFOPERSO . '</div><div class="block-widget-content">';
-
-        echo '<form method="post" action="index.php?file=User&amp;op=update_pref" enctype="multipart/form-data">
+		leftpannel();
+		
+        echo '<div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' . _INFOPERSO . '</div><div class="block-widget-content">
+			  <form method="post" action="index.php?file=User&amp;op=update_pref" enctype="multipart/form-data">
               <table class="table table-striped">
               <tr><td>' . _LASTNAME . ' :</td><td><input type="text" name="prenom" value="' . $prenom . '" class="span3" /></td></tr>
               <tr><td><b> ' . _BIRTHDAY . ' :</b></td><td><select name="jour">';
@@ -694,12 +672,6 @@ function edit_pref(){
 
         echo "</select></td></tr>\n";
         echo "</table></div></div><div style=\"text-align: center;\"><br /><input class=\"btn\" type=\"submit\" value=\"" . _MODIFPREF . "\" /></div></form><br />\n";
-		echo "<script>
-		$(document).ready(function(){
-		var high = $('.profiledroit').height();
-		$('#User').height(high+50);
-		});
-		</script>";
     }
     else{
         echo "<br /><br /><div style=\"text-align: center;\">" . _USERENTRANCE . "</div><br /><br />";
@@ -1608,28 +1580,9 @@ function change_theme(){
 
     $cookietheme = $_COOKIE[$cookie_theme];
 		
-		echo '<div id="User"><div class="profilegauche">';
-		$sql3 = mysql_query('SELECT U.pseudo, U.url, U.mail, U.date, U.avatar, U.count, S.last_used FROM ' . USER_TABLE . ' AS U LEFT OUTER JOIN ' . SESSIONS_TABLE . ' AS S ON U.id = S.user_id WHERE U.id = "' . $user[0] . '"');
-        $user_data = mysql_fetch_array($sql3);
-		$avatar = !$user_data['avatar'] ? 'modules/User/images/noavatar.png' : checkimg($user_data['avatar']);
-		$last_used = $user_data['last_used'] > 0 ? nkDate($user_data['last_used']) : 'N/A';
-		$website = !$user_data['url'] ? 'N/A' : $user_data['url'];
-		echo '<div class="avatar"><img src="' . $avatar .'" class="img-polaroid" ></div>';
-		echo '
-		<ul class="nav nav-list">
-		<li class="nav-header">' . _YOURACCOUNT . '</li>
-		<li><a href="index.php?file=User">' . _INFO . '</a></li>
-		<li><a href="index.php?file=User&amp;op=edit_account">' . _PROFIL . '</a></li>
-		<li><a href="index.php?file=User&amp;op=edit_pref">' . _PREF . '</a></li>
-		<li class="active"><a href="#">' . _THEMESELECT . '</a></li>
-		<li><a href="index.php?file=User&amp;nuked_nude=index&amp;op=logout">' . _USERLOGOUT . '</a></li>
-		<li class="nav-header infos">' . _ACCOUNT .'</li>
-        <li><b>' . _NICK . ' :</b> ' . $user_data['pseudo'] . '</li>
-        <li><b>' . _WEBSITE . ' :</b> ' . $website . '</li>
-        <li><b>' . _MAIL . ' :</b> ' . $user_data['mail'] . '</li>
-        <li><b>' . _DATEUSER . ' : </b> ' . nkDate($user_data['date'], TRUE) . '</li>
-        <li><b>' . _LASTVISIT . ' : </b> ' . $last_used . '</li>
-		</ul></div><div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' . _SELECTTHEME . '</div><div class="block-widget-content">
+		echo '<div id="User">';
+		leftpannel();
+		echo '<div class="profiledroit"><div class="block-widget"><div class="block-widget-header">' . _SELECTTHEME . '</div><div class="block-widget-content">
 		<form method="post" action="index.php?file=User&amp;nuked_nude=index&amp;op=modif_theme">
         <table class="table table-striped">
         <tr><td><select name="user_theme">';
@@ -1656,12 +1609,6 @@ function change_theme(){
     
     closedir($handle);
     echo "</select></td></tr><tr><td align=\"center\"><input class=\"btn\" type=\"submit\" value=\"" . _CHANGETHEME . "\" /></td></tr></table></form></div></div>\n";
-	echo "<script>
-		$(document).ready(function(){
-		var high = $('.profilegauche').height();
-		$('#User').height(high+50);
-		});
-	</script>";
 }
 
 function modif_theme(){
@@ -1779,6 +1726,42 @@ function del_account($pass){
         redirect("index.php?file=User&op=edit_account", 2);
     }
 }
+function edit_games() {
+	global $user, $nuked;
+	if($user) {
+	echo '<div id="User">';
+	leftpannel();
+	echo '<div class="profiledroit">
+    <div class="block-widget"><div class="block-widget-header">' . _GAME . '</div><div class="block-widget-content"><div class="mygames">';
+	$sql = mysql_query("SELECT id, name FROM " . GAMES_TABLE . " ORDER BY name");
+	$check = mysql_num_rows($sql);
+	if($check > 0)
+	{
+	echo '<form method="post" action="index.php?file=User&op=update_games">';
+    while (list($game_id, $nom) = mysql_fetch_array($sql)){
+    $nom = htmlentities($nom);
+    echo '<label class="checkbox"><input type="checkbox" name="games[]" value="' . $game_id . '">' . $nom . '</label>';
+	}
+    echo '<input class="btn" type="submit" name="Submit" value="' . _MODIF . '"/></form>';
+	}
+	else {
+	echo _NOGAMES;
+	}
+	echo '</div></div></div></div></div>';
+	}
+}
+function update_games($games) {
+	global $user, $nuked;
+	/*
+	foreach ($_REQUEST['games'] as $gameid)
+	{
+	echo $gameid;	
+	}
+	*/
+	$upd3 = mysql_query("UPDATE " . USER_TABLE . " SET game = '" . $games . "' WHERE id = '" . $user[0] . "'");
+	echo "<br /><br /><div style=\"text-align: center;\">" . _INFOMODIF . "</div><br /><br />";
+    redirect("index.php?file=User", 1);
+}
 
 switch ($_REQUEST['op']){
     case"edit_account":
@@ -1865,6 +1848,16 @@ switch ($_REQUEST['op']){
         envoi_mail($_REQUEST['email']);
         closetable();
         break;
+	case"edit_games":
+		opentable();
+		edit_games();
+		closetable();
+		break;
+	case"update_games":
+		opentable();
+		update_games($_REQUEST['games']);
+		closetable();
+		break;
     default:
         index();
         break;
