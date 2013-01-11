@@ -158,7 +158,7 @@ else
     $pseudo_max = $max_pseudo;
 }
 
-echo "<table class=\"table-striped\" width=\"100%\"><tr><td>\n"
+echo '<div id="blocktextbox"><table class="table-striped" width="100%"><tr><td>'
 . "<div id=\"textbox\" style=\"overflow: auto;\">\n"
 . "<p>\n"
 . "<img src=\"images/loading.gif\" alt=\"Loading\" /><br />\n"
@@ -216,5 +216,5 @@ else
 	. "<b>" . _SMILEY . "</b></a></div><div style=\"text-align: center;\"><br />[ <a href=\"index.php?file=Textbox\">" . _SEEARCHIVES . "</a> ]</div></form><br />\n";
     }
 }
-echo"</div>\n";
+echo"</div></div>\n";
 ?>

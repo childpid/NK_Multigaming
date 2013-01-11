@@ -16,7 +16,7 @@ define('FORUM_PRIMAIRE_TABLE', $nuked['prefix'] . '_forums_primaire');
 include("modules/Forum/template.php");
 
 opentable();
-
+echo '<div id="Forum">';
 /****** Récupération du skin ******/
 $nuked['forum_skin'] = $nuked['forum_skin'];
 include('modules/Forum/Skin/' . $nuked['forum_skin'] . '/comun.php');
@@ -158,40 +158,24 @@ if ($visiteur >= $level_access && $level_access > -1)
 			$nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cat . "\"><b>" . $cat_name . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;page=viewforum&amp;forum_id=" . $_REQUEST['forum_id'] . "\"><b>" . $nom . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $titre . "</b>";		
 		}
 
-	if($nuked['forum_name_viewtopic'] == "oui" || $nuked['forum_search_viewtopic'] == "oui")	
-	{
-	echo"	<form method=\"get\" action=\"index.php\">\n"
-		. "	<table class=\"Forum_search_t\" width=\"100%\" cellspacing=\"0\">\n"
-		. "	<tr class=\"Forum_search_r\">\n";
-			
-			if($nuked['forum_name_viewtopic'] == "oui")	
-			{
-			echo "<td class=\"Forum_search_d1\"><big><b>" . $title . "</b></big><br />" . $titre . "</td>\n";
-			}
-			
-			if($nuked['forum_search_viewtopic'] == "oui")	
-			{
-			echo "<td class=\"Forum_search_d2\"><br /><b>" . _SEARCH . " :</b>\n"
-			. "	<input type=\"text\" name=\"query\" size=\"25\" /><br />\n"
-			. "	[ <a href=\"index.php?file=Forum&amp;page=search\">" . _ADVANCEDSEARCH . "</a> ]&nbsp;\n"
-			. "	<input type=\"hidden\" name=\"file\" value=\"Forum\" />\n"
-			. "	<input type=\"hidden\" name=\"page\" value=\"search\" />\n"
-			. "	<input type=\"hidden\" name=\"do\" value=\"search\" />\n"
-			. "	<input type=\"hidden\" name=\"into\" value=\"all\" />\n"
-			. "	</td>\n";
-			}
-			
-	echo "</tr>\n"
-		. "	</table>\n"
-		. "	</form>\n";	
-	}		
-	echo "	<table class=\"Forum_prevnext_top_t\" cellspacing=\"0\">\n"
-		. "	<tr class=\"Forum_prevnext_top_r\">\n"
-		. "	<td class=\"Forum_prevnext_top_d1\">" . $prev . "</td>\n"
-		. "	<td class=\"Forum_prevnext_top_d2\">" . $next . "</td>\n"
-		. "	</tr>\n"
-		. "	</table>\n"
-		. "	<table class=\"Forum_nav_t\" cellspacing=\"4\" border=\"0\">\n";
+	if($nuked['forum_search_secondaire'] == "oui")	
+		{
+		echo'
+		<div class="navbar">
+		<div class="navbar-inner">
+		<form class="navbar-form" method="get" action="index.php">
+		<input type="text" name="query" class="span3" />
+		<input type="hidden" name="file" value="Forum" />
+		<input type="hidden" name="page" value="search" />
+		<input type="hidden" name="do" value="search" />
+		<input type="hidden" name="into" value="all" />
+		<button type="submit" class="btn">' . _SEARCH . '</button>
+		</form>
+		</div>
+		</div>
+		';
+		}	
+	echo "<table>\n";
 
 					if ($count > $nb_mess_for_mess)
 					{		
@@ -388,26 +372,6 @@ if ($visiteur >= $level_access && $level_access > -1)
                 $online_connect = mysql_query("SELECT user_id FROM " . NBCONNECTE_TABLE . " WHERE user_id = '" . $auteur_id . "'");
                 list($connect_id) = mysql_fetch_array($online_connect);
 
-                $sql_game = mysql_query("SELECT name, icon, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . GAMES_TABLE . " WHERE id = '" . $user_game . "'" );
-                  list($game_name, $game_icon, $pref_1, $pref_2, $pref_3, $pref_4, $pref_5) = mysql_fetch_array($sql_game);
-                  $game_name = htmlentities($game_name);
-
-                  if ($game_icon != '' && is_file($game_icon)){
-                  $game_icone = $game_icon;
-                  } 
-                  else{
-                  $game_icone = 'images/games/nk.gif';
-                  }
-
-                  $sql_user_details = mysql_query("SELECT  pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . USER_DETAIL_TABLE . " WHERE user_id = '" . $auteur_id . "'");
-                  list($pref1, $pref2, $pref3, $pref4, $pref5) = mysql_fetch_array($sql_user_details);
-                  
-                  $pref_1 = htmlentities($pref_1);
-                  $pref_2 = htmlentities($pref_2);
-                  $pref_3 = htmlentities($pref_3);
-                  $pref_4 = htmlentities($pref_4);
-                  $pref_5 = htmlentities($pref_5);
-
                 if($auteur_id == $connect_id){
                   $online = "" . _STATUT . " : <img src=\"modules/Forum/images/icon_online.png\" alt=\"\" title=\"" . _ONLINESTATUT . "\" style=\"margin-bottom:-3px;cursor:pointer;\" /><br />\n";
                   }
@@ -514,17 +478,7 @@ if ($visiteur >= $level_access && $level_access > -1)
                     {
                         echo _IP . " : " . $auteur_ip ."<br />\n";
                     }
-                    echo $online;
-
-            if ($nuked['gamer_details'] == "on")
-            {                       
-                        echo "<br />" . _GAME . " : <img src=\"" . $game_icone . "\" alt=\"\" height=\"13px\" width=\"13px\" title=\"" . $game_name . "\" style=\"margin-bottom:-3px;\" /><br />\n";
-            if ($pref1) echo "" . $pref_1 . "&nbsp;:&nbsp;" . $pref1 . "<br />\n";
-            if ($pref2) echo "" . $pref_2 . "&nbsp;:&nbsp;" . $pref2 . "<br />\n";
-            if ($pref3) echo "" . $pref_3 . "&nbsp;:&nbsp;" . $pref3 . "<br />\n";
-            if ($pref4) echo "" . $pref_4 . "&nbsp;:&nbsp;" . $pref4 . "<br />\n";
-            if ($pref5) echo "" . $pref_5 . "&nbsp;:&nbsp;" . $pref5 . "<br />\n";
-            }         
+                    echo $online;     
                 } 
                 else
                 {
@@ -785,7 +739,6 @@ if ($visiteur >= $level_access && $level_access > -1)
 			
 		if ($level == 0 || $visiteur >= $level || $administrator == 1)
 		{
-			echo "&nbsp;<a href=\"index.php?file=Forum&amp;page=post&amp;forum_id=" . $_REQUEST['forum_id'] . "\"><img style=\"border: 0;\" src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/buttons/" . $language . "/newthread.png\" alt=\"\" title=\"" . _NEWSTOPIC . "\" /></a>&nbsp;";
 			if ($closed == 0 || $administrator == 1 || $visiteur >= admin_mod("Forum"))
 			{
 				echo "&nbsp;<a href=\"index.php?file=Forum&amp;page=post&amp;forum_id=" . $_REQUEST['forum_id'] . "&amp;thread_id=" . $_REQUEST['thread_id'] . "\"><img style=\"border: 0;\" src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/buttons/" . $language . "/reply.png\" alt=\"\" title=\"" . _REPLY . "\" /></a>";
@@ -796,47 +749,7 @@ if ($visiteur >= $level_access && $level_access > -1)
 		. "</tr>\n"
 		. "</table>\n"
 		. "<div class=\"Forum_cadre_bas\">\n";
-
-	$nb = nbvisiteur();
-	if($nuked['forum_who_viewtopic'] == "oui")	
-	{
-	echo "	<table class=\"Forum_online_t\" cellspacing=\"0\">\n"
-		. "	<tr class=\"Forum_online_r\">\n"
-		. "	<td class=\"Forum_online_d\" colspan=\"5\"><b>" . _FWHOISONLINE . "</b></td>\n"
-		. "	</tr>\n"
-		. "	</table>\n"
-		. "	<table class=\"Forum_online_centre_t\" cellspacing=\"1\">\n"
-		. "	<tr class=\"Forum_online_centre_r\">\n"
-		. "	<td class=\"Forum_online_centre_d1\"><img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/whoisonline.png\" alt=\"\" /></td>\n"
-		. "	<td class=\"Forum_online_centre_d2\">" . _THEREARE . "&nbsp;" . $nb[0] . "&nbsp;" . _FVISITORS . ", " . $nb[1] . "&nbsp;" . _FMEMBERS . "&nbsp;" . _AND . "&nbsp;" . $nb[2] . "&nbsp;" . _FADMINISTRATORS . "&nbsp;" . _ONLINE . "<br />" . _MEMBERSONLINE . " : ";
-
-			$i = 0;
-			$online = mysql_query("SELECT username FROM " . NBCONNECTE_TABLE . " WHERE type > 0 ORDER BY date");
-			while (list($name) = mysql_fetch_row($online))
-			{
-				$i++;
-				if ($i == $nb[3])
-				{
-					$sep = "";
-				} 
-				else
-				{
-					$sep = ", ";
-				} 
-				echo "<a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . urlencode($name) . "\">" . $name . "</a>" . $sep;
-			}
-			if (mysql_num_rows($online) == NULL) echo '<em>' . _NONE . '</em>';
-
-	echo "	</td>\n"
-		. "	<td class=\"Forum_online_centre_d3\"><b>" . _MODO . " :</b>&nbsp;<small>" . $lienmodo . "</small></td>\n"
-		. "	</tr>\n"
-		. "	</table>\n"
-		. "	<table class=\"Forum_online_bas_t\">\n"
-		. "	<tr class=\"Forum_online_bas_r\">\n"
-		. "	<td class=\"Forum_online_bas_d\"></td>\n"
-		. "	</tr>\n"
-		. "	</table>\n";
-	}		
+		
 	echo "	<table class=\"Forum_info_top_t\" cellspacing=\"0\">\n"
 		. "	<tr class=\"Forum_info_top_r1\">\n";
 
@@ -897,6 +810,7 @@ else
 {
     echo "<br /><br /><div style=\"text-align: center;\">" . _NOENTRANCE . "<br /><br /><a href=\"javascript:history.back()\"><b>" . _BACK . "</b></a></div><br /><br />";
 } 
+echo '</div>';
 closetable();
 
 ?>

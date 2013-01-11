@@ -12,6 +12,7 @@ if (!defined("INDEX_CHECK")){
 } 
 
 global $language, $user;
+translate("modules/User/lang/" . $language . ".lang.php");
 translate("modules/Members/lang/" . $language . ".lang.php");
 
 $visiteur = !$user ? 0 : $user[1];
@@ -288,11 +289,11 @@ if ($visiteur >= $level_access && $level_access > -1){
 			$sql_config = mysql_query("SELECT nivoreq FROM ". $nuked['prefix'] ."_users_config");
 		list($nivoreq) = mysql_fetch_array($sql_config);
 
-        $sql = mysql_query("SELECT U.id, U.icq, U.msn, U.aim, U.yim, U.email, U.url, U.date, U.game, U.country, U.xfire, U.facebook , U.origin, U.steam, U.twitter, U.skype, S.date FROM " . USER_TABLE . " AS U LEFT OUTER JOIN " . SESSIONS_TABLE . " AS S ON U.id = S.user_id WHERE U.pseudo = '" . $autor . "'");
+        $sql = mysql_query("SELECT U.id, U.icq, U.msn, U.aim, U.yim, U.email, U.url, U.date, U.country, U.xfire, U.facebook , U.origin, U.steam, U.twitter, U.skype, S.date FROM " . USER_TABLE . " AS U LEFT OUTER JOIN " . SESSIONS_TABLE . " AS S ON U.id = S.user_id WHERE U.pseudo = '" . $autor . "'");
         $test = mysql_num_rows($sql);
 
         if ($test > 0){
-            list($id_user, $icq, $msn, $aim, $yim, $email, $url, $date, $game_id, $country, $xfire, $facebook, $origin, $steam, $twitter, $skype, $last_used) = mysql_fetch_array($sql);
+            list($id_user, $icq, $msn, $aim, $yim, $email, $url, $date, $country, $xfire, $facebook, $origin, $steam, $twitter, $skype, $last_used) = mysql_fetch_array($sql);
             list ($pays, $ext) = explode ('.', $country);
 
             if ($email != ""){
@@ -304,11 +305,8 @@ if ($visiteur >= $level_access && $level_access > -1){
 
             $sql2 = mysql_query("SELECT prenom, age, sexe, ville, motherboard, cpu, ram, video, resolution, son, ecran, souris, clavier, connexion, system, photo FROM " . USER_DETAIL_TABLE . " WHERE user_id = '" . $id_user . "'");
             list($prenom, $birthday, $sexe, $ville, $motherboard, $cpu, $ram, $video, $resolution, $sons, $ecran, $souris, $clavier, $connexion, $osystem, $photo) = mysql_fetch_array($sql2);
-
-            $sql3 = mysql_query("SELECT titre, pref_1, pref_2, pref_3, pref_4, pref_5 FROM " . GAMES_TABLE . " WHERE id = '" . $game_id . "'");
-            list($titre, $pref_1, $pref_2, $pref_3, $pref_4, $pref_5) = mysql_fetch_array($sql3);
 			
-			$sql4 = mysql_query("SELECT id FROM " . COMMENT_TABLE . " WHERE autor_id = '" . $user[0] . "'");
+			$sql4 = mysql_query("SELECT id FROM " . COMMENT_TABLE . " WHERE autor_id = '" . $id_user . "'");
 			$nb_comment = mysql_num_rows($sql4);
 			
 			
@@ -377,146 +375,170 @@ if ($visiteur >= $level_access && $level_access > -1){
 				echo '<img class="img-polaroid" src="modules/User/images/noavatar.png" alt="" />';
 			}
 			echo '</div>';
-			
-			echo'<div class="infos">';
 			if ($user){
                 echo '<a class="btn btn-block btn-primary" href="index.php?file=Userbox&amp;op=post_message&amp;for=' . $id_user . '">' . _REQUESTPV . '</a>';
             }
 			
 			echo '<a class="btn btn-block" href="index.php?file=Search&amp;op=mod_search&amp;autor=' . $autor . '">' . _FINDSTUFF . '</a>';
-			echo '<div class="block-widget"><div class="block-widget-header">' . _INFOPERSO . '</div><div class="block-widget-content"><ul>';
-			echo '<li>' . _NICK . ' : <img src="images/flags/' . $country . '" alt="' . $pays . '" /> <b>' . $autor . '</b></li>';
+			echo '<div class="block-widget"><div class="block-widget-header">' . _INFOPERSO . '</div><div class="block-widget-content"><table class="table table-striped table-condensed">';
+			echo '<tr><td>' . _NICK . ' :</td><td><img src="images/flags/' . $country . '" alt="' . $pays . '" /> ' . $autor . '</td></tr>';
 			
-			if ($prenom) echo '<li>' . _LASTNAME . ' : <b>' . $prenom . '</b></li>';
-			if ($age) echo '<li>' . _AGE . ' : <b>' . $age . '</b></li>';
-			if ($sex) echo '<li>' . _SEXE . ' : <b>' . $sex . '</b></li>';
-			if ($ville) echo '<li>' . _CITY . ' : <b>' . $ville . '</b></li>';
-			if ($pays) echo '<li>' . _COUNTRY . ' : <b>' . $pays . '</b></li>';
-			if ($date) echo '<li>' . _DATEUSER . ' : <b>' . $date . '</b></li>';
-			if ($last_used) echo '<li>' . _LASTVISIT . ' : <b>' . $last_used . '</b></li>';
+			if ($prenom) echo '<tr><td>' . _LASTNAME . ' :</td><td>' . $prenom . '</td></tr>';
+			if ($age) echo '<tr><td>' . _AGE . '</td><td>' . $age . '</td></tr>';
+			if ($sex) echo '<tr><td>' . _SEXE . '</td><td>' . $sex . '</td></tr>';
+			if ($ville) echo '<tr><td>' . _CITY . '</td><td>' . $ville . '</td></tr>';
+			if ($pays) echo '<tr><td>' . _COUNTRY . '</td><td>' . $pays . '</td></tr>';
+			if ($date) echo '<tr><td>' . _DATEUSER . '</td><td>' . $date . '</td></tr>';
+			if ($last_used) echo '<tr><td>' . _LASTVISIT . '</td><td>' . $last_used . '</td></tr>';
 			
-			echo '</ul></div></div>';
+			echo '</table></div></div>';
 			
 			if ($visiteur >= $nivoreq)
-{			
-			echo '</div><div class="infos"><div class="block-widget"><div class="block-widget-header">' . _INFOCONTACT . '</div><div class="block-widget-content"><ul>';
-			if ($mail) echo '<li>' . _MAIL . ' : <b>' . $mail . '</b></li>';
-			if ($url && preg_match("`http://`i", $url)) echo '<li>' . _URL . ' : <a href="' . $url . '" onclick="window.open(this.href); return false;">' . $url . '</a></li>';
-			if ($icq) echo '<li>' . _ICQ . ' : <a href="http://web.icq.com/whitepages/add_me?uin=' . $icq . '&amp;action=add">' . $icq . '</a></li>';
-			if ($msn) echo '<li>' . _MSN . ' : <a href="mailto: . $msn . ">' . $msn . '</a></li>';
-			if ($aim) echo '<li>' . _AIM . ' : <a href="aim:goim?screenname=' . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there+?">' . $aim . '</a></li>';               
-			if ($yim) echo '<li>' . _YIM . ' : <a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $yim . '&amp;.src=pg">' . $yim . '</a></li>';
-			if ($xfire) echo '<li>' . _XFIRE . ' : <a href="xfire:add_friend?user=' . $xfire . '">' . $xfire . '</a></li>';
-			if ($facebook) echo '<li>' . _FACEBOOK . ' : <a href="http://www.facebook.com/' . $facebook . '">' . $facebook . '</a></li>';
-			if ($origin) echo '<li>' . _ORIGINEA . ' : <a href="#">' . $origin. '</a></li>';
-			if ($steam) echo '<li>' . _STEAM . ' : <a href="#">' . $steam . '</a></td></tr>';
-			if ($twitter) echo '<li>' . _TWITER . ' : <a href="http://twitter.com/#!/' . $twitter . '">' . $twitter . '</a></td></tr>';
-			if ($skype) echo '<li>' . _SKYPE . ' : <a href="skype:' . $skype . '?call">' . $skype . '</a></li>';
-			echo '</ul></div></div>';
- }
- 
-			echo '</div></div><div class="profiledroit"><div class="infos">';	
+{			if ( $mail || $url || $icq || $msn || $aim || $yim || $xfire || $facebook || $origin || $steam || $twitter || $skype ){
+			echo '<div class="block-widget"><div class="block-widget-header">' . _INFOCONTACT . '</div><div class="block-widget-content"><table class="table table-striped table-condensed">';
+			if ($mail) echo '<tr><td>' . _MAIL . '</td><td>' . $mail . '</td></tr>';
+			if ($url && preg_match("`http://`i", $url)) echo '<tr><td>' . _URL . ' :</td><td><a href="' . $url . '" onclick="window.open(this.href); return false;">' . $url . '</a></td></tr>';
+			if ($icq) echo '<tr><td>' . _ICQ . ' :</td><td><a href="http://web.icq.com/whitepages/add_me?uin=' . $icq . '&amp;action=add">' . $icq . '</a></td></tr>';
+			if ($msn) echo '<tr><td>' . _MSN . ' :</td><td><a href="mailto: . $msn . ">' . $msn . '</a></td></tr>';
+			if ($aim) echo '<tr><td>' . _AIM . ' :</td><td><a href="aim:goim?screenname=' . $aim . '&amp;message=Hi+' . $aim . '+Are+you+there+?">' . $aim . '</a></td></tr>';               
+			if ($yim) echo '<tr><td>' . _YIM . ' :</td><td><a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $yim . '&amp;.src=pg">' . $yim . '</a></td></tr>';
+			if ($xfire) echo '<tr><td>' . _XFIRE . ' :</td><td><a href="xfire:add_friend?user=' . $xfire . '">' . $xfire . '</a></td></tr>';
+			if ($facebook) echo '<tr><td>' . _FACEBOOK . ' :</td><td><a href="http://www.facebook.com/' . $facebook . '">' . $facebook . '</a></td></tr>';
+			if ($origin) echo '<tr><td>' . _ORIGINEA . ' :</td><td><a href="#">' . $origin. '</a></td></tr>';
+			if ($steam) echo '<tr><td>' . _STEAM . ' :</td><td><a href="#">' . $steam . '</a></td></tr>';
+			if ($twitter) echo '<tr><td>' . _TWITER . ' :</td><td><a href="http://twitter.com/#!/' . $twitter . '">' . $twitter . '</a></td></tr>';
+			if ($skype) echo '<tr><td>' . _SKYPE . ' :</td><td><a href="skype:' . $skype . '?call">' . $skype . '</a></td></tr>';
+			echo '</table></div></div>';
+ 			}
+			echo '</div><div class="profiledroit">';	
 			if ( $cpu || $ram || $motherboard || $video || $resolution || $sons || $souris || $clavier || $ecran || $osystem || $connexion ){
-				echo '<div class="block-widget"><div class="block-widget-header">' . _HARDCONFIG . '</div><div class="block-widget-content"><ul>';
+				echo '<div class="block-widget"><div class="block-widget-header">' . _HARDCONFIG . '</div><div class="block-widget-content"><table class="table table-striped table-condensed">';
 				
-				if ($cpu) echo '<li>' . _PROCESSOR . ' : <b>' . $cpu . '</b></li>';
-				if ($ram) echo '<li>' . _MEMORY . ' : <b>' . $ram . '</b></li>';
-				if ($motherboard) echo '<li>' . _MOTHERBOARD . ' : <b>' . $motherboard . '</b></li>';
-				if ($video) echo '<li>' . _VIDEOCARD . ' : <b>' . $video . '</b></li>';
-				if ($resolution) echo '<li>' . _RESOLUTION . ' : <b>' . $resolution . '</b></li>';
-				if ($sons) echo '<li>' . _SOUNDCARD . ' : <b>' . $sons . '</b></li>';
-				if ($souris) echo '<li>' . _MOUSE . ' : <b>' . $souris . '</b></li>';
-				if ($clavier) echo '<li>' . _KEYBOARD . ' : <b>' . $clavier . '</b></li>';
-				if ($ecran) echo '<li>' . _MONITOR . ' : <b>' . $ecran . '</b></li>';
-				if ($osystem) echo '<li>' . _SYSTEMOS . ' : <b>' . $osystem . '</b></li>';
-				if ($connexion) echo '<li>' . _CONNECT . ' : <b>' . $connexion . '</b></li>';
-				echo '<ul></div></div>';
+				if ($cpu) echo '<tr><td>' . _PROCESSOR . ' :</td><td>' . $cpu . '</td></tr>';
+				if ($ram) echo '<tr><td>' . _MEMORY . ' :</td><td>' . $ram . '</td></tr>';
+				if ($motherboard) echo '<tr><td>' . _MOTHERBOARD . ' :</td><td>' . $motherboard . '</td></tr>';
+				if ($video) echo '<tr><td>' . _VIDEOCARD . ' :</td><td>' . $video . '</td></tr>';
+				if ($resolution) echo '<tr><td>' . _RESOLUTION . ' :</td><td>' . $resolution . '</td></tr>';
+				if ($sons) echo '<tr><td>' . _SOUNDCARD . ' :</td><td>' . $sons . '</td></tr>';
+				if ($souris) echo '<tr><td>' . _MOUSE . ' :</td><td>' . $souris . '</td></tr>';
+				if ($clavier) echo '<tr><td>' . _KEYBOARD . ' :</td><td>' . $clavier . '</td></tr>';
+				if ($ecran) echo '<tr><td>' . _MONITOR . ' :</td><td>' . $ecran . '</td></tr>';
+				if ($osystem) echo '<tr><td>' . _SYSTEMOS . ' :</td><td>' . $osystem . '</td></tr>';
+				if ($connexion) echo '<tr><td>' . _CONNECT . ' :</td><td>' . $connexion . '</td></tr>';
+				echo '</table></div></div>';
+			}
+			echo '<div class="block-widget"><div class="block-widget-header">' . _PREFGAMES . '</div><div class="block-widget-content">
+			<table class="table table-striped"><thead><tr><td>' . _NAME . '</td></tr></thead><tbody>';
+			$sql = mysql_query("SELECT game FROM " . GAMES_PREFS_TABLE . " WHERE user_id = '" . $id_user . "'");
+			$check = mysql_num_rows($sql);
+			if($check > 0) {
+			while (list($games) = mysql_fetch_array($sql)){
+			$sql1 = mysql_query("SELECT name FROM " . GAMES_TABLE . " WHERE id = '" . $games . "'");
+			while (list($nom) = mysql_fetch_array($sql1)){
+			echo '<tr><td>' . $nom . '</td></tr>';
+			}
+			}
+			}
+			else {
+				echo '<tr><td colspan="3">' . _NOGAMESINLIST .'</td></tr>';
+			}
+			echo '</tbody></table></div></div>';
 			}
 			
-			echo '<div class="block-widget"><div class="block-widget-header">' . _LASTUSERMESS . '</div><div class="block-widget-content"><ul>';
-			$iforum = 0;
-            $sql_forum = mysql_query("SELECT id, titre, date, thread_id, forum_id FROM " . FORUM_MESSAGES_TABLE . " WHERE auteur_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
-            while (list($mid, $subject, $date, $tid, $fid) = mysql_fetch_array($sql_forum)){
-                $subject = htmlentities($subject);
-                $subject = nk_CSS($subject);
-                $date = nkDate($date);
-
-                $iforum++;
-
-                $sql_page = mysql_query("SELECT id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $tid . "'");
-                $nb_rep = mysql_num_rows($sql_page);
-
-                if ($nb_rep > $nuked['mess_forum_page']){
-                    $topicpages = $nb_rep / $nuked['mess_forum_page'];
-                    $topicpages = ceil($topicpages);
-                    $link_REQUEST = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $fid . "&amp;thread_id=" . $tid . "&amp;p=" . $topicpages . "#" . $mid;
-                }
-                else{
-                    $link_REQUEST = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $fid . "&amp;thread_id=" . $tid . "#" . $mid;
-                }
-				echo '<li><a href="' . $link_REQUEST . '">' . $subject . '</a>  ' . $date . '</li>';
-            }
-
-            if ($iforum == 0){
-                echo '<li>' . _NOUSERMESS . '</li>';
-            }
-		echo '</ul></div></div><div class="block-widget"><div class="block-widget-header">' . _LASTUSERCOMMENT . '</div><div class="block-widget-content"><ul>';
-        if ($nb_comment == 0){
-            echo '<li>' . _NOUSERCOMMENT . '</li>';
-        }
-        else{
-            $icom = 0;
-            $sql_com = mysql_query("SELECT im_id, titre, module, date FROM " . COMMENT_TABLE . " WHERE autor_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
-            while (list($im_id, $titre, $module, $date) = mysql_fetch_array($sql_com)){
-                $titre = htmlentities($titre);
-                $titre = nk_CSS($titre);
-
-                if ($titre != ""){
-                    $title = $titre;
-                }
-                else{
-                    $title = $module;
-                }
-
-                $date = nkDate($date);
-
-                $icom++;
-
-                if ($module == "news"){
-                    $link_title = '<li><a href="index.php?file=News&amp;op=index_comment&amp;news_id=' . $im_id . '">' . $title . '</a></li>';
-                }
-                else if ($module == "Gallery"){
-                    $link_title = '<li><a href="index.php?file=Gallery&amp;op=description&amp;sid=' . $im_id . '">' . $title . '</a>/li>';
-                }
-                else if ($module == "Wars"){
-                    $link_title = '<li><a href="index.php?file=Wars&amp;op=detail&amp;war_id=' . $im_id . '">' . $title . '</a></li>';
-                }
-                else if ($module == "Links"){
-                    $link_title = '<li><a href="index.php?file=Links&amp;op=description&amp;link_id=' . $im_id . '">' . $title . '</a></li>';
-                }
-                else if ($module == "Download"){
-                    $link_title = '<li><a href="index.php?file=Download&amp;op=description&amp;dl_id=' . $im_id . '">' . $title . '</a></li>';
-                }
-                else if ($module == "Survey"){
-                    $link_title = '<li><a href="index.php?file=Survey&amp;op=affich_res&amp;sid=' . $im_id . '">' . $title . '</a></li>';
-                }
-                else if ($module == "Sections"){
-                    $link_title = '<li><a href="index.php?file=Sections&amp;op=article&amp;artid=' . $im_id . '">' . $title . '</a></li>';
-                }
-				echo $link_title;
-            }
-			echo '</ul></div></div>';
-        }
-
+			echo '<div class="block-widget"><div class="block-widget-header">' . _LASTUSERMESS . '</div><div class="block-widget-content"><table class="table table-striped">
+			<thead><tr><td>#</td><td>' . _TITLE .'</td><td>' . _DATE . '</td></tr></thead><tbody>';
+			
+			if ($user_data['count'] == 0){
+				echo '<tr><td colspan="3">' . _NOUSERMESS . '</td></tr>';
+			}
+			else{
+				$iforum = 0;
+				$sql_forum = mysql_query("SELECT id, titre, date, thread_id, forum_id FROM " . FORUM_MESSAGES_TABLE . " WHERE auteur_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
+				while (list($mid, $subject, $date, $tid, $fid) = mysql_fetch_array($sql_forum)){
+					$subject = htmlentities($subject);
+					$subject = nk_CSS($subject);
+					$date = nkDate($date);
+					
+					$iforum++;
+					
+					$sql_page = mysql_query("SELECT id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $tid . "'");
+					$nb_rep = mysql_num_rows($sql_page);
+					
+					if ($nb_rep > $nuked['mess_forum_page']){
+						$topicpages = $nb_rep / $nuked['mess_forum_page'];
+						$topicpages = ceil($topicpages);
+						$link_REQUEST = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $fid . "&amp;thread_id=" . $tid . "&amp;p=" . $topicpages . "#" . $mid;
+					}
+					else{
+						$link_REQUEST = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $fid . "&amp;thread_id=" . $tid . "#" . $mid;
+					}
+					
+					echo '<tr><td>' . $iforum . '</td>
+					<td><a href="' . $link_REQUEST . '">' . $subject . '</a></td>
+					<td>' . $date . '</td></tr>';
+				}
+				
+				if ($iforum == 0){
+					echo '<tr><td colspan="3">' . _NOUSERMESS . '</td></tr>';
+				}
+			}
+			
+			echo '</tbody></table></div></div><div class="block-widget"><div class="block-widget-header">' . _LASTUSERCOMMENT . '</div><div class="block-widget-content"><table class="table table-striped">
+			<thead><tr><td>#</td><td>' . _TITLE .'</td><td>' . _DATE . '</td></tr></thead><tbody>';
+			
+			if ($nb_comment == 0){
+				echo '<tr><td colspan="3">' . _NOUSERCOMMENT . '</td></tr>';
+			}
+			else{
+				$icom = 0;
+				$sql_com = mysql_query("SELECT im_id, titre, module, date FROM " . COMMENT_TABLE . " WHERE autor_id = '" . $id_user . "' ORDER BY id DESC LIMIT 0, 10");
+				while (list($im_id, $titre, $module, $date) = mysql_fetch_array($sql_com)){
+					$titre = htmlentities($titre);
+					$titre = nk_CSS($titre);
+					
+					if ($titre != ""){
+						$title = $titre;
+					}
+					else{
+						$title = $module;
+					}
+					
+					$date = nkDate($date);
+					
+					$icom++;
+					
+					if ($module == "news"){
+						$link_title = "<a href=\"index.php?file=News&amp;op=index_comment&amp;news_id=" . $im_id . "\">" . $title . "</a>";
+					}
+					else if ($module == "Gallery"){
+						$link_title = "<a href=\"index.php?file=Gallery&amp;op=description&amp;sid=" . $im_id . "\">" . $title . "</a>";
+					}
+					else if ($module == "Wars"){
+						$link_title = "<a href=\"index.php?file=Wars&amp;op=detail&amp;war_id=" . $im_id . "\">" . $title . "</a>";
+					}
+					else if ($module == "Links"){
+						$link_title = "<a href=\"index.php?file=Links&amp;op=description&amp;link_id=" . $im_id . "\">" . $title . "</a>";
+					}
+					else if ($module == "Download"){
+						$link_title = "<a href=\"index.php?file=Download&amp;op=description&amp;dl_id=" . $im_id . "\">" . $title . "</a>";
+					}
+					else if ($module == "Survey"){
+						$link_title = "<a href=\"index.php?file=Survey&amp;op=affich_res&amp;sid=" . $im_id . "\">" . $title . "</a>";
+					}
+					else if ($module == "Sections"){
+						$link_title = "<a href=\"index.php?file=Sections&amp;op=article&amp;artid=" . $im_id . "\">" . $title . "</a>";
+					}
+					
+					echo '<tr><td>' . $icom . '</td><td>' . $link_title . '</td><td>' . $date . '</td></tr>';
+				}
+			}
+			
+			echo '</tbody></table></div></div>';
         }
         else{
             echo '<div>' . _NOMEMBER . '</div>';
         } 
-		echo '</div></div></div>';
-		echo "<script>
-		$(document).ready(function(){
-		$('#Profile').height($(window).height());
-		});</script>";
+		echo '</div></div>';
 		closetable();
     } 
 	
