@@ -207,17 +207,17 @@ while (list($nom_cat, $cid, $cat_image) = mysql_fetch_row($main))
 							$img = "<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/forum.png\" alt=\"\" />";
 						} 
 
-						echo "	<tr class=\"Forum_contenu_r\">\n"
-							. "		<td class=\"Forum_contenu_d1\">" . $img . "</td>\n";
+						echo '<tr><td>' . $img . '</td>';
         if ($nuked['image_forums'] == "on")
         { 
             if ($forum_image == "")
             { 
             $forum_image = "images/no_forum_image.png";
             }         
-              echo "<td  style=\"width: 5%;\" align=\"center\"><div style=\"margin:-0px -0px -2px -0px\"><a href=\"index.php?file=Forum&amp;page=viewforum&amp;forum_id=" . $forum_id . "\"><img src=\"" . $forum_image . "\" style=\"border:0px; max-width:100px; max-height:100px;\" /></a></div></td>\n";
+              echo '<td><a href="index.php?file=Forum&amp;page=viewforum&amp;forum_id=' . $forum_id . '"><img src="' . $forum_image . '"/></a></div></td>';
         }
-							echo "		<td class=\"Forum_contenu_d2\" onclick=\"document.location='index.php?file=Forum&amp;page=viewforum&amp;forum_id=" . $forum_id . "'\"><a href=\"index.php?file=Forum&amp;page=viewforum&amp;forum_id=" . $forum_id . "\"><big><b>" . $nom ." </b></big></a><br />" . $comment . "</td>\n";
+							echo '<td onclick="document.location="index.php?file=Forum&amp;page=viewforum&amp;forum_id=' . $forum_id . '">
+							<a href="index.php?file=Forum&amp;page=viewforum&amp;forum_id=' . $forum_id . '">' . $nom . '</a><br />' . $comment . '</td>';
 
 						$sql_page = mysql_query("SELECT thread_id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $thid . "'");
 						$nb_rep = mysql_num_rows($sql_page);
@@ -233,9 +233,7 @@ while (list($nom_cat, $cid, $cat_image) = mysql_fetch_row($main))
 							$link_post = "index.php?file=Forum&amp;page=viewtopic&amp;forum_id=" . $forum_id . "&amp;thread_id=" . $thid . "#" . $mess_id;
 						} 
 
-						echo "		<td class=\"Forum_contenu_d3\">" . $num_post . "</td>\n"
-							. "		<td class=\"Forum_contenu_d4\">" . $num_mess . "</td>\n"
-							. "		<td class=\"Forum_contenu_d5\"> ";
+						echo '<td>' . $num_post . '</td><td>' . $num_mess . '</td><td> ';
 
 										if ($num_mess > 0)
 										{
@@ -288,14 +286,12 @@ while (list($nom_cat, $cid, $cat_image) = mysql_fetch_row($main))
 										{
 											echo _NOPOST;
 										} 
-						echo "		</td>\n"
-							. "	</tr>\n";	
+						echo '</td></tr>';
 					} 
 				}
 				else
 				{
-					echo "<tr class=\"Forum_contenu_r2\">\n"
-						. "<td class=\"Forum_contenu_d6\" colspan=\"5\">" . _NOFORUM ."</td>\n";
+					echo '<tr><td colspan="5">' . _NOFORUM . '</td>';
 				}	
 
 echo '</tbody></table></div>';
@@ -306,17 +302,14 @@ echo '</div>';
 echo '<div class="forumfooter"><div class="linksfooter">';
 	if ($user)
 	{
-	echo "<a href=\"index.php?file=Forum&amp;op=mark\">" . _MARKREAD . "</a>";
+	echo '<a href="index.php?file=Forum&amp;op=mark">' . _MARKREAD . '</a>';
 	} 
 	if ($user && $user[4] != "")
 	{
-	echo "<br /><a href=\"index.php?file=Forum&amp;page=search&amp;do=search&amp;date_max=" . $user[4] . "\">" . _VIEWLASTVISITMESS . "</a>";
+	echo '<br /><a href="index.php?file=Forum&amp;page=search&amp;do=search&amp;date_max=' . $user[4] . '">' . _VIEWLASTVISITMESS . '</a>';
 	} 
 echo '</div>';
 
-
-echo"<div class=\"Forum_cadre_bas\">\n";	
-		
 $nb = nbvisiteur();
 
     $sql_tmessage = mysql_query("SELECT id FROM " . FORUM_MESSAGES_TABLE . " ");
@@ -330,36 +323,26 @@ $nb = nbvisiteur();
 
 if($nuked['forum_who_secondaire'] == "oui")	
 {
-echo "	<table class=\"Forum_online_t\" cellspacing=\"0\">\n"
-	. "		<tr class=\"Forum_online_r\">\n"
-	. "			<td class=\"Forum_online_d\" colspan=\"5\"><b>" . _FWHOISONLINE . "</b></td>\n"
-	. "		</tr>\n"
-	. "	</table>\n";
-
-echo "	<table class=\"Forum_online_centre_t\" cellspacing=\"1\">\n"
-	. "		<tr class=\"Forum_online_centre_r\">\n"
-	. "			<td class=\"Forum_online_centre_d1\"><img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/whoisonline.png\" alt=\"\" /></td>\n"
-	. "			<td class=\"Forum_online_centre_d2\">\n"
-  . "". _MEMBERTOTALMESSAGES ."&nbsp;<b>" . $nb_tmessage . "</b>&nbsp;" . _MESSAGES2 . ".<br />\n"
-  . "". _WEHAVE ."&nbsp;<b>" . $nb_tusers . "</b>&nbsp;" . _REGISTEREDUSERS . ".<br />\n"
-  . "". _LASTREGISTEREDUSER ."&nbsp;<a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . $last_user . "\"><b>" . $last_user . "</b></a><br /><br />\n"
-
-  . "" . _THEREARE . "&nbsp;" . $nb[0] . "&nbsp;" . _FVISITORS . ", " . $nb[1] . "&nbsp;" . _FMEMBERS . "&nbsp;" . _AND . "&nbsp;" . $nb[2] . "&nbsp;" . _FADMINISTRATORS . "&nbsp;" . _ONLINE . "\n";
-  
+echo '<div class="block-widget"><div class="block-widget-header">' . _FWHOISONLINE . '</div><div class="block-widget-content">
+<table class="table table-striped table-condensed">
+<tr><td>' . _MEMBERTOTALMESSAGES . '&nbsp;<b>' . $nb_tmessage . '</b>&nbsp;' . _MESSAGES2 . '</td></tr>
+<tr><td>'. _WEHAVE . '&nbsp;<b>' . $nb_tusers . '</b>&nbsp;' . _REGISTEREDUSERS . '</td></tr>
+<tr><td>'. _LASTREGISTEREDUSER . '&nbsp;<b>&nbsp;<a href="index.php?file=Members&amp;op=detail&amp;autor=' . $last_user . '"><b>' . $last_user . '</b></a></td></tr>'; 
 if ($nuked['profil_details'] == "on")
 {   
-  echo "<br />" . _RANKLEGEND . "&nbsp;:&nbsp;\n";
-
-$sql_rank_team = mysql_query("SELECT titre, couleur FROM " . TEAM_RANK_TABLE . " ORDER BY ordre LIMIT 0, 20");
+  echo '<tr><td>' . _RANKLEGEND . '&nbsp;:&nbsp;';
+  $sql_rank_team = mysql_query("SELECT titre, couleur FROM " . TEAM_RANK_TABLE . " ORDER BY ordre LIMIT 0, 20");
   while (list($rank_titre, $rank_color) = mysql_fetch_array($sql_rank_team))
   {	
       $rank_color1 = "style=\"color: #" . $rank_color . ";\"";
       echo "[&nbsp;<span " . $rank_color1 . "><b>" . $rank_titre . "</b></span>&nbsp;]&nbsp;";
-  }    
+  }  
+  echo '</td></tr>';
 }
 
 
-echo "<br />" . _MEMBERSONLINE . " : ";
+echo '<tr><td>' . _THEREARE . '&nbsp;' . $nb[0] . '&nbsp;' . _FVISITORS . ', ' . $nb[1] . '&nbsp;' . _FMEMBERS . '&nbsp;' . _AND . '&nbsp;' . $nb[2] . '&nbsp;' . _FADMINISTRATORS . '&nbsp;' . _ONLINE . '</td></tr>
+ <tr><td>' . _MEMBERSONLINE . ' : ';
 
 $i = 0;
 $online = mysql_query("SELECT username FROM " . NBCONNECTE_TABLE . " WHERE type > 0 ORDER BY date");
@@ -392,12 +375,14 @@ $sql_user_details = mysql_query("SELECT pseudo, count, avatar, country FROM " . 
 
     echo "<a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . urlencode($name) . "\" " . $rank_color . ">" . $name . "</a>" . $sep;
 }
+echo '</td></tr><tr><td>' . _MODO . ' :</b>&nbsp;<small>' . $lienmodo . '</td></tr>';
 
 if (mysql_num_rows($online) == NULL) echo '<em>' . _NONE . '</em>';
 
 // Les anniversaires //
 if ($nuked['birthday_forum'] == "on")
 {
+	  echo '<tr><td>';
 	  $y = date("Y");
 	  $m = date("m");
 	  $d = date("d");
@@ -416,7 +401,7 @@ if ($nuked['birthday_forum'] == "on")
 			$nb_aniv = $nb_aniv - 1;
 			}
 		}	  
-		echo "<br /><br />" . _TODAY . ", ";
+		echo "" . _TODAY . ", ";
 		if ($nb_aniv == 0)
 		echo "" . _BIRTHDAY1 . "";
 		elseif ($nb_aniv == 1)
@@ -463,20 +448,25 @@ if ($nuked['profil_details'] == "on")
 			echo " <a href=\"index.php?file=Members&amp;op=detail&amp;autor=" . $anivpseudo . "\" " . $rank_color2 . "><b> " . $anivpseudo . "</b></a> (" . $age . " " . _ANS . ")" . $virg . "";
 			}
 		}
+	echo '</td></tr>';
 }		
 // Fin anniversaire
 
-echo "			</td>\n"
-	. "			<td class=\"Forum_online_centre_d3\"><b>" . _MODO . " :</b>&nbsp;<small>" . $lienmodo . "</small></td>\n"
-	. "		</tr>\n"
-	. "	</table>\n";
-
-echo "	<table class=\"Forum_online_bas_t\">\n"
-	. "		<tr class=\"Forum_online_bas_r\">\n"
-	. "			<td class=\"Forum_online_bas_d\"></td>\n"
-	. "		</tr>\n"
-	. "	</table>\n";
+echo '</table></div></div>';
 }	
+	
+echo "	<table class=\"Forum_info_t\" cellspacing=\"0\">\n"
+	. "		<tr class=\"Forum_info_r1\">\n"
+	. "			<td class=\"Forum_info_d1\"><img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/forum_new.png\" alt=\"\" /></td>\n"
+	. "			<td class=\"Forum_info_d2\">&nbsp;" . _NEWSPOSTLASTVISIT . "</td>\n"
+	. "		</tr>\n"
+	. "		<tr class=\"Forum_info_r2\">\n"
+	. "			<td class=\"Forum_info_d3\"><img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/forum.png\" alt=\"\" /></td>\n"
+	. "			<td class=\"Forum_info_d4\">&nbsp;" . _NOPOSTLASTVISIT . "</td>\n"
+	. "		</tr>\n"
+	. "</table>\n";
+	
+	
 echo '</div></div></div>';	
 closetable();
 ?>

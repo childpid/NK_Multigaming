@@ -468,6 +468,9 @@ opacity: .25;
 /* Module Members (Profil) */
 #Profile {
 height: 100%;
+width: 100%;
+position: relative;
+display: table;
 }
 #Profile .profilegauche {
 	background-color: #F4F4F4;	
@@ -475,7 +478,8 @@ height: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	float: left;
+	display: table-cell;
+	vertical-align: top;
 }
 #Profile .editionprofil {
 margin: 2%;	
@@ -488,7 +492,8 @@ margin: 2%;
 	margin: 0;
 	padding: 0;
 	margin-left: -1px;
-	float: right;
+	display: table-cell;
+	vertical-align: top;
 }
 #Profile .block-widget {
 margin: 2%;	
@@ -512,6 +517,25 @@ margin: 2%;
 }
 #Profile .infos b {
 	color: #353535;	
+}
+#Profile .block-widget-content{
+padding: 0%;
+}
+#Profile .block-widget-content table{
+padding: 0px;
+margin: 0px;
+}
+#Profile td {
+text-align: left;	
+}
+#Profile td,#Profile tbody tr:last-child {
+border: 0px;
+}
+#Profile tbody tr, #Profile thead tr{
+border-bottom: 1px solid #DDD;	
+}
+#Profile tfoot tr {
+border-top: 1px solid #DDD;		
 }
 /* Module Forum */
 #Forum {
@@ -542,11 +566,43 @@ text-transform: uppercase;
 font-size: 18px;
 }
 #Forum .forumcategorie {
-border: 1px solid #D4D4D4;
 margin-bottom: 20px;
+width: 100%;
+}
+#Forum .forumcategorie table tr{
+border: 1px solid #D4D4D4;
+width: 100%;
+}
+#Forum .forumcategorie tbody td:nth-child(1){
+width: 5%;
+text-align: center;
+vertical-align: middle;
+}
+#Forum .forumcategorie td:nth-child(2){
+width: 10%;
+text-align: center;
+vertical-align: middle;
+}
+#Forum .forumcategorie td:nth-child(3){
+width: 45%;
+}
+#Forum .forumcategorie td:nth-child(4){
+width: 10%;
+vertical-align: middle;
+}
+#Forum .forumcategorie td:nth-child(5){
+width: 10%;
+vertical-align: middle;
+}
+#Forum .forumcategorie td:nth-child(6){
+width: 20%;
+vertical-align: top;
 }
 #Forum .linksfooter {
 text-align: right;
+}
+#Forum .block-widget-content {
+padding: 0%;	
 }
 /* Module User */
 #User{
