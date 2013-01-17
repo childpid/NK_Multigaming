@@ -132,7 +132,7 @@ while (list($nom_cat, $cid, $cat_image) = mysql_fetch_row($main))
 	{ 
 	$nom_cat = '<img src="' . $cat_image . '"/>';		
 	}   
-	echo '<div class="forumcategorie"><table class="table table-striped"><caption><a href="index.php?file=Forum&amp;page=main&amp;cat=' . $cid . '">' . $nom_cat . '</a></caption><thead><tr>';
+	echo '<div class="forumcategorie"><table class="table"><caption><a href="index.php?file=Forum&amp;page=main&amp;cat=' . $cid . '">' . $nom_cat . '</a></caption><thead><tr>';
 	if ($nuked['image_forums'] == "on")
     { 
     echo '<td colspan="2"></td>';
@@ -216,7 +216,8 @@ while (list($nom_cat, $cid, $cat_image) = mysql_fetch_row($main))
             }         
               echo '<td><a href="index.php?file=Forum&amp;page=viewforum&amp;forum_id=' . $forum_id . '"><img src="' . $forum_image . '"/></a></div></td>';
         }
-							echo '<td onclick="document.location="index.php?file=Forum&amp;page=viewforum&amp;forum_id=' . $forum_id . '">
+							$linkforum = 'index.php?file=Forum&amp;page=viewforum&amp;forum_id=' . $forum_id . '';
+							echo '<td onclick="document.location=\'' . $linkforum . '\'">
 							<a href="index.php?file=Forum&amp;page=viewforum&amp;forum_id=' . $forum_id . '">' . $nom . '</a><br />' . $comment . '</td>';
 
 						$sql_page = mysql_query("SELECT thread_id FROM " . FORUM_MESSAGES_TABLE . " WHERE thread_id = '" . $thid . "'");

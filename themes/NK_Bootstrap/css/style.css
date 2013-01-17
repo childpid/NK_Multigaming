@@ -559,7 +559,7 @@ background-image: -o-linear-gradient(top, white, #F2F2F2);
 background-image: linear-gradient(to bottom, white, #F2F2F2);
 background-repeat: repeat-x;
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
-border-bottom: 1px solid #D4D4D4;
+border: 1px solid #d4d4d4;
 }
 #Forum table caption a {
 text-transform: uppercase;
@@ -573,28 +573,42 @@ width: 100%;
 border: 1px solid #D4D4D4;
 width: 100%;
 }
+#Forum .forumcategorie thead td {
+text-align: left;	
+}
+#Forum .forumcategorie table thead tr {
+border-top: 0px;	
+}
+#Forum .forumcategorie table tbody tr {
+background-color: #F5F5F5;
+}
+#Forum .forumcategorie table tbody tr:hover {
+background-color: #F9F9F9;
+}
 #Forum .forumcategorie tbody td:nth-child(1){
 width: 5%;
 text-align: center;
 vertical-align: middle;
 }
-#Forum .forumcategorie td:nth-child(2){
+#Forum .forumcategorie tbody td:nth-child(2){
 width: 10%;
 text-align: center;
 vertical-align: middle;
 }
-#Forum .forumcategorie td:nth-child(3){
-width: 45%;
+#Forum .forumcategorie tbody td:nth-child(3){
+width: 30%;
 }
-#Forum .forumcategorie td:nth-child(4){
+#Forum .forumcategorie tbody td:nth-child(4){
 width: 10%;
+padding-left: 20px;
 vertical-align: middle;
 }
-#Forum .forumcategorie td:nth-child(5){
+#Forum .forumcategorie tbody td:nth-child(5){
 width: 10%;
+padding-left: 20px;
 vertical-align: middle;
 }
-#Forum .forumcategorie td:nth-child(6){
+#Forum .forumcategorie tbody td:nth-child(6){
 width: 20%;
 vertical-align: top;
 }

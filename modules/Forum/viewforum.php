@@ -19,7 +19,7 @@ define('FORUM_PRIMAIRE_TABLE', $nuked['prefix'] . '_forums_primaire');
 include("modules/Forum/template.php");
 
 opentable();
-
+echo '<div id="Forum"><div class="ForumHeader">';
 /****** Récupération du skin ******/
 $nuked['forum_skin'] = $nuked['forum_skin'];
 include('modules/Forum/Skin/' . $nuked['forum_skin'] . '/comun.php');
@@ -120,42 +120,37 @@ else
 
     if ($nuked['forum_cat_prim'] == "on")
     { 		
-		$nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;cat=" . $cat_pri . "\"><b>" . $cat_primaire . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cat . "\"><b>" . $cat_name . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $nom . "</b>";
+		$nav = "<li><a href=\"index.php?file=Forum&amp;cat=" . $cat_pri . "\"><b>" . $cat_primaire . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cat . "\"><b>" . $cat_name . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $nom . "</b>";
 		}
 		else
 		{
 		$nav = "&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<a href=\"index.php?file=Forum&amp;page=main&amp;cat=" . $cat . "\"><b>" . $cat_name . "</b></a>&nbsp;<img src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/fleche.png\" alt=\"\" style=\"margin-bottom:-2px;\"/>&nbsp;<b>" . $nom . "</b>";		
 		}
 
-if($nuked['forum_name_viewforum'] == "oui" || $nuked['forum_search_viewforum'] == "oui")	
-{
-echo"		<form method=\"get\" action=\"index.php\">\n"
-		. "	<table class=\"Forum_search_t\" width=\"100%\" cellspacing=\"0\">\n"
-		. "		<tr class=\"Forum_search_r\">\n";
-		
-		if($nuked['forum_name_viewforum'] == "oui")	
+	if($nuked['forum_search_secondaire'] == "oui")	
 		{
-		echo "		<td class=\"Forum_search_d1\"><big><b>" . $title . "</b></big><br />" . $nom . "</td>\n";
-		}
-		
-		if($nuked['forum_search_viewforum'] == "oui")	
-		{
-		echo "			<td class=\"Forum_search_d2\"><br /><b>" . _SEARCH . " :</b>\n"
-		. "				<input type=\"text\" name=\"query\" size=\"25\" /><br />\n"
-		. "				[ <a href=\"index.php?file=Forum&amp;page=search\">" . _ADVANCEDSEARCH . "</a> ]&nbsp;\n"
-		. "				<input type=\"hidden\" name=\"file\" value=\"Forum\" />\n"
-		. "				<input type=\"hidden\" name=\"page\" value=\"search\" />\n"
-		. "				<input type=\"hidden\" name=\"do\" value=\"search\" />\n"
-		. "				<input type=\"hidden\" name=\"into\" value=\"all\" />\n"
-		. "			</td>\n";
-		}
-		
-		echo "		</tr>\n"
-		. "	</table>\n"
-		. "	</form>\n";	
-}		
-echo"		<table class=\"Forum_nav_t\" cellspacing=\"4\" border=\"0\">\n";
-
+		echo'
+		<div class="navbar">
+		<div class="navbar-inner">
+		<form class="navbar-form" method="get" action="index.php">
+		<input type="text" name="query" class="span3" />
+		<input type="hidden" name="file" value="Forum" />
+		<input type="hidden" name="page" value="search" />
+		<input type="hidden" name="do" value="search" />
+		<input type="hidden" name="into" value="all" />
+		<button type="submit" class="btn">' . _SEARCH . '</button>
+		</form>
+		</div>
+		</div>
+		';
+	}
+echo '<ul class="breadcrumb">
+		<li><a href="index.php?file=Forum">' . _INDEXFORUM . '</a> <span class="divider">/</span></li>
+		<li class="active">' . _INDEXFORUM . '</li>
+	  </ul>';
+//Fin Header Forum
+echo '</div>';
+echo '<div class="forumcontenu">';	
 				if ($count > $nb_mess_for)
 				{		
 					echo"<tr class=\"Forum_prevnext_r\">\n"
@@ -174,10 +169,6 @@ echo "			<tr class=\"Forum_nav_r\">\n"
 						{
 							echo "&nbsp;<a href=\"index.php?file=Forum&amp;page=post&amp;forum_id=" . $_REQUEST['forum_id'] . "\"><img style=\"border: 0;\" src=\"modules/Forum/Skin/" . $nuked['forum_skin'] . "/images/buttons/" . $language . "/newthread.png\" alt=\"\" title=\"" . _NEWSTOPIC . "\" /></a>";
 						}
-		
-echo "				</td>\n"
-		. "		</tr>\n"
-		. "	</table>\n";
 
 echo"<div class=\"Forum_cadre_haut\">\n";
 
@@ -699,7 +690,7 @@ else
 {
     echo "<br /><br /><div style=\"text-align: center;\">" . _NOENTRANCE . "<br /><br /><a href=\"javascript:history.back()\"><b>" . _BACK . "</b></a></div><br /><br />";
 }
-
+echo '</div>';
 closetable();
 
 ?>
